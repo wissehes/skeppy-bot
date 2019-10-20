@@ -1,0 +1,31 @@
+{
+  "name": "skeppy-bot",
+  "version": "1.0.0",
+  "description": "A bot for discord about Skeppy",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://TheChicken14@github.com/TheChicken14/skeppy-bot.git"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "skeppy",
+    "pingspoof",
+    "14",
+    "sotp"
+  ],
+  "author": "TheChicken/Skeppy's Chicken",
+  "license": "GNU GPLv3",
+  "bugs": {
+    "url": "https://github.com/TheChicken14/skeppy-bot/issues"
+  },
+  "homepage": "https://github.com/TheChicken14/skeppy-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "enmap": "^5.2.1"
+  }
+}
