@@ -1,5 +1,5 @@
 exports.run = (client, message, args) => {
-  if(!message.member.roles.some(r=>["Administrator","Admin", "Moderator", "Mod", "Owner"].includes(r.name)) )
+  if(!message.member.roles.some(r=>["Administrator","Admin", "Moderator", "Mod", "Owner", "the owner"].includes(r.name)) )
     return message.reply("Sorry, you can not use this =(");
   // makes the bot say something and delete the message. As an example, it's open to anyone to use.
   // To get the "message" itself we join the `args` back into a string with spaces:
