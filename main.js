@@ -36,12 +36,13 @@ fs.readdir("./commands/", (err, files) => {
 });
 
 client.on("guildMemberAdd", (member) => {
-  if(!config.guilds.includes(member.guild.id)){ return; } // only run when user joins my server
+  if(config.guilds.includes(member.guild.id)){ // only run when user joins my server
     if(member.guild)
     var guild = member.guild; // Reading property `guild` of guildmember object.
     let memberTag = member.user.id; // GuildMembers don't have a tag property, read property user of guildmember to get the user object from it
     if(guild.systemChannel){ // Checking if it's not null
       guild.systemChannel.send("Welcome <@" + memberTag + "> to the server! Try me out in <#579374195860045856>, ``skeppy help``");
+  }
   }
 });
 
