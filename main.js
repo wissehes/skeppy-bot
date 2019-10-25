@@ -42,7 +42,7 @@ client.on("guildMemberAdd", (member) => {
     let memberTag = member.user.id; // GuildMembers don't have a tag property, read property user of guildmember to get the user object from it
     if(guild.systemChannel){ // Checking if it's not null
       guild.systemChannel.send("Welcome <@" + memberTag + "> to the server! Try me out in <#579374195860045856>, ``skeppy help``");
-  }
+    }
   }
 });
 
