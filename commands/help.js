@@ -52,6 +52,10 @@ exports.run = (client, message, args) => {
         {
           "name": "skeppy say",
           "value": "Make skeppy say something!"
+        },
+        {
+          "name": "skeppy musichelp",
+          "value": "Shows you the help page for playing music"
         }
       ]
   };

@@ -27,6 +27,9 @@
   "homepage": "https://github.com/TheChicken14/skeppy-bot#readme",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "enmap": "^5.2.1"
+    "discord.js-musicbot-addon": "^13.8.1",
+    "enmap": "^5.2.1",
+    "ffmpeg": "0.0.4",
+    "node-opus": "^0.3.3"
   }
 }

@@ -5,12 +5,92 @@ const fs = require("fs");
 const client = new Discord.Client();
 const config = require("./config.json");
 client.config = config;
+client.music = require("discord.js-musicbot-addon");
 
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
   client.user.setActivity(`say "skeppy help" | Serving ${client.guilds.size} servers`);
+});
 
+// Following the previous example.
+client.music.start(client, {
+// Set the api key used for YouTube.
+youtubeKey: config.YTapikey,
+
+// The PLAY command Object.
+play: {
+  enabled: true,
+  // Usage text for the help command.
+  usage: "{{prefix}}play some tunes",
+  // Whether or not to exclude the command from the help command.
+  exclude: false
+},
+
+help: {
+  name: "musichelp"
+},
+
+loop: {
+  enabled: false,
+  exclude: true
+},
+
+leave: {
+  enabled: true
+},
+
+volume: {
+  enabled: true,
+  alt: ['vol', 'v']
+},
+
+skip: {
+  enabled: true
+},
+
+clearqueue: {
+  enabled: true
+},
+
+np: {
+  enabled: true,
+  alts: ['nowplaying']
+},
+
+remove: {
+  enabled: true
+},
+
+queue: {
+  enabled: true
+},
+
+pause: {
+  enabled: false,
+  exclude: true
+},
+
+resume: {
+  enabled: false,
+  exclude: true
+},
+
+//set the prefix
+botPrefix: config.prefix,
+// Make it so anyone in the voice channel can skip the
+// currently playing song.
+anyoneCanSkip: true,
+
+// Make it so the owner (you) bypass permissions for music.
+ownerOverMember: true,
+ownerID: config.ownerID,
+
+// The cooldown Object.
+cooldown: {
+  // This disables the cooldown. Not recommended.
+  enabled: false
+}
 });
 
 fs.readdir("./events/", (err, files) => {
@@ -23,7 +103,6 @@ fs.readdir("./events/", (err, files) => {
 });
 
 client.commands = new Enmap();
-
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
