@@ -56,6 +56,10 @@ exports.run = (client, message, args) => {
         {
           "name": "skeppy musichelp",
           "value": "Shows you the help page for playing music"
+        },
+        {
+          "name": "skeppy latestvideo",
+          "value": "Shows Skeppy's BadBoyHalo's or a6d's latest video!"
         }
       ]
   };
