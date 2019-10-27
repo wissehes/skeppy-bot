@@ -59,7 +59,7 @@ exports.run = (client, message, args) => {
         },
         {
           "name": "skeppy latestvideo",
-          "value": "Shows Skeppy's BadBoyHalo's or a6d's latest video!"
+          "value": "Shows the latest video of the channel you specify!"
         }
       ]
   };
