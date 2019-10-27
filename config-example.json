@@ -1,5 +1,21 @@
 {
   "token": "<your token>",
   "prefix": "skeppy ",
-  "guilds": "<your guild id>"
+  "guilds": "<your guild id>",
+  "lavalink": {
+    "searchnode": {
+      "host": "<your Lavalink node hostname>",
+      "port": "<your Lavalink node port>",
+      "address": "<your Lavalink node address. This will cancel out host and port.>",
+      "password": "<your Lavalink node's password>"
+    },
+    "nodes": [
+      {
+        "host": "<your Lavalink node hostname>",
+        "port": "<your Lavalink node port>",
+        "address": "<your Lavalink node address. This will cancel out host and port.>",
+        "password": "<your Lavalink node's password>"
+      }
+    ]
+  }
 }
