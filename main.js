@@ -20,7 +20,7 @@ youtubeKey: config.YTapikey,
 
 // The PLAY command Object.
 play: {
-  enabled: true,
+  enabled: false,
   // Usage text for the help command.
   usage: "{{prefix}}play some tunes",
   // Whether or not to exclude the command from the help command.
@@ -37,7 +37,8 @@ loop: {
 },
 
 leave: {
-  enabled: true
+  enabled: true,
+  alt: ['stop']
 },
 
 volume: {
@@ -84,7 +85,7 @@ anyoneCanSkip: true,
 
 // Make it so the owner (you) bypass permissions for music.
 ownerOverMember: true,
-ownerID: config.ownerID,
+ownerID: client.config.ownerID,
 
 // The cooldown Object.
 cooldown: {
