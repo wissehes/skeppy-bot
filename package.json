@@ -1,7 +1,7 @@
 {
   "name": "skeppy-bot",
   "version": "1.0.0",
-  "description": "A bot for discord about Skeppy",
+  "description": "A bot for Discord about Skeppy",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,10 +26,9 @@
   },
   "homepage": "https://github.com/TheChicken14/skeppy-bot#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "discord.js": "^11.5.1",
-    "discord.js-musicbot-addon": "^13.8.1",
-    "enmap": "^5.2.1",
-    "ffmpeg": "0.0.4",
-    "node-opus": "^0.3.3"
+    "discord.js-lavalink": "^2.2.3",
+    "enmap": "^5.2.1"
   }
 }
