@@ -4,7 +4,8 @@ exports.run = (client, message, args) => {
   if(args[0]){
     getVideo(channel)
   }else{
-    message.channel.send(`🚫 You didn't specify a channel name!`)
+    //message.channel.send(`🚫 You didn't specify a channel name!`)
+    getVideo('Skeppy')
   }
 
   function getVideo(channelname) {
@@ -18,7 +19,7 @@ exports.run = (client, message, args) => {
       .then(res => {
         const body = res.data;
         var lastVideoId = body.items[0].id.videoId;
-        message.channel.send("This is "+channel+"'s latest video is: https://youtube.com/watch?v="+ lastVideoId)
+        message.channel.send("This is "+channelname+"'s latest video is: https://youtube.com/watch?v="+ lastVideoId)
         return lastVideoId;
       }).catch(err => {
           // Handle the error somehow.
