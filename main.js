@@ -209,7 +209,7 @@ client.execQueue = (message, queue, player) => {
 			}, 1000);
 		} else {
 			message.channel.send(`Queue is now empty! Leaving the voice channel.`);
-			await player.leave(message.guild.id);
+			await client.player.leave(message.guild.id);
 		}
 	});
 }
