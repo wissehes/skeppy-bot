@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
 
-if(message.author.id !== client.config.ownerID) return message.reply('no');
-
-
 exports.run = (client, message, args) => {
+  if(message.author.id !== client.config.ownerID) return message.reply('no');
+
   const queue = client.getQueue(message.guild.id);
   if(!queue || queue.length == 0)
     return message.channel.send(`Currently not playing anything!`);
