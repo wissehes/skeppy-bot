@@ -1,5 +1,8 @@
 const Discord = require('discord.js');
 
+if(message.author.id !== client.config.ownerID) return message.reply('no');
+
+
 exports.run = (client, message, args) => {
   const queue = client.getQueue(message.guild.id);
   if(!queue || queue.length == 0)
