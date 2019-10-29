@@ -62,4 +62,6 @@ typings/
 .next
 scores.sqlite
 scores*
+scores.qglite-shm
+scores.sqlite-wal
 .DS_Store

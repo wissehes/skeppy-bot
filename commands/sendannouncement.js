@@ -5,6 +5,6 @@ exports.run = (client, message, args) => {
       try {
           guildList.forEach(guild => guild.systemChannel.send(sayMessage));
       } catch (err) {
-          console.log("Could not send message to ");
+          console.log("Could not send message to " + guild.name);
       }
 }
