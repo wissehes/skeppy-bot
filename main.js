@@ -3,6 +3,7 @@ const Enmap = require("enmap");
 const fs = require("fs");
 const Lavalink = require('discord.js-lavalink');
 const axios = require('axios');
+const Twitter = require('twitter');
 
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
@@ -11,6 +12,15 @@ const config = require("./config.json");
 client.config = config;
 //client.music = require("discord.js-musicbot-addon");
 client.queue = {};
+//Twitter API login
+var t = new Twitter({
+  consumer_key: config.twitterConsumer,
+  consumer_secret: config.twitterConsumerSecret,
+  access_token_key: config.twitterTokenKey,
+  access_token_secret: config.twitterTokenSecret
+});
+//Bind 't' to 'client'
+client.t = t;
 
 Discord.Collection.betterForEach = async (callback) => {
   for (let index = 0; index < this.size; index++) {

@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
       "timestamp": "2019-10-20T20:28:06.764Z",
       "footer": {
         "icon_url": "https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg",
-        "text": "Made by trashcan#2971"
+        "text": "Made by TheChicken#5845"
       },
       "thumbnail": {
         "url": "https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg"
@@ -60,6 +60,10 @@ exports.run = (client, message, args) => {
         {
           "name": "skeppy latestvideo",
           "value": "Shows the latest video of the channel you specify!"
+        },
+        {
+          "name": "skeppy latesttweet",
+          "value": "Shows Skeppy's latest tweet!"
         }
       ]
   };
