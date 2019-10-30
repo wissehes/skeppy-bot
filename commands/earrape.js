@@ -4,7 +4,7 @@ exports.run = (client, message, args) => {
   if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a)) return;
   if(!queue || queue.length == 0)
         return message.channel.send(`No music is playing!`);
-  if(!args[0])
+  if(!args[0]){
         if(volume > 100) {
           client.player.get(message.guild.id).volume(100);
           message.react('✅')
@@ -20,6 +20,7 @@ exports.run = (client, message, args) => {
           }
         }
         return;
+}
   if(args[0]) {
     var num = args[0]
     try {
