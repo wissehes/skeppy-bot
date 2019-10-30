@@ -7,7 +7,7 @@ function clean(text) { // For Eval
             return text;
     }
 exports.run = (client, message, args) => {
-  if(!['592337489084022794', '354289971361742848'].some(a => message.author.id == a)) return;
+  if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a)) return;
   try {
         const code = args.join(' ');
         let evaled = eval(code);
