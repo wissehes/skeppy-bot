@@ -112,6 +112,6 @@ exports.run = (client, message, args) => {
     .addField(`ban`, `Bans a user`)
     .addField(`kick`, `Kicks a user`)
     .addField(`eval`, `Evaluates code`)
-
+  )
   }
 }
