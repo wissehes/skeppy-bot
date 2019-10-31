@@ -1,6 +1,10 @@
 module.exports = (client, message) => {
   // Ignore all bots
   if (message.author.bot) return;
+  //ignore dm's
+  if (message.channel.type === 'dm')
+      return message.channel.send('lmao, no');
+
   let score;
   if (message.guild) {
     score = client.getScore.get(message.author.id, message.guild.id);

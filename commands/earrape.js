@@ -1,6 +1,11 @@
 exports.run = (client, message, args) => {
   var queue = client.getQueue(message.guild.id);
-  if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a)) return;
+  //if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a)) return;
+  if(!message.member.roles.some(r=>["DJ", "dj", "DeeJay", "deejay"].includes(r.name)) ){
+    message.react('🚫')
+    message.channel.send('You need the `DJ` role to do that!')
+    return;
+  }
   if(!queue || queue.length == 0)
         return message.channel.send(`No music is playing!`);
   if(!args[0]){

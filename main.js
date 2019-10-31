@@ -46,7 +46,7 @@ setInterval(pingLavalinkNodes, 260000);
 client.on("ready", () => {
   pingLavalinkNodes();
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
-  client.user.setActivity(`for "${config.prefix}help" | Serving ${client.guilds.size} servers`, {type: "WATCHING"});
+  client.user.setActivity(`for "${config.prefix[0]}help" | Serving ${client.guilds.size} servers`, {type: "WATCHING"});
   client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {id: client.user.id});
 
   client.player.nodes.forEach(a => {
