@@ -1,18 +1,19 @@
 const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
+  const prefixes = client.config.prefix.join(", ");
+  const prefix = client.config.prefix[0]
   if(!args[0]){
-    const prefixes = client.config.prefix.join(", ");
     var embed = new Discord.RichEmbed()
       .setTitle("Skeppy Bot Commands")
-      .setDescription("The prefixes are: " + prefixes)
+      .setDescription(`Make sure you use one of the prefixes: ${prefixes}`)
       .setThumbnail('https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg')
       .setURL('https://github.com/thechicken14/skeppy-bot')
       .setFooter('Made by TheChicken#5845', 'https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg')
       .setTimestamp()
-      .addField('help commands', 'Shows a list of the default commands accessible by everyone', true)
-      .addField('help music', 'Shows the musiccommands', true)
-      .addField('help admincommands', 'Shows the admincommands', true)
+      .addField(prefix + 'help commands', 'Shows a list of the default commands accessible by everyone', true)
+      .addField(prefix + 'help music', 'Shows the musiccommands', true)
+      .addField(prefix + 'help admincommands', 'Shows the admincommands', true)
     message.channel.send(embed)
   }
   if(args[0] == "commands"){
@@ -31,55 +32,55 @@ exports.run = (client, message, args) => {
         },
         "fields": [
           {
-            "name": "meme",
+            "name": prefix+"meme",
             "value": "Sends a random meme related to The Trio"
           },
           {
-            "name": "BadBoyHalo",
+            "name": prefix+"BadBoyHalo",
             "value": "Sends a random meme related to BadBoyHalo"
           },
           {
-            "name": "braincells",
+            "name": prefix+"braincells",
             "value": "Sends how many braincells you have left"
           },
           {
-            "name": "candad",
+            "name": prefix+"candad",
             "value": "Sends information about Candad"
           },
           {
-            "name": "chicken",
+            "name": prefix+"chicken",
             "value": "Sends a random picture of a chicken"
           },
           {
-            "name": "help",
+            "name": prefix+"help",
             "value": "Sends help"
           },
           {
-            "name": "pinecone",
+            "name": prefix+"pinecone",
             "value": "Sends a picture of a pincone"
           },
           {
-            "name": "ping or skeppy pingspoof",
+            "name": prefix+"ping or skeppy pingspoof",
             "value": "I think you know what this is"
           },
           {
-            "name": "sotp",
+            "name": prefix+"sotp",
             "value": "sotp"
           },
           {
-            "name": "say",
+            "name": prefix+"say",
             "value": "Make skeppy say something!"
           },
           {
-            "name": "musichelp",
+            "name": prefix+"musichelp",
             "value": "Shows you the help page for playing music"
           },
           {
-            "name": "latestvideo",
+            "name": prefix+"latestvideo",
             "value": "Shows the latest video of the channel you specify!"
           },
           {
-            "name": "latesttweet",
+            "name": prefix+"latesttweet",
             "value": "Shows Skeppy's latest tweet!"
           }
         ]
@@ -87,31 +88,29 @@ exports.run = (client, message, args) => {
     message.channel.send({ embed });
   }
   if(args[0] === "music"){
-    const prefixes = client.config.prefix.join(", ");
     message.channel.send(new Discord.RichEmbed()
       .setColor("RED")
       .setTitle(`Music help for ${client.user.tag}`)
       .setDescription(`Prefixes are: ${prefixes}`)
-      .addField(`play`, 'Adds/Plays music in your voice channel!')
-      .addField(`leave`, 'Leave the voice channel.')
-      .addField(`np`, 'Check out what\'s currently playing!')
-      .addField(`queue *or* q`, 'Check out the queue!')
-      .addField(`pause`, 'Pauses the player.')
-      .addField(`resume`, 'Resumes the player.')
-      .addField(`skip`, 'Skip songs in the queue!')
-      .addField(`volume *or* vol`, 'Set the current player volume!')
-      .addField(`earrape`, 'Toggle earrape mode (only for people with `DJ` role)')
+      .addField(`${prefix}play`, 'Adds/Plays music in your voice channel!')
+      .addField(`${prefix}leave`, 'Leave the voice channel. (requires `DJ` role)')
+      .addField(`${prefix}np`, 'Check out what\'s currently playing!')
+      .addField(`${prefix}queue *or* q`, 'Check out the queue!')
+      .addField(`${prefix}pause`, 'Pauses the player.')
+      .addField(`${prefix}resume`, 'Resumes the player.')
+      .addField(`${prefix}skip`, 'Skip songs in the queue!')
+      .addField(`${prefix}volume *or* vol`, 'Set the current player volume! (requires `DJ` role)')
+      .addField(`${prefix}earrape`, 'Toggle earrape mode (only for people with `DJ` role)')
       .setThumbnail(client.user.avatarURL)
     );
   }
   if(args[0] === "admincommands"){
-    const prefixes = client.config.prefix.join(", ");
     message.channel.send(new Discord.RichEmbed()
     .setTitle(`Admin commands`)
     .setDescription(`Prefixes are: ${prefixes}`)
-    .addField(`ban`, `Bans a user`)
-    .addField(`kick`, `Kicks a user`)
-    .addField(`eval`, `Evaluates code`)
+    .addField(`${prefix}ban`, `Bans a user`)
+    .addField(`${prefix}kick`, `Kicks a user`)
+    .addField(`${prefix}eval`, `Evaluates code`)
   )
   }
 }
