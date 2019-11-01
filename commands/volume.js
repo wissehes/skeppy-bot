@@ -5,8 +5,7 @@ exports.run = (client, message, args) => {
 	if(!queue || queue.length == 0)
         return message.react('🚫') && message.channel.send(`No music is playing!`);
     if(!args[0])
-        message.react('❌')
-        return message.channel.send(`No volume given to set!`);
+        return message.react('❌') && message.channel.send(`No volume given to set!`);
 
     if(parseInt(args[0]) > 200 || parseInt(args[0]) < 0)
         return message.react('🚫') && message.channel.send(`This volume number is unable to be set!`);
