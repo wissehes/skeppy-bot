@@ -4,11 +4,14 @@ const fs = require("fs");
 const Lavalink = require('discord.js-lavalink');
 const axios = require('axios');
 const Twitter = require('twitter');
+const DBL = require("dblapi.js");
+
 
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const config = require("./config.json");
+const dbl = new DBL(config.DBLApiKey, client);
 client.config = config;
 //client.music = require("discord.js-musicbot-addon");
 client.queue = {};
@@ -82,6 +85,9 @@ client.on("ready", () => {
   // And then we have two prepared statements to get and set the score data.
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
+  setInterval(() => {
+    dbl.postStats(client.guilds.size);
+}, 1800000);
 });
 
 // Following the previous example.
