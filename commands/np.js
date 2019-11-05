@@ -12,6 +12,6 @@ exports.run = (client, message, args) => {
     .setDescription(`
 • **Author**: ${queue[0].info.author}
 • **URL**: [${queue[0].info.uri}](${queue[0].info.uri})
-• **Length**: ${client.getYTLength(queue[0].info.length)}
+• **Time**: [${client.getYTLength(client.player.get(message.guild.id).state.position)}/${client.getYTLength(queue[0].info.length)}]
   `));
 }
