@@ -6,7 +6,8 @@ exports.run = (client, message, args) => {
         "a6dee",
         "outvadedlands is just great!",
         "a6d french guy",
-        "a6d likes baguettes"
+        "a6d likes baguettes",
+        "French Server Owner"
         ];
     return a6d[Math.floor(Math.random() * a6d.length)];
   }

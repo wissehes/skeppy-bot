@@ -2,6 +2,9 @@ exports.run = (client, message, args) => {
   var queue = client.getQueue(message.guild.id);
   //if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a)) return;
   if([client.config.ownerID, client.config.adminID].some(a => message.author.id == a) || message.member.roles.some(r=>["DJ", "dj", "DeeJay", "deejay"].includes(r.name))){
+    if(!msg.member.voiceChannelID)
+    return message.channel.send(`You're not in a voice channel!`);
+    
     if(!queue || queue.length == 0)
           return message.channel.send(`No music is playing!`);
     if(!args[0]){

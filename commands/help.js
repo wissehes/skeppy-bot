@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Pagination = require('discord-paginationembed');
 
 exports.run = (client, message, args) => {
   const prefixes = client.config.prefix.join(", ");
@@ -17,7 +18,7 @@ exports.run = (client, message, args) => {
     message.channel.send(embed)
   }
   if(args[0] == "commands"){
-    const embed = {
+    const oldembed = {
         "title": "Skeppy Bot Command List",
         "description": "Here's a list of commands you can use!",
         "url": "https://github.com/thechicken14/skeppy-bot",
@@ -72,20 +73,42 @@ exports.run = (client, message, args) => {
             "value": "Make skeppy say something!"
           },
           {
-            "name": prefix+"musichelp",
-            "value": "Shows you the help page for playing music"
-          },
-          {
-            "name": prefix+"latestvideo",
+            "name": prefix+"latest video",
             "value": "Shows the latest video of the channel you specify!"
           },
           {
-            "name": prefix+"latesttweet",
+            "name": prefix+"latest tweet",
             "value": "Shows Skeppy's latest tweet!"
           }
         ]
     };
-    message.channel.send({ embed });
+    var help1 = new Discord.RichEmbed()
+    .addField(`${prefix}meme`, `Sends a random meme related to The Trio`)
+    .addField(`${prefix}BadBoyHalo`, `Sends a random meme related to BadBoyHalo`)
+    .addField(`${prefix}braincells`, `Sends the number of your braincells`)
+    .addField(`${prefix}Candad`, `Sends information about Candad`)
+    .addField(`${prefix}chicken`, `Sends a random picture of a chicken`)
+    .addField(`${prefix}pinecone`, `pinecone`)
+
+    var help2 = new Discord.RichEmbed()
+    .addField(`${prefix}ping`, `Gives the ping of the bot`)
+    .addField(`${prefix}pingspoof`, `I think you know what this is`)
+    .addField(`${prefix}sotp`, `sotp`)
+    .addField(`${prefix}say`, `Make Skeppy say whatever you want!`)
+    .addField(`${prefix}latest video`, `Shows the latest video of the channel you specify!`)
+    .addField(`${prefix}latest tweet`, `Shows skeppy's latest tweet`)
+    new Pagination.Embeds()
+    .setArray([help1, help2])
+    .setDeleteOnTimeout(true)
+    .setAuthorizedUsers([message.author.id])
+    .setChannel(message.channel)
+    .setPageIndicator(true)
+    .setThumbnail("https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg")
+    .setFooter("Made by TheChicken#5845")
+    .setURL('https://github.com/thechicken14/skeppy-bot')
+    .setColor(4285916)
+    .build();
+    //message.channel.send({ embed });
   }
   if(args[0] === "music"){
     message.channel.send(new Discord.RichEmbed()
