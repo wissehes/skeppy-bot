@@ -17,97 +17,91 @@ exports.run = (client, message, args) => {
       .addField(prefix + 'help admincommands', 'Shows the admincommands', true)
     message.channel.send(embed)
   }
-  if(args[0] == "commands"){
-    const oldembed = {
-        "title": "Skeppy Bot Command List",
-        "description": "Here's a list of commands you can use!",
-        "url": "https://github.com/thechicken14/skeppy-bot",
-        "color": 4285916,
-        "timestamp": new Date(),
-        "footer": {
-          "icon_url": "https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg",
-          "text": "Made by TheChicken#5845"
-        },
-        "thumbnail": {
-          "url": "https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg"
-        },
-        "fields": [
-          {
-            "name": prefix+"meme",
-            "value": "Sends a random meme related to The Trio"
-          },
-          {
-            "name": prefix+"BadBoyHalo",
-            "value": "Sends a random meme related to BadBoyHalo"
-          },
-          {
-            "name": prefix+"braincells",
-            "value": "Sends how many braincells you have left"
-          },
-          {
-            "name": prefix+"candad",
-            "value": "Sends information about Candad"
-          },
-          {
-            "name": prefix+"chicken",
-            "value": "Sends a random picture of a chicken"
-          },
-          {
-            "name": prefix+"help",
-            "value": "Sends help"
-          },
-          {
-            "name": prefix+"pinecone",
-            "value": "Sends a picture of a pincone"
-          },
-          {
-            "name": prefix+"ping or skeppy pingspoof",
-            "value": "I think you know what this is"
-          },
-          {
-            "name": prefix+"sotp",
-            "value": "sotp"
-          },
-          {
-            "name": prefix+"say",
-            "value": "Make skeppy say something!"
-          },
-          {
-            "name": prefix+"latest video",
-            "value": "Shows the latest video of the channel you specify!"
-          },
-          {
-            "name": prefix+"latest tweet",
-            "value": "Shows Skeppy's latest tweet!"
-          }
-        ]
-    };
-    var help1 = new Discord.RichEmbed()
+  if(args[0] === "commands" && args[1] === "normalembed"){
+    var oldembed = new Discord.RichEmbed()
+    .setTitle(`My commands!`)
+    .setDescription("Here's a list of commands you can use!")
+    .setThumbnail("https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg")
+    .setFooter("Made by TheChicken#5845")
+    .setURL('https://github.com/thechicken14/skeppy-bot')
+    .setColor(4285916)
     .addField(`${prefix}meme`, `Sends a random meme related to The Trio`)
     .addField(`${prefix}BadBoyHalo`, `Sends a random meme related to BadBoyHalo`)
     .addField(`${prefix}braincells`, `Sends the number of your braincells`)
     .addField(`${prefix}Candad`, `Sends information about Candad`)
     .addField(`${prefix}chicken`, `Sends a random picture of a chicken`)
     .addField(`${prefix}pinecone`, `pinecone`)
-
-    var help2 = new Discord.RichEmbed()
     .addField(`${prefix}ping`, `Gives the ping of the bot`)
     .addField(`${prefix}pingspoof`, `I think you know what this is`)
     .addField(`${prefix}sotp`, `sotp`)
     .addField(`${prefix}say`, `Make Skeppy say whatever you want!`)
     .addField(`${prefix}latest video`, `Shows the latest video of the channel you specify!`)
     .addField(`${prefix}latest tweet`, `Shows skeppy's latest tweet`)
-    new Pagination.Embeds()
-    .setArray([help1, help2])
-    .setDeleteOnTimeout(true)
-    .setAuthorizedUsers([message.author.id])
-    .setChannel(message.channel)
-    .setPageIndicator(true)
-    .setThumbnail("https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg")
-    .setFooter("Made by TheChicken#5845")
-    .setURL('https://github.com/thechicken14/skeppy-bot')
-    .setColor(4285916)
-    .build();
+    message.channel.send(oldembed)
+    return;
+  }
+  if(args[0] == "commands"){
+    var help1 = new Discord.RichEmbed()
+    .addField(`${prefix}meme`, `Sends a random meme related to The Trio`)
+    .addField(`${prefix}BadBoyHalo`, `Sends a random meme related to BadBoyHalo`)
+    .addField(`${prefix}braincells`, `Sends the number of your braincells`)
+    .addField(`${prefix}Candad`, `Sends information about Candad`)
+    var help2 = new Discord.RichEmbed()
+    .addField(`${prefix}chicken`, `Sends a random picture of a chicken`)
+    .addField(`${prefix}pinecone`, `pinecone`)
+    .addField(`${prefix}ping`, `Gives the ping of the bot`)
+    .addField(`${prefix}pingspoof`, `I think you know what this is`)
+    var help3 = new Discord.RichEmbed()
+    .addField(`${prefix}sotp`, `sotp`)
+    .addField(`${prefix}say`, `Make Skeppy say whatever you want!`)
+    .addField(`${prefix}latest video`, `Shows the latest video of the channel you specify!`)
+    .addField(`${prefix}latest tweet`, `Shows skeppy's latest tweet`)
+    var helpMusic = new Discord.RichEmbed()
+    .addField(`${prefix}play`, 'Adds/Plays music in your voice channel!')
+    .addField(`${prefix}leave`, 'Leave the voice channel. (requires `DJ` role)')
+    .addField(`${prefix}np`, 'Check out what\'s currently playing!')
+    .addField(`${prefix}queue *or* q`, 'Check out the queue!')
+    .addField(`${prefix}pause`, 'Pauses the player.')
+    .addField(`${prefix}resume`, 'Resumes the player.')
+    .addField(`${prefix}skip`, 'Skip songs in the queue!')
+    .addField(`${prefix}volume *or* vol`, 'Set the current player volume! (requires `DJ` role)')
+    .addField(`${prefix}earrape`, 'Toggle earrape mode (only for people with `DJ` role)')
+    //no
+    /*const commands = [
+      [ `${prefix}meme`, `Sends a random meme related to The Trio` ],
+      [ `${prefix}BadBoyHalo`, `Sends a random meme related to BadBoyHalo` ],
+      [ `${prefix}braincells`, `Sends the number of your braincells` ],
+      [ `${prefix}Candad`, `Sends information about Candad` ],
+      [ `${prefix}chicken`, `Sends a random picture of a chicken` ],
+      [ `${prefix}chicken`, `Sends a random picture of a chicken` ],
+      [ `${prefix}pinecone`, `pinecone` ],
+      [ `${prefix}ping`, `Gives the ping of the bot` ],
+      [ `${prefix}pingspoof`, `I think you know what this is` ],
+      [ `${prefix}sotp`, `sotp` ],
+      [ `${prefix}say`, `Make Skeppy say whatever you want!` ],
+      [ `${prefix}latest video`, `Shows the latest video of the channel you specify!` ],
+      [ `${prefix}latest tweet`, `Shows skeppy's latest tweet` ]
+    ].map(field => new Discord.RichEmbed().addField(field[0], field[1], field[2], field[3], field[4], field[5], field[6], field[7], field[8], field[9], field[10], field[11], field[12]));*/
+    try {
+      new Pagination.Embeds()
+      .setArray([help1, help2, help3])
+      .setDeleteOnTimeout(true)
+      .setAuthorizedUsers([message.author.id])
+      .setChannel(message.channel)
+      .setPageIndicator(true)
+      .setTitle(`My commands!`)
+      .setDescription("Here's a list of commands you can use!")
+      .setThumbnail("https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg")
+      .setFooter("Made by TheChicken#5845")
+      .setURL('https://github.com/thechicken14/skeppy-bot')
+      .setColor(4285916)
+      .build()
+      .catch(err)
+    }
+    catch(err){
+      message.channel.send(`⚠️ I couldn't send the paginated help page, try \`${prefix}help commands normalembed\``)
+    }
+
     //message.channel.send({ embed });
   }
   if(args[0] === "music"){
