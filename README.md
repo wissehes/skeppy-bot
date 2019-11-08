@@ -1,5 +1,4 @@
-[![Discord Bots](https://top.gg/api/widget/status/579327336395309062.svg)](https://top.gg/bot/579327336395309062)[![Discord Bots](https://top.gg/api/widget/servers/579327336395309062.svg)](https://top.gg/bot/579327336395309062)
-[![Discord Bots](https://top.gg/api/widget/lib/579327336395309062.svg)](https://top.gg/bot/579327336395309062)
+[![Discord Bots](https://top.gg/api/widget/status/579327336395309062.svg)](https://top.gg/bot/579327336395309062) [![Discord Bots](https://top.gg/api/widget/servers/579327336395309062.svg)](https://top.gg/bot/579327336395309062) [![Discord Bots](https://top.gg/api/widget/lib/579327336395309062.svg)](https://top.gg/bot/579327336395309062)
 
 # Skeppy Bot
 This is the Skeppy Discord bot, full of the trio related memes!
