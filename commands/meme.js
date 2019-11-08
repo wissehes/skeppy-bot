@@ -13,7 +13,8 @@ exports.run = (client, message, args) => {
         "p i n g s p o o f",
         "I was testing",
         "Candad is a real country!",
-        "https://www.urbandictionary.com/define.php?term=Candad"
+        "https://www.urbandictionary.com/define.php?term=Candad",
+        "https://media.discordapp.net/attachments/636292662898589696/642453088359153664/image0.jpg"
         ];
     return memes[Math.floor(Math.random() * memes.length)];
   }
