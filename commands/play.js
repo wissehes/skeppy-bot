@@ -68,6 +68,9 @@ exports.run = async (client, message, args) => {
   if(!msg.member.voiceChannelID)
     return message.channel.send(`You're not in a voice channel!`);
 
+  if(bot.player.get(message.guild.id) && msg.member.voiceChannelID !== bot.player.get(message.guild.id).channel)
+    return message.channel.send(`You're not in the playing voice channel!`);
+
   if(!betterArgs && !bot.player.get(message.guild.id))
     return message.channel.send(`You didn't give anything to play!`);
 
@@ -82,6 +85,10 @@ exports.run = async (client, message, args) => {
   if(urlParams.get('list') && myParam) {
     track = track.splice(myParam - 1, track.length);
     track.forEach((cr, i) => {
+      queue.push(cr);
+    });
+  } else if(urlParams.get('list')) {
+    track.forEach((cr) => {
       queue.push(cr);
     });
   } else {

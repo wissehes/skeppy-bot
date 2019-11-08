@@ -14,6 +14,9 @@ exports.run = (client, message, args) => {
   embed.setColor('RED').setTitle(`Queue for **${message.guild.name}**`);
 
   embed.setDescription(list.join('\n'));
-
+  if(client.musicSettings[message.guild.id])
+    embed.addField('Current Settings', `**Loop**: ${client.musicSettings[message.guild.id].loop}\n**Shuffle**: ${client.musicSettings[message.guild.id].shuffle}`);
+  else
+    embed.addField('Current Settings', `**Loop**: 0\n**Shuffle**: false`);
   message.channel.send(embed);
 }

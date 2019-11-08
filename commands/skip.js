@@ -1,7 +1,12 @@
 const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
-  var queue = client.getQueue(message.guild.id);
+	if(!msg.member.voiceChannelID)
+    	return message.channel.send(`You're not in a voice channel!`);
+
+	if(bot.player.get(message.guild.id) && msg.member.voiceChannelID !== bot.player.get(message.guild.id).channel)
+		return message.channel.send(`You're not in the playing voice channel!`);
+  	var queue = client.getQueue(message.guild.id);
 	if(!queue || queue.length == 0)
 		return message.channel.send(`No music is playing!`);
 	let howMany = 1;

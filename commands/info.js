@@ -35,12 +35,13 @@ String.prototype.toHHMMSS = function () {
     .setURL('https://github.com/TheChicken14/skeppy-bot')
     .setThumbnail(client.user.avatarURL)
     .addField(`Server count`, client.guilds.size, true)
+    .addField(`Uptime`, time.toString().toHHMMSS(), true)
     .addField(`Uptime`, (time + "").toHHMMSS(), true)
     .addField(`User count`, client.users.size, true)
     .addField(`Channels`, client.channels.size, true)
     .addField(`Node.JS version`, process.version, true)
     .addField(`Discord.JS version`, DJSVer, true)
-    .addField(`Total Memory`, `${formatBytes(os.totalmem())}`, true)
-    .addField(`Free memory`, `${formatBytes(os.freemem())}`, true)
+    .addField(`Memory`, `${formatBytes(os.freemem())}/${formatBytes(os.totalmem())}`, true);
     message.channel.send(embed)
-}
+}   
+

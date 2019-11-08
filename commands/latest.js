@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
                 .setFooter('Powered by Twitter API');
         
             message.channel.send(tweett)
-          })
+          });
     }
     if(args[0] == "video"){
         var axios = require('axios');

@@ -11,19 +11,29 @@ const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const config = require("./config.json");
-const dbl = new DBL(config.DBLApiKey, client);
+
+let dbl;
+try {
+  dbl = new DBL(config.DBLApiKey, client);
+} catch (e) {}
 client.config = config;
 //client.music = require("discord.js-musicbot-addon");
 client.queue = {};
+client.musicSettings = {};
+
 //Twitter API login
-var t = new Twitter({
-  consumer_key: config.twitterConsumer,
-  consumer_secret: config.twitterConsumerSecret,
-  access_token_key: config.twitterTokenKey,
-  access_token_secret: config.twitterTokenSecret
-});
-//Bind 't' to 'client'
-client.t = t;
+
+let t;
+try {
+  t = new Twitter({
+    consumer_key: config.twitterConsumer,
+    consumer_secret: config.twitterConsumerSecret,
+    access_token_key: config.twitterTokenKey,
+    access_token_secret: config.twitterTokenSecret
+  });
+  //Bind 't' to 'client'
+  client.t = t;
+} catch (e) {} // If it errors, silently fail and do nothing.
 
 Discord.Collection.betterForEach = async (callback) => {
   for (let index = 0; index < this.size; index++) {
@@ -87,7 +97,8 @@ client.on("ready", () => {
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
   setInterval(() => {
     dbl.postStats(client.guilds.size);
-}, 1800000);
+  }, 1800000);
+
 });
 
 // Following the previous example.
@@ -231,18 +242,30 @@ client.getQueue = (server) => {
 }
 
 client.execQueue = (message, queue, player) => {
-	player.play(queue[0].track);
+  if(client.musicSettings[message.guild.id] && client.musicSettings[message.guild.id].shuffle) {
+    var th = Math.floor(Math.random() * queue.length);
+    queue.unshift(queue[th]);
+    queue.splice(th + 1, th + 1);
+  }
+  player.play(queue[0].track);
 	message.channel.send(`Now playing **${queue[0].info.title}**`);
 
 	player.once('end', async (r) => {
-		queue.shift();
+    if(!client.musicSettings[message.guild.id] || client.musicSettings[message.guild.id].loop == 0)
+      queue.shift();
+    else if(client.musicSettings[message.guild.id].loop == 2) {
+      queue.push(queue[0]);
+      queue.shift();
+    }
 		if(queue.length > 0) {
 			setTimeout(() => {
 				client.execQueue(message, queue, player);
 			}, 1000);
 		} else {
 			message.channel.send(`Queue is now empty! Leaving the voice channel.`);
-			await client.player.leave(message.guild.id);
+      await client.player.leave(message.guild.id);
+      if(client.musicSettings[message.guild.id])
+        delete client.musicSettings[message.guild.id];
 		}
 	});
 }

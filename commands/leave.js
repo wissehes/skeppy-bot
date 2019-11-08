@@ -7,6 +7,8 @@ exports.run = (client, message, args) => {
       return message.channel.send(`Currently not playing anything!`);
   
     queue.splice(0, queue.length);
+    if(client.musicSettings[message.guild.id])
+      delete client.musicSettings[message.guild.id];
     message.channel.send(`Leaving the voice channel...`);
     client.player.leave(message.guild.id);
   } else if(!message.member.roles.some(r=>["DJ", "dj", "DeeJay", "deejay"].includes(r.name)))
