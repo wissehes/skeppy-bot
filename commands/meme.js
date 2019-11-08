@@ -5,7 +5,7 @@ exports.run = (client, message, args) => {
         "baldiiii",
         "sotp",
         "i hav ur eyep",
-        "/poll 'is badboyhalo bald?'",
+        "is badboyhalo bald?",
         "i was testing",
         ":mag: :mag_right: :mag: :mag_right: :mag: :mag_right: :mag: :mag_right: :mag: :mag_right:",
         "do u sell 14?",
@@ -17,7 +17,14 @@ exports.run = (client, message, args) => {
         ];
     return memes[Math.floor(Math.random() * memes.length)];
   }
-  
+
   var meme = getMeme();
-  message.channel.send(meme)
+  if (meme === "is badboyhalo bald?"){
+    message.channel.send(meme).then(message => {
+      message.react('👍');
+      message.react('👎');
+    })
+  } else {
+    message.channel.send(meme);
+  }
 }

@@ -7,7 +7,9 @@ exports.run = (client, message, args) => {
         "pineconie",
         "PINECONES FOR BREAKFAST!",
         "i'm a potato-to-to",
-        "https://www.youtube.com/watch?v=r7JQ6wApR-4"
+        "https://www.youtube.com/watch?v=r7JQ6wApR-4",
+        "VSCOBoyHalo",
+        "turtle turtle turtle :turtle:"
         ];
     return badboy[Math.floor(Math.random() * badboy.length)];
   }
