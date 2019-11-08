@@ -98,6 +98,7 @@ client.on("ready", () => {
   setInterval(() => {
     dbl.postStats(client.guilds.size);
   }, 1800000);
+
 });
 
 // Following the previous example.

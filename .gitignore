@@ -60,5 +60,8 @@ typings/
 
 # next.js build output
 .next
-
+scores.sqlite
+scores*
+scores.qglite-shm
+scores.sqlite-wal
 .DS_Store
