@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-exports.run = (client, message, args) => {
 
+exports.run = (client, message, args) => {
 
 String.prototype.toHHMMSS = function () {
     var sec_num = parseInt(this, 10); // don't forget the second param
@@ -14,6 +14,16 @@ String.prototype.toHHMMSS = function () {
     var time    = hours+':'+minutes+':'+seconds;
     return time;
 }
+    function getOsUptime() {
+        var seconds = os.uptime
+        var days = Math.floor(seconds / (3600*24));
+        seconds  -= days*3600*24;
+        var hrs   = Math.floor(seconds / 3600);
+        seconds  -= hrs*3600;
+        var mnts = Math.floor(seconds / 60);
+        seconds  -= mnts*60;
+        return days+" days, "+hrs+" Hrs, "+mnts+" Minutes";
+    }
     var os	= require('os');
     //ty https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
     function formatBytes(bytes, decimals = 2) {
@@ -35,7 +45,7 @@ String.prototype.toHHMMSS = function () {
     .setURL('https://github.com/TheChicken14/skeppy-bot')
     .setThumbnail(client.user.avatarURL)
     .addField(`Server count`, client.guilds.size, true)
-    .addField(`Uptime`, time.toString().toHHMMSS(), true)
+    .addField(`System Uptime`, getOsUptime(), true)
     .addField(`Uptime`, (time + "").toHHMMSS(), true)
     .addField(`User count`, client.users.size, true)
     .addField(`Channels`, client.channels.size, true)
