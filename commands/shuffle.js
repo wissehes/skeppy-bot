@@ -1,6 +1,12 @@
 exports.run = async (client, message, args) => {
-    if(!queue || queue.length == 0)
-        return message.channel.send(`No music is playing!`);
+	if(!message.member.voiceChannelID)
+    	return message.channel.send(`You're not in a voice channel!`);
+
+	if(client.player.get(message.guild.id) && message.member.voiceChannelID !== client.player.get(message.guild.id).channel)
+		return message.channel.send(`You're not in the playing voice channel!`);
+  	var queue = client.getQueue(message.guild.id);
+	if(!queue || queue.length == 0)
+		return message.channel.send(`No music is playing!`);
     
     if(!client.musicSettings[message.guild.id])
         client.musicSettings[message.guild.id] = {loop:0,shuffle:false};
