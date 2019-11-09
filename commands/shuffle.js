@@ -1,7 +1,6 @@
 exports.run = async (client, message, args) => {
 	if(!message.member.voiceChannelID)
     	return message.channel.send(`You're not in a voice channel!`);
-
 	if(client.player.get(message.guild.id) && message.member.voiceChannelID !== client.player.get(message.guild.id).channel)
 		return message.channel.send(`You're not in the playing voice channel!`);
   	var queue = client.getQueue(message.guild.id);
