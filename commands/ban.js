@@ -15,5 +15,6 @@ exports.run = (client, message, args) => {
 
   member.ban(reason)
     .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-  message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+  message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: \`\`\`${reason}\`\`\``);
+  client.users.get(member.user.id).send(`You have been banned from ${message.guild.name} by ${message.author.tag} for \`\`\`${reason}\`\`\``)
 }

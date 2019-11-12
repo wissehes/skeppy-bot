@@ -20,6 +20,6 @@ exports.run = (client, message, args) => {
   // Now, time for a swift kick in the nuts!
   member.kick(reason)
     .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-  message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+  message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: \`\`\`${reason}\`\`\``);
   client.users.get(member.user.id).send(`You have been kicked from ${message.guild.name} by ${message.author.tag} for \`\`\`${reason}\`\`\``)
 }
