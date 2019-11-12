@@ -64,4 +64,5 @@ scores.sqlite
 scores*
 scores.qglite-shm
 scores.sqlite-wal
+*.sqlite*
 .DS_Store
