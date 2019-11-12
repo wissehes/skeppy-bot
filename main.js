@@ -11,12 +11,12 @@ const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const config = require("./config.json");
-
+client.config = config;
 let dbl;
 try {
   dbl = new DBL(config.DBLApiKey, client);
 } catch (e) {}
-client.config = config;
+
 //client.music = require("discord.js-musicbot-addon");
 client.queue = {};
 client.musicSettings = {};
