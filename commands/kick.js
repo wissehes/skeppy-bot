@@ -1,6 +1,6 @@
 exports.run = (client, message, args) => {
 
-  if (message.member.hasPermission('KICK_MEMBERS', false, false))
+  if (!message.channel.permissionsFor(message.member).has("KICK_MEMBERS", false))
     return message.reply("Sorry, you don't have permissions to use this!  ");
 
   // Let's first check if we have a member and if we can kick them!
