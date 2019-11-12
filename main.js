@@ -122,6 +122,20 @@ fs.readdir("./commands/", (err, files) => {
   });
 });
 
+client.reloadAllCommands = function(){
+  client.commands = new Enmap();
+  fs.readdir("./commands/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+      if (!file.endsWith(".js")) return;
+      let props = require(`./commands/${file}`);
+      let commandName = file.split(".")[0];
+      console.log(`[reload] Attempting to load command ${commandName}`);
+      client.commands.set(commandName, props);
+    });
+  });
+}
+
 client.on("guildMemberAdd", (member) => {
   if(config.guilds.includes(member.guild.id)){ // only run when user joins my server
     if(member.guild)
