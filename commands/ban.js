@@ -1,7 +1,7 @@
 exports.run = (client, message, args) => {
   // Most of this command is identical to kick, except that here we'll only let admins do it.
   // In the real world mods could ban too, but this is just an example, right? ;)
-  if (member.hasPermission('BAN_MEMBERS', false, false))
+  if (message.member.hasPermission('BAN_MEMBERS', false, false))
       return message.reply("Sorry, you don't have permissions to use this!");
 
   let member = message.mentions.members.first();
