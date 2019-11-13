@@ -24,7 +24,7 @@ if (args[0]){
             for(let i = 0; i < lyrics.length; i += 1990) {
               const toSend = lyrics.substring(i, Math.min(lyrics.length, i + 1990));
               //sendIt(toSend);
-                  if(toSend.length < 1990){
+                  if(toSend == firstLyricPart && lastArrayElement.length < 1){
                       sendIt(toSend, true, true)
                   } else if (toSend == firstLyricPart) {
                       sendIt(toSend, true)
