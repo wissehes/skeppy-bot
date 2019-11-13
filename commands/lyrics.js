@@ -24,7 +24,9 @@ if (args[0]){
             for(let i = 0; i < lyrics.length; i += 1990) {
               const toSend = lyrics.substring(i, Math.min(lyrics.length, i + 1990));
               //sendIt(toSend);
-                  if (toSend == firstLyricPart) {
+                  if(toSend.length < 1990){
+                      sendIt(toSend, true, true)
+                  } else if (toSend == firstLyricPart) {
                       sendIt(toSend, true)
                   } else if (toSend == lastArrayElement){
                       sendIt(toSend, false, true)
@@ -33,7 +35,14 @@ if (args[0]){
                   }
               }
             function sendIt(msg, first, last){
-              if(first){
+              if(first && last){
+                var embed = new Discord.RichEmbed()
+                .setAuthor(song)
+                .setColor('BLUE')
+                .setDescription(msg)
+                .setFooter(`Requested by ${requestedBy} | Lyrics provided by KSoft`, message.author.avatarURL);
+                message.channel.send(embed) 
+              }else if(first){
                   var embed = new Discord.RichEmbed()
                   .setAuthor(song)
                   .setColor('BLUE')
