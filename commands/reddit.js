@@ -21,13 +21,13 @@ exports.run = (client, message, args) => {
             var author = postData.author
             var permalink = postData.permalink
             var upvotes = postData.ups
-            var rSlash = postData.subreddit_name_prefixed
+            var sub = postData.subreddit_name_prefixed
             var redditPost = new Discord.RichEmbed()
             .setTitle(`${title}`)
             //.setAuthor(`By u/${author}`)
             .setImage(`${imageUrl}`)
             .setURL(`https://reddit.com${permalink}`)
-            .setFooter(`👍 ${upvotes} | By u/${author} | ${rSlash}`)
+            .setFooter(`👍 ${upvotes} | By u/${author} | ${sub}`)
     
             return message.channel.send(redditPost)
         })
