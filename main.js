@@ -10,8 +10,10 @@ const DBL = require("dblapi.js");
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
+const npSettings = new Enmap({ name: 'npSettings' });
 const config = require("./config.json");
 client.config = config;
+client.npSettings = npSettings;
 let dbl;
 try {
   dbl = new DBL(config.DBLApiKey, client);
@@ -79,7 +81,6 @@ client.on("ready", () => {
 			console.log(`Node ${a.host} is currently reconnecting...`);
 		});
   });
-
   //---levels---
   // Check if the table "points" exists.
   const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
@@ -181,7 +182,8 @@ client.execQueue = (message, queue, player) => {
     queue.splice(th + 1, th + 1);
   }
   player.play(queue[0].track);
-	message.channel.send(`Now playing **${queue[0].info.title}**`);
+  if(client.npSettings.get(message.guild.id, "np"))
+	    message.channel.send(`Now playing **${queue[0].info.title}**`);
 
 	player.once('end', async (r) => {
     if(!client.musicSettings[message.guild.id] || client.musicSettings[message.guild.id].loop == 0)
