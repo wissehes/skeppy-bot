@@ -6,11 +6,11 @@ if(args[0]){
   if([client.config.ownerID, client.config.adminID].some(a => message.author.id == a) || message.member.roles.some(r=>["DJ", "dj", "DeeJay", "deejay"].includes(r.name))){
     var guildId = message.guild.id
     if(args[0] == "off"){
-      npSettings.set(guildId, {np: false})
+      npSettings.set(guildId, false, 'np')
       message.channel.send(`Now playing messages are now turned **off**`)
     } 
     if (args[0] == "on"){
-      npSettings.set(guildId, {np: true})
+      npSettings.set(guildId, true, 'np')
       message.channel.send(`Now playing messages are now turned **on**`)
     }
   } else {

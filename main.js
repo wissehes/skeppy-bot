@@ -12,8 +12,11 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
 const config = require("./config.json");
+const defaultSettings = {np: true, levels: true}
+client.defaultSettings = defaultSettings;
 client.config = config;
 client.npSettings = npSettings;
+
 let dbl;
 try {
   dbl = new DBL(config.DBLApiKey, client);
