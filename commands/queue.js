@@ -10,13 +10,20 @@ exports.run = (client, message, args) => {
   if(list.length > 15)
     list.splice(14, list.length);
 
+    let npMsgs;
+    if(client.npSettings.get(message.guild.id, "np")){
+      npMsgs = `On`
+    } else (
+      npMsgs = `Off`
+    )
+
   var embed = new Discord.RichEmbed();
   embed.setColor('RED').setTitle(`Queue for **${message.guild.name}**`);
 
   embed.setDescription(list.join('\n'));
   if(client.musicSettings[message.guild.id])
-    embed.addField('Current Settings', `**Loop**: ${client.musicSettings[message.guild.id].loop}\n**Shuffle**: ${client.musicSettings[message.guild.id].shuffle}`);
+    embed.addField('Current Settings', `**Loop**: ${client.musicSettings[message.guild.id].loop}\n**Shuffle**: ${client.musicSettings[message.guild.id].shuffle}\n **Now playing messages**: ${npMsgs}`);
   else
-    embed.addField('Current Settings', `**Loop**: 0\n**Shuffle**: false`);
+    embed.addField('Current Settings', `**Loop**: 0\n**Shuffle**: false\n **Song updates**: ${npMsgs}`);
   message.channel.send(embed);
 }

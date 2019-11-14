@@ -21,7 +21,12 @@ if(args[0]){
   var queue = client.getQueue(message.guild.id);
   if(!queue || queue.length == 0)
     return message.channel.send(`No music is playing!`);
-
+  let npMsgs;
+  if(client.npSettings.get(message.guild.id, "np")){
+    npMsgs = `On`
+  } else (
+    npMsgs = `Off`
+  )
   message.channel.send(`:musical_note: Now playing:`, new Discord.RichEmbed()
     .setColor("RED")
     .setTitle(queue[0].info.title)
@@ -30,5 +35,6 @@ if(args[0]){
 • **Author**: ${queue[0].info.author}
 • **URL**: [${queue[0].info.uri}](${queue[0].info.uri})
 • **Time**: [${client.getYTLength(client.player.get(message.guild.id).state.position)}/${client.getYTLength(queue[0].info.length)}]
+• **Song Updates:** ${npMsgs}
   `));
 }
