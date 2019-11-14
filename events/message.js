@@ -7,7 +7,8 @@ module.exports = (client, message) => {
 
   let score;
   if (message.guild) { 
-    if (!client.config.noLevelServers.includes(message.guild.id)){
+    client.npSettings.ensure(message.guild.id, client.defaultSettings);
+    if (client.npSettings.get(message.guild.id, "levels")){
       score = client.getScore.get(message.author.id, message.guild.id);
       if (!score) {
         score = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, points: 0, level: 1 }
