@@ -56,5 +56,14 @@ exports.run = (client, message, args) => {
                 message.channel.send(`i am confused rn`)
             }
         }
+        if(args[1] == 'setchannel'){
+            var channelName = args[2]
+            if(message.guild.channels.exists('name', channelName)){
+                npSettings.set(guildId, channelName, "welcomeChannel")
+                message.channel.send(`✅ Welcome channel set!`)
+            } else {
+                message.channel.send(`❌ An error occured!`)
+            }
+        }
     }
 }

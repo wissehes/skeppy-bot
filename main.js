@@ -150,14 +150,17 @@ client.on("guildMemberAdd", (member) => {
     if(member.guild)
       var guild = member.guild; // Reading property `guild` of guildmember object.
       let memberTag = member.user.id; // GuildMembers don't have a tag property, read property user of guildmember to get the user object from it
-      client.npSettings.ensure(member.guild.id, client.defaultSettings);
+      const defaultSettings = client.npSettings.ensure(member.guild.id, client.defaultSettings);
       if(client.npSettings.get(guild.id, "welcome")){
+        if(!client.npSettings.has(member.guild.id, "welcomeMessage") || !client.npSettings.has(member.guild.id, "welcomeChannel")){
+          return;
+        }
         // First, get the welcome message using get: 
         let welcomeMessage = client.npSettings.get(member.guild.id, "welcomeMessage");
-        
+        console.log(welcomeMessage)
         // Our welcome message has a bit of a placeholder, let's fix that:
-        welcomeMessage = welcomeMessage.replace("{{user}}", member.user.toString())
-        
+        if(welcomeMessage.includes('{{user}}'))
+            welcomeMessage = welcomeMessage.replace("{{user}}", member.user.toString())
         // we'll send to the welcome channel.
         member.guild.channels
           .find("name", client.npSettings.get(member.guild.id, "welcomeChannel"))
