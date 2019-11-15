@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
         var npSettings = client.npSettings
         if(!args[1]){
             npSettings.ensure(guildId, client.defaultSettings)
-            var settingStatus = npSettings.get(guildId, 'welcomeMessage')
+            var settingStatus = npSettings.get(guildId, 'welcome')
             if(settingStatus) {
                 message.channel.send(`Welcome messages are turned **on**`)
             } else {
@@ -39,12 +39,19 @@ exports.run = (client, message, args) => {
             }
         }
         if(args[1] == 'on'){
-            npSettings.set(guildId, true, 'welcomeMessage')
+            npSettings.set(guildId, true, 'welcome')
             message.channel.send(`Welcome messages are now **on**`)            
         }
         if(args[1] == 'off'){
-            npSettings.set(guildId, false, 'welcomeMessage')
+            npSettings.set(guildId, false, 'welcome')
             message.channel.send(`Welcome messages are now **off**`)  
+        }
+        if(args[1] == 'set'){
+            if(args[2]){
+                var array = args.slice(2).join(" ")
+                npSettings.set(guildId, array, 'welcomeMessage')
+                message.channel.send(`Welcome  message is now set to "${array}"`)
+            }
         }
     }
 }
