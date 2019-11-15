@@ -2,7 +2,7 @@ exports.run = (client, message, args) => {
     if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES", false) && message.author.id !== client.config.ownerID)
         return message.reply("🚫 You need the `Manage Messages` permission.");
     if(!args[0]){
-        message.channel.send(`You need to provide something you want to change. You can choose from\n\`levels\``)
+        message.channel.send(`For help please refer to the documentation: https://thechicken.gitbook.io/skeppy-discord-bot/commands/settings`)
         return;
     }
     if (args[0] == 'levels'){
