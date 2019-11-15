@@ -15,7 +15,7 @@ const config = require("./config.json");
 const defaultSettings = {
   np: true, 
   levels: true, 
-  welcome: true, 
+  welcome: false, 
   welcomeMessage: "Welcome {{user}} to the server!",
   welcomeChannel: "welcome"
 }
