@@ -8,6 +8,15 @@ exports.run = (client, message, args) => {
     if (args[0] == 'levels'){
         var guildId = message.guild.id
         var npSettings = client.npSettings
+        if(!args[1]){
+            npSettings.ensure(guildId, client.defaultSettings)
+            var settingStatus = npSettings.get(guildId, 'levels')
+            if(settingStatus) {
+                message.channel.send(`Levels are turned **on**`)
+            } else {
+                message.channel.send(`Levels are turned **off**`)
+            }
+        }
         if(args[1] == 'on'){
             npSettings.set(guildId, true, 'levels')
             message.channel.send(`Levels are now turned **on**`)
@@ -20,6 +29,15 @@ exports.run = (client, message, args) => {
     if(args[0] == 'welcomemessage'){
         var guildId = message.guild.id
         var npSettings = client.npSettings
+        if(!args[1]){
+            npSettings.ensure(guildId, client.defaultSettings)
+            var settingStatus = npSettings.get(guildId, 'welcomeMessage')
+            if(settingStatus) {
+                message.channel.send(`Welcome messages are turned **on**`)
+            } else {
+                message.channel.send(`Welcome messages are turned **off**`)
+            }
+        }
         if(args[1] == 'on'){
             npSettings.set(guildId, true, 'welcomeMessage')
             message.channel.send(`Welcome messages are now **on**`)            
