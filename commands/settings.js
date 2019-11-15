@@ -17,4 +17,16 @@ exports.run = (client, message, args) => {
             message.channel.send(`Levels are now turned **off**`)
         }
     }
+    if(args[0] == 'welcomemessage'){
+        var guildId = message.guild.id
+        var npSettings = client.npSettings
+        if(args[1] == 'on'){
+            npSettings.set(guildId, true, 'welcomeMessage')
+            message.channel.send(`Welcome messages are now **on**`)            
+        }
+        if(args[1] == 'off'){
+            npSettings.set(guildId, false, 'welcomeMessage')
+            message.channel.send(`Welcome messages are now **off**`)  
+        }
+    }
 }

@@ -12,7 +12,7 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
 const config = require("./config.json");
-const defaultSettings = {np: true, levels: true}
+const defaultSettings = {np: true, levels: true, welcomeMessage: true}
 client.defaultSettings = defaultSettings;
 client.config = config;
 client.npSettings = npSettings;
@@ -143,10 +143,13 @@ client.reloadAllCommands = function(){
 client.on("guildMemberAdd", (member) => {
   if(config.guilds.includes(member.guild.id)){ // only run when user joins my server
     if(member.guild)
-    var guild = member.guild; // Reading property `guild` of guildmember object.
-    let memberTag = member.user.id; // GuildMembers don't have a tag property, read property user of guildmember to get the user object from it
-    if(guild.systemChannel){ // Checking if it's not null
-      guild.systemChannel.send(`Welcome ${member.user.toString()} to the server!`);
+      var guild = member.guild; // Reading property `guild` of guildmember object.
+      let memberTag = member.user.id; // GuildMembers don't have a tag property, read property user of guildmember to get the user object from it
+      if(guild.systemChannel){ // Checking if it's not null
+        client.npSettings.ensure(message.guild.id, client.defaultSettings);
+        if(client.npSettings.get(guild.id, "welcomeMessage")){
+          guild.systemChannel.send(`Welcome ${member.user.toString()} to ${guild.name}!`);
+        }
     }
   }
 });
