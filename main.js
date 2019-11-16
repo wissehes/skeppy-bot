@@ -234,3 +234,4 @@ process.on('uncaughtException', async function (error) {
 		process.exit(1);
 	}
 });
+process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
