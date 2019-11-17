@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
             .addField(`Humidity`, `${humidity}%`, true)
             .addField(`Windspeed`, windSpeed, true)
             .setTimestamp(time)
-            .setFooter(`${location} | Powered by KSoft`)
+            .setFooter(`${location} | Powered by KSoft.Si`)
         message.channel.send(embed)
     })
     .catch(function (error) {

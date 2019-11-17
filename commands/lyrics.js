@@ -52,7 +52,7 @@ if (args[0]){
                   var embed = new Discord.RichEmbed()
                   .setDescription(msg)
                   .setColor('BLUE')
-                  .setFooter(`Requested by ${requestedBy} | Lyrics provided by KSoft`, message.author.avatarURL);
+                  .setFooter(`Requested by ${requestedBy} | Lyrics provided by KSoft.Si`, message.author.avatarURL);
                   message.channel.send(embed) 
                   return;
               } else if (!first && !last) {
