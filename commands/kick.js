@@ -1,5 +1,8 @@
 exports.run = (client, message, args) => {
-
+  //ignore dm's
+  if (message.channel.type === 'dm')
+      return message.channel.send(`You need to be in a server to use this command.`);
+      
   if (!message.channel.permissionsFor(message.member).has("KICK_MEMBERS", false))
     return message.reply("Sorry, you don't have permissions to use this!  ");
 

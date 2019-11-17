@@ -1,6 +1,10 @@
 const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
+  //ignore dm's
+  if (message.channel.type === 'dm')
+      return message.channel.send(`You need to be in a server to use this command.`);
+
 var npSettings = client.npSettings
 if(args[0]){
   if([client.config.ownerID, client.config.adminID].some(a => message.author.id == a) || message.member.roles.some(r=>["DJ", "dj", "DeeJay", "deejay"].includes(r.name))){

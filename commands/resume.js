@@ -1,4 +1,8 @@
 exports.run = (client, message, args) => {
+    //ignore dm's
+    if (message.channel.type === 'dm')
+    return message.channel.send(`You need to be in a server to use this command.`);
+    
   var queue = client.getQueue(message.guild.id);
   if(!queue || queue.length == 0)
     return message.channel.send(`No music is playing!`);

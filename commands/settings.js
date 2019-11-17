@@ -1,4 +1,8 @@
 exports.run = (client, message, args) => {
+      //ignore dm's
+  if (message.channel.type === 'dm')
+  return message.channel.send(`You need to be in a server to use this command.`);
+  
     if (!message.channel.permissionsFor(message.member).has("MANAGE_MESSAGES", false) && message.author.id !== client.config.ownerID)
         return message.reply("🚫 You need the `Manage Messages` permission.");
     if(!args[0]){

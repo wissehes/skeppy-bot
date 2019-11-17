@@ -1,4 +1,7 @@
 exports.run = (client, message, args) => {
+    //ignore dm's
+    if (message.channel.type === 'dm')
+    return message.channel.send(`You need to be in a server to use this command.`);
   // Most of this command is identical to kick, except that here we'll only let admins do it.
   // In the real world mods could ban too, but this is just an example, right? ;)
   if (!message.channel.permissionsFor(message.member).has("BAN_MEMBERS", false))
