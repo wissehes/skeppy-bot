@@ -20,7 +20,7 @@ if (args[0]){
             var firstLyricPart = lyrics.substring(0, Math.min(lyrics.length, 0 + 1990));
             var lastArrayElement = lyrics.slice(firstLyricPart.length).trim() 
             var requestedBy = message.author.tag
-            console.log(lastArrayElement)
+            //console.log(lastArrayElement)
             for(let i = 0; i < lyrics.length; i += 1990) {
               const toSend = lyrics.substring(i, Math.min(lyrics.length, i + 1990));
               //sendIt(toSend);
@@ -63,5 +63,14 @@ if (args[0]){
               }
             }
         })
+        .catch(function (error) {
+            // handle error
+            console.log(`oof`);
+            var embed = new Discord.RichEmbed()
+                .setTitle(`❌ Error`)
+                .setColor(`RED`)
+                .setDescription(`Couldn't find lyrics for ${args.join(' ')}`)
+            return message.channel.send(embed);
+          })
       }
 }
