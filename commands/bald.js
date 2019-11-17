@@ -11,14 +11,14 @@ exports.run = async (client, message, args) => {
 			return message.reply('Are you stupid? Just mention someone, smh');
 		}
     }
-    createImage(message.member.user)
+    createImage(message.author)
     async function createImage(userMention) {
         const canvas = Canvas.createCanvas(176, 176);
         const ctx = canvas.getContext('2d');
         const background = await Canvas.loadImage('./img/bald.jpg');
         // This uses the canvas dimensions to stretch the image onto the entire canvas
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const avatar = await Canvas.loadImage(userMention.displayAvatarURL);
+        const avatar = await Canvas.loadImage(userMention.avatarURL);
         ctx.drawImage(avatar, 54.1, 72, 87, 87);
     
         // Use helpful Attachment class structure to process the file for you
