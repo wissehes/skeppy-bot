@@ -3,6 +3,13 @@ const axios = require('axios')
 
 exports.run = async (client, message, args) => {
     var location = args.join(" ")
+    if(!location || location.length < 1 || !args[0]){
+        var embed = new Discord.RichEmbed()
+            .setTitle(`❌ Error`)
+            .setColor(`RED`)
+            .setDescription(`You need to specify a place to get weather information!`)
+        return message.channel.send(embed);
+    }
     axios.get(`https://api.ksoft.si/kumo/weather/currently?q=${location}`, {headers: {'Authorization': 'Bearer '+client.config.ksoftApi}})
     .then(res => {
         var data = res.data.data;
