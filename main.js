@@ -22,6 +22,8 @@ const defaultSettings = {
 client.defaultSettings = defaultSettings;
 client.config = config;
 client.npSettings = npSettings;
+const commandCooldown = new Set();
+client.cooldown = commandCooldown;
 
 let dbl;
 try {
