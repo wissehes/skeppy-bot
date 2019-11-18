@@ -17,14 +17,20 @@ exports.run = (client, message, args) => {
     var feedbackChannel = client.channels.get(client.config.feedbackChannel)
     var feedbackUser = message.author.toString()
     var ownerMention = client.users.get(client.config.ownerID).toString()
-    var embed = new Discord.RichEmbed()
+    var feedbackEmbed = new Discord.RichEmbed()
         .setTitle(`New suggestion`)
         .setColor(`GREEN`)
         .addField(`By`, feedbackUser)
         .addField(`Feedback message`, feedback)
         .setTimestamp()
+    var responseEmbed = new Discord.RichEmbed()
+        .setTitle(`Success!`)
+        .setColor(`GREEN`)
+        .setDescription(`Feedback send!`)
     try {
-        feedbackChannel.send(ownerMention, embed)
+        feedbackChannel.send(ownerMention, feedbackEmbed)
+        message.channel.send()
+
     } catch(e) {
         message.channel.send(`an error ocurred o-o`)
     }
