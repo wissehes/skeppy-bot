@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
         .setDescription(`Feedback send!`)
     try {
         feedbackChannel.send(ownerMention, feedbackEmbed)
-        message.channel.send()
+        message.channel.send(responseEmbed)
 
     } catch(e) {
         message.channel.send(`an error ocurred o-o`)
