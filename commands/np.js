@@ -50,8 +50,9 @@ if(args[0]){
   } else {
     time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)}] ${showBar()} [${client.getYTLength(queue[0].info.length)}]`
   }
-  message.channel.send(`:musical_note: Now playing:`, new Discord.RichEmbed()
+  message.channel.send(new Discord.RichEmbed()
     .setColor("RED")
+    .setAuthor(`Now playing`)
     .setTitle(`${queue[0].info.author} - ${queue[0].info.title}`)
     .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
     .setURL(queue[0].info.uri)
