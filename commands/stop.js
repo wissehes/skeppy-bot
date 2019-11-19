@@ -17,5 +17,6 @@ exports.run = (client, message, args) => {
     if(client.musicSettings[message.guild.id])
       delete client.musicSettings[message.guild.id];
     message.channel.send(`Stopped playing`);
+    client.player.get(message.guild.id).stop();
     //client.player.leave(message.guild.id);
 }
