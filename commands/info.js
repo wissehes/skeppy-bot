@@ -42,7 +42,7 @@ String.prototype.toHHMMSS = function () {
     var embed = new Discord.RichEmbed()
     .setTitle("Skeppy Bot Info")
     .setDescription("Here's some info about me")
-    .setURL('https://github.com/TheChicken14/skeppy-bot')
+    .setURL('https://skeppybot.xyz')
     .setThumbnail(client.user.avatarURL)
     .addField(`Server count`, client.guilds.size, true)
     .addField(`System Uptime`, getOsUptime(), true)
