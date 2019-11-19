@@ -51,7 +51,7 @@ if(args[0]){
     time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)}] ${showBar()} [${client.getYTLength(queue[0].info.length)}]`
   }
   message.channel.send(new Discord.RichEmbed()
-    .setColor("RED")
+    .setColor("0357ff")
     .setAuthor(`Now playing`)
     .setTitle(`${queue[0].info.author} - ${queue[0].info.title}`)
     .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
