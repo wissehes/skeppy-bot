@@ -45,7 +45,7 @@ exports.run = (client, message, args) => {
         var axios = require('axios');
         var inputArgs = args.join(" ");
         const channel = inputArgs.slice(args[0].length).trim().split(/ +/g);
-        message.channel.send(channel)
+        //message.channel.send(channel)
         if(args[1]){
           getVideo(channel)
         }else{
