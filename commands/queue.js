@@ -23,11 +23,21 @@ exports.run = (client, message, args) => {
 
   var embed = new Discord.RichEmbed();
   embed.setColor('RED').setTitle(`Queue for **${message.guild.name}**`);
-
+  let loopV = `off`
+  let shuffleV = `off`
   embed.setDescription(list.join('\n'));
-  if(client.musicSettings[message.guild.id])
-    embed.addField('Current Settings', `**Loop**: ${client.musicSettings[message.guild.id].loop}\n**Shuffle**: ${client.musicSettings[message.guild.id].shuffle}\n **Now playing messages**: ${npMsgs}`);
-  else
-    embed.addField('Current Settings', `**Loop**: 0\n**Shuffle**: false\n **Song updates**: ${npMsgs}`);
-  message.channel.send(embed);
+  if(client.musicSettings[message.guild.id]){
+    if(client.musicSettings[message.guild.id].loop == 1)
+      loopV = `single song`
+    if(client.musicSettings[message.guild.id].loop == 2)
+      loopV = `whole queue`
+    if(client.musicSettings[message.guild.id].shuffle)
+      shuffleV = `on`
+  }
+
+    //embed.addField('Current Settings', `**Loop**: ${client.musicSettings[message.guild.id].loop}\n**Shuffle**: ${client.musicSettings[message.guild.id].shuffle}\n **Now playing messages**: ${npMsgs}`);
+  //else
+    //embed.addField('Current Settings', `**Loop**: 0\n**Shuffle**: false\n **Song updates**: ${npMsgs}`);
+      embed.addField('Current Settings', `**Loop**: ${loopV}\n**Shuffle**: ${shuffleV}\n **Song updates**: ${npMsgs}`)
+    message.channel.send(embed);
 }
