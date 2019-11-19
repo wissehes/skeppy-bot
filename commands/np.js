@@ -31,6 +31,25 @@ if(args[0]){
   } else (
     npMsgs = `Off`
   )
+  //https://stackoverflow.com/questions/56918073/progress-bar-for-leveling-system
+  const showBar = xp => {
+    var currentPos = client.player.get(message.guild.id).state.position / 10000
+    var totalTime = queue[0].info.length / 10000
+    const currentLevel = Math.floor(currentPos / totalTime);
+    const progress = (currentPos % 1000) / totalTime;
+    const progressOutOf35 = Math.round(progress * totalTime);
+    
+    const x = "□";
+    const barStr = `[${'■'.repeat(progressOutOf35)}${'□'.repeat(totalTime - progressOutOf35)}]`;
+    return barStr;
+    //console.log(barStr + ', currntly at level ' + currentLevel);
+  };
+  let time;
+  if(queue[0].info.length >= 9223372036854776000){
+    time = `Live`
+  } else {
+    time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)}] ${showBar()} [${client.getYTLength(queue[0].info.length)}]`
+  }
   message.channel.send(`:musical_note: Now playing:`, new Discord.RichEmbed()
     .setColor("RED")
     .setTitle(queue[0].info.title)
@@ -38,7 +57,7 @@ if(args[0]){
     .setDescription(`
 • **Author**: ${queue[0].info.author}
 • **URL**: [${queue[0].info.uri}](${queue[0].info.uri})
-• **Time**: [${client.getYTLength(client.player.get(message.guild.id).state.position)}/${client.getYTLength(queue[0].info.length)}]
+• **Time**: ${time}
 • **Song Updates:** ${npMsgs}
   `));
 }
