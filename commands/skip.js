@@ -14,6 +14,9 @@ exports.run = (client, message, args) => {
 		howMany = Math.min(parseInt(args[0]), queue.length);
 
 	queue.splice(0, howMany - 1);
-	message.channel.send(`Skipped ${howMany} songs.`);
-	client.player.get(message.guild.id).stop();
+	if(howMany == 1)
+			message.channel.send(`Skipped ${howMany} song.`);
+	if(howMany > 1)
+		message.channel.send(`Skipped ${howMany} songs.`);
+		client.player.get(message.guild.id).stop();
 }
