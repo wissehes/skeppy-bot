@@ -52,12 +52,8 @@ if(args[0]){
   }
   message.channel.send(`:musical_note: Now playing:`, new Discord.RichEmbed()
     .setColor("RED")
-    .setTitle(queue[0].info.title)
+    .setTitle(`${queue[0].info.author} - ${queue[0].info.title}`)
     .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
-    .setDescription(`
-• **Author**: ${queue[0].info.author}
-• **URL**: [${queue[0].info.uri}](${queue[0].info.uri})
-• **Time**: ${time}
-• **Song Updates:** ${npMsgs}
-  `));
+    .setURL(queue[0].info.uri)
+    .setDescription(time));
 }
