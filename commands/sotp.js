@@ -1,5 +1,5 @@
 exports.run = (client, message, args) => {
-  function getSotp() {
+  /*function getSotp() {
   var sotp = [
       "no thx",
       "maybe tomorrow",
@@ -14,5 +14,10 @@ exports.run = (client, message, args) => {
       var sotp = getSotp();
       newMessage.edit(sotp);
     }, 3000);
-  });
+  });*/
+    //ignore dm's
+  if (message.channel.type === 'dm')
+      return message.channel.send(`You need to be in a server to use this command.`);
+  const cmd = client.commands.get('queue');
+  cmd.run(client, message, args);
 }
