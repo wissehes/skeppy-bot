@@ -64,23 +64,24 @@ exports.run = async (client, message, args) => {
   var msg = message; // Also shush
   const betterArgs = args.join(' ').trim();
   let canPlay = false;
-  await message.channel.send(`Hold on...`);
+  //await message.channel.send(`Hold on...`);
+  await message.channel.startTyping()
   if(!msg.member.voiceChannelID)
-    return message.channel.send(`You're not in a voice channel!`);
+    return message.channel.stopTyping() && message.channel.send(`You're not in a voice channel!`);
 
   if(bot.player.get(message.guild.id) && msg.member.voiceChannelID !== bot.player.get(message.guild.id).channel)
-    return message.channel.send(`You're not in the playing voice channel!`);
+    return message.channel.stopTyping() && message.channel.send(`You're not in the playing voice channel!`);
 
   if(!betterArgs && !bot.player.get(message.guild.id))
-    return message.channel.send(`You didn't give anything to play!`);
+    return message.channel.stopTyping() && message.channel.send(`You didn't give anything to play!`);
 
   var queue = bot.getQueue(message.guild.id);
   var track = await getSongs(betterArgs.startsWith(`http`) ? betterArgs : `ytsearch:${betterArgs}`);
   if(track instanceof Error)
-    return message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``);
+    return message.channel.stopTyping() && message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``);
   const urlParams = new URLSearchParams(args.join(' '));
   const myParam = parseInt(urlParams.get('index'));
-  if(!track[0]) return message.channel.send(`No results found.`);
+  if(!track[0]) return message.channel.stopTyping() && message.channel.send(`No results found.`);
   if(!queue[0]) canPlay = true;
   if(urlParams.get('list') && myParam) {
     track = track.splice(myParam - 1, track.length);
@@ -94,7 +95,7 @@ exports.run = async (client, message, args) => {
   } else {
     queue.push(track[0]);
   }
-
+  message.channel.stopTyping()
   message.channel.send(`:musical_note: Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`, new Discord.RichEmbed()
   .setColor("RED")
   .setTitle(track[0].info.title)
