@@ -1,21 +1,38 @@
-exports.run = (client, message, args) => {
-  function getChicken() {
-  var chickens = [
-      "https://i.imgur.com/7ehJlAq.jpg",
-      "https://i.imgur.com/MKpnUn7.jpg",
-      "https://i.imgur.com/sXSPQMk.png",
-      "https://i.imgur.com/lfjeb5u.png",
-      "https://i.imgur.com/g36UjJk.png",
-      "https://i.imgur.com/TnkbNOm.png",
-      "https://i.imgur.com/ggS5RF2.png",
-      "https://i.imgur.com/oY1ED5Q.jpg",
-      "https://i.imgur.com/FCNlO6p.png",
-      "https://i.imgur.com/Meytrjb.png",
-      "https://i.imgur.com/Ltt2yxz.jpg",
-      "https://i.imgur.com/gQKgAVU.png"
-  ];
-  return chickens[Math.floor(Math.random() * chickens.length)];
-  }
-  var chicken = getChicken();
-  message.channel.send("Chicken!", {file: chicken})
+const Canvas = require('canvas');
+const Discord = require('discord.js');
+//ty discordjs.guide
+exports.run = async (client, message, args) => {
+  /*function randomChicken() {
+    var chickens = [
+      "chicken1.jpg",
+      "chicken2.jpg",
+      "chicken3.jpg",
+      "chicken4.jpg"
+    ]
+    return chickens[Math.floor(Math.random() * chickens.length)];
+  }*/
+    if(args[0]){
+        const user = message.mentions.users.first()
+        if(user){
+            return createImage(user);
+        }
+        if (!user) {
+			      return message.reply('Are you stupid? Just mention someone, smh');
+		    }
+    }
+    createImage(message.author, )
+    async function createImage(userMention) {
+        const canvas = Canvas.createCanvas(720, 816);
+        const ctx = canvas.getContext('2d');
+        //var image = randomChicken();
+        const background = await Canvas.loadImage(`./img/chickens/chicken3.jpg`);
+        // This uses the canvas dimensions to stretch the image onto the entire canvas
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        const avatar = await Canvas.loadImage(userMention.avatarURL);
+        ctx.drawImage(avatar, 468.1, 51.3, 163.3, 163.3);
+    
+        // Use helpful Attachment class structure to process the file for you
+        const attachment = new Discord.Attachment(canvas.toBuffer(), 'pinecone.png');
+        message.channel.send(attachment)
+    }
 }
