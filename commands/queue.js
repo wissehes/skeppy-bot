@@ -22,7 +22,7 @@ exports.run = (client, message, args) => {
     )
 
   var embed = new Discord.RichEmbed();
-  embed.setColor('RED').setTitle(`Queue for **${message.guild.name}**`);
+  embed.setColor('0357ff').setTitle(`Queue for **${message.guild.name}**`);
   let loopV = `off`
   let shuffleV = `off`
   embed.setDescription(list.join('\n'));

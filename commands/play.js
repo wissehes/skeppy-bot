@@ -58,7 +58,7 @@ exports.run = async (client, message, args) => {
         if (id === region || region.startsWith(id) || region.includes(id)) return key;
       }
     }
-    return "asia";
+    return "europe";
   }
   var bot = client; // Shush.
   var msg = message; // Also shush
@@ -96,14 +96,15 @@ exports.run = async (client, message, args) => {
     queue.push(track[0]);
   }
   message.channel.stopTyping()
-  message.channel.send(`:musical_note: Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`, new Discord.RichEmbed()
-  .setColor("RED")
-  .setTitle(track[0].info.title)
+  message.channel.send(new Discord.RichEmbed()
+  .setColor("0357ff")
+  .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
+  .setTitle(`${track[0].info.author} - ${track[0].info.title}`)
   .setThumbnail(`https://i.ytimg.com/vi/${track[0].info.identifier}/hqdefault.jpg`)
+  .setFooter(`Length: ${bot.getYTLength(track[0].info.length)}`)
   .setDescription(`
 • **Author**: ${track[0].info.author}
 • **URL**: [${track[0].info.uri}](${track[0].info.uri})
-• **Length**: ${bot.getYTLength(track[0].info.length)}
   `));
 
   if(canPlay) {

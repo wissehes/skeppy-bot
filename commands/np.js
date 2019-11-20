@@ -48,7 +48,8 @@ if(args[0]){
   if(queue[0].info.length >= 9223372036854776000){
     time = `Live`
   } else {
-    time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)}] ${showBar()} [${client.getYTLength(queue[0].info.length)}]`
+    //time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)}] ${showBar()} [${client.getYTLength(queue[0].info.length)}]`
+    time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)} / ${client.getYTLength(queue[0].info.length)}]`
   }
   message.channel.send(new Discord.RichEmbed()
     .setColor("0357ff")
