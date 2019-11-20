@@ -5,6 +5,7 @@ const Lavalink = require('discord.js-lavalink');
 const axios = require('axios');
 const Twitter = require('twitter');
 const DBL = require("dblapi.js");
+const internetradio = require('node-internet-radio');
 
 
 const client = new Discord.Client();

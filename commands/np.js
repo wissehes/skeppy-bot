@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
+const internetradio = require('node-internet-radio');
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
   //ignore dm's
   if (message.channel.type === 'dm')
       return message.channel.send(`You need to be in a server to use this command.`);
@@ -44,17 +45,31 @@ if(args[0]){
     return barStr;
     //console.log(barStr + ', currntly at level ' + currentLevel);
   };
-  let time;
+  let time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)} / ${client.getYTLength(queue[0].info.length)}]`;
+  let song = `${queue[0].info.author} - ${queue[0].info.title}`
   if(queue[0].info.length >= 9223372036854776000){
     time = `Live`
-  } else {
-    //time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)}] ${showBar()} [${client.getYTLength(queue[0].info.length)}]`
-    time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)} / ${client.getYTLength(queue[0].info.length)}]`
+    await getStreamMeta(queue[0].info.uri)
+    .then((song) => {
+      song = song
+      //console.log(song)
+    })
   }
+
+  async function getStreamMeta(url){
+    return new Promise((resolve) => {
+      internetradio.getStationInfo(url, function(error, station) {
+        song = station.title;
+        console.log(station)
+       resolve(song);
+      });
+    });
+  }
+
   message.channel.send(new Discord.RichEmbed()
     .setColor("0357ff")
     .setAuthor(`Now playing`)
-    .setTitle(`${queue[0].info.author} - ${queue[0].info.title}`)
+    .setTitle(song)
     .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
     .setURL(queue[0].info.uri)
     .setDescription(time));

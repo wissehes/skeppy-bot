@@ -34,6 +34,7 @@
     "discord.js": "^11.5.1",
     "discord.js-lavalink": "^2.2.3",
     "enmap": "^5.2.1",
+    "node-internet-radio": "^0.1.6",
     "request": "^2.88.0",
     "twitter": "^1.7.1"
   }
