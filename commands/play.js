@@ -95,13 +95,17 @@ exports.run = async (client, message, args) => {
   } else {
     queue.push(track[0]);
   }
+  let length = bot.getYTLength(track[0].info.length)
+  if(track[0].info.length >= 9223372036854776000){
+    length = `Live`
+  }
   message.channel.stopTyping()
   message.channel.send(new Discord.RichEmbed()
   .setColor("0357ff")
   .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
   .setTitle(`${track[0].info.author} - ${track[0].info.title}`)
   .setThumbnail(`https://i.ytimg.com/vi/${track[0].info.identifier}/hqdefault.jpg`)
-  .setFooter(`Length: ${bot.getYTLength(track[0].info.length)}`)
+  .setFooter(`Length: ${length}`)
   .setDescription(`
 • **Author**: ${track[0].info.author}
 • **URL**: [${track[0].info.uri}](${track[0].info.uri})
