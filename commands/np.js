@@ -72,5 +72,5 @@ if(args[0]){
     .setTitle(song)
     .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
     .setURL(queue[0].info.uri)
-    .setDescription(time));
+    .setFooter(`${time} | ${track[0].info.author}`));
 }

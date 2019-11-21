@@ -121,7 +121,7 @@ exports.run = async (client, message, args) => {
   .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
   .setTitle(song)
   .setThumbnail(`https://i.ytimg.com/vi/${track[0].info.identifier}/hqdefault.jpg`)
-  .setFooter(`Length: ${length}`)
+  .setFooter(`Length: ${length} | ${track[0].info.author}`)
   .setDescription(`
 • **URL**: [${track[0].info.uri}](${track[0].info.uri})
   `));
