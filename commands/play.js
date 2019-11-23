@@ -27,7 +27,7 @@ const defaultRegions = {
 
 exports.run = async (client, message, args) => {
   var config = client.config;
-  async function getSongs(search) {
+  async function getSongs(search, userid) {
     return new Promise(async (resolve, rej) => {
       try {
         const res = await axios.get(`${config.lavalink.searchnode.address ? config.lavalink.searchnode.address : `https://${config.lavalink.searchnode.host}:${config.lavalink.searchnode.port}`}/loadtracks?identifier=${encodeURIComponent(search)}`, {
@@ -35,9 +35,13 @@ exports.run = async (client, message, args) => {
             Authorization: config.lavalink.searchnode.password
           }
         });
-        resolve(res.data.tracks);
+        var results = res.data.tracks
+        //console.log(res.data)
+        //if(!res.data.tracks || res.data.loadType == 'NO_MATCHES') return message.channel.send(`No results found.`) && message.channel.stopTyping();
+        results.userid = userid
+        resolve(results);
       } catch (e) {
-        //message.channel.send(`Track not found.`);
+        message.channel.send(`Track not found.`);
         resolve(e);
       }
     });
@@ -59,7 +63,7 @@ exports.run = async (client, message, args) => {
         if (id === region || region.startsWith(id) || region.includes(id)) return key;
       }
     }
-    return "europe";
+    return "eu";
   }
   var bot = client; // Shush.
   var msg = message; // Also shush
@@ -68,21 +72,25 @@ exports.run = async (client, message, args) => {
   //await message.channel.send(`Hold on...`);
   await message.channel.startTyping()
   if(!msg.member.voiceChannelID)
-    return message.channel.stopTyping() && message.channel.send(`You're not in a voice channel!`);
+    return message.channel.send(`You're not in a voice channel!`) && message.channel.stopTyping();
 
   if(bot.player.get(message.guild.id) && msg.member.voiceChannelID !== bot.player.get(message.guild.id).channel)
-    return message.channel.stopTyping() && message.channel.send(`You're not in the playing voice channel!`);
+    return message.channel.send(`You're not in the playing voice channel!`) && message.channel.stopTyping();
 
   if(!betterArgs && !bot.player.get(message.guild.id))
-    return message.channel.stopTyping() && message.channel.send(`You didn't give anything to play!`);
+    return message.channel.send(`You didn't give anything to play!`) && message.channel.stopTyping();
 
   var queue = bot.getQueue(message.guild.id);
-  var track = await getSongs(betterArgs.startsWith(`http`) ? betterArgs : `ytsearch:${betterArgs}`);
+  var track = await getSongs(betterArgs.startsWith(`http`) ? betterArgs : `ytsearch:${betterArgs}`, message.author.id);
+  console.log(track)
+  var requestedBy = track.userid
   if(track instanceof Error)
-    return message.channel.stopTyping() && message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``);
+    return message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``) && message.channel.stopTyping();
   const urlParams = new URLSearchParams(args.join(' '));
   const myParam = parseInt(urlParams.get('index'));
-  if(!track[0]) return message.channel.stopTyping() && message.channel.send(`No results found.`);
+
+  if(!track[0]) return message.channel.send(`No results found.`) && message.channel.stopTyping();
+  track[0].requestedBy = requestedBy
   if(!queue[0]) canPlay = true;
   if(urlParams.get('list') && myParam) {
     track = track.splice(myParam - 1, track.length);
