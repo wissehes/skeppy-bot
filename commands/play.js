@@ -38,7 +38,10 @@ exports.run = async (client, message, args) => {
         var results = res.data.tracks
         //console.log(res.data)
         //if(!res.data.tracks || res.data.loadType == 'NO_MATCHES') return message.channel.send(`No results found.`) && message.channel.stopTyping();
-        results.userid = userid
+        console.log(userid)
+        results.forEach((results) => {
+          results.requestedBy = userid
+        })
         resolve(results);
       } catch (e) {
         message.channel.send(`Track not found.`);
@@ -82,7 +85,7 @@ exports.run = async (client, message, args) => {
 
   var queue = bot.getQueue(message.guild.id);
   var track = await getSongs(betterArgs.startsWith(`http`) ? betterArgs : `ytsearch:${betterArgs}`, message.author.id);
-  console.log(track)
+  //console.log(track)
   var requestedBy = track.userid
   if(track instanceof Error)
     return message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``) && message.channel.stopTyping();
@@ -90,7 +93,7 @@ exports.run = async (client, message, args) => {
   const myParam = parseInt(urlParams.get('index'));
 
   if(!track[0]) return message.channel.send(`No results found.`) && message.channel.stopTyping();
-  track[0].requestedBy = requestedBy
+  //track[0].requestedBy = requestedBy
   if(!queue[0]) canPlay = true;
   if(urlParams.get('list') && myParam) {
     track = track.splice(myParam - 1, track.length);
