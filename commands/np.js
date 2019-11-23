@@ -48,7 +48,7 @@ if(args[0]){
   let time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)} / ${client.getYTLength(queue[0].info.length)}]`;
   let song = `${queue[0].info.author} - ${queue[0].info.title}`
   if(queue[0].info.length >= 9223372036854776000){
-    time = `Live`
+    time = `[${client.getYTLength(client.player.get(message.guild.id).state.position)} / Live]`
     await getStreamMeta(queue[0].info.uri)
     .then((song) => {
       song = song
@@ -65,12 +65,15 @@ if(args[0]){
       });
     });
   }
-
+  var requestedBy = client.users.get(queue[0].requestedBy)
+  var name = requestedBy.username
+  var avatarURL = requestedBy.avatarURL
   message.channel.send(new Discord.RichEmbed()
     .setColor("0357ff")
     .setAuthor(`Now playing`)
     .setTitle(song)
+    .setDescription(`${time}`)
     .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
     .setURL(queue[0].info.uri)
-    .setFooter(`${time} | ${queue[0].info.author}`));
+    .setFooter(`Requested by ${name}`, avatarURL));
 }
