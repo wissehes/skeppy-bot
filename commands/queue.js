@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
 
   var requestedBy = client.users.get(queue[0].requestedBy).username
   //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri}) by **${a.info.author}**` : `Unknown`} (${client.getYTLength(a.info.length)})`);
-  var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${requestedBy}** (${client.getYTLength(a.info.length)})`);
+  var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${a.requestedBy.username}** (${client.getYTLength(a.info.length)})`);
 
   if(list.length > 15)
     list.splice(14, list.length);
