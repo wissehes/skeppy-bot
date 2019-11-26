@@ -108,7 +108,7 @@ exports.run = async (client, message, args) => {
     queue.push(track[0]);
   }
   let length = bot.getYTLength(track[0].info.length)
-  let song = `${track[0].info.author} - ${track[0].info.title}`
+  let song = track[0].info.title
   if(track[0].info.length >= 9223372036854776000){
     length = `Live`
     await getStreamMeta(track[0].info.uri)
@@ -145,6 +145,6 @@ exports.run = async (client, message, args) => {
       host: theHost
     });
     bot.player.get(message.guild.id).node = bot.player.nodes.get(theHost);
-    bot.execQueue(message, queue, player);
+    bot.execQueue(message, queue, player, true);
   }
 }
