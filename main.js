@@ -30,7 +30,7 @@ let dbl;
 try {
   dbl = new DBL(config.DBLApiKey, client);
 } catch (e) {}
-
+client.dbl = dbl;
 //client.music = require("discord.js-musicbot-addon");
 client.queue = {};
 client.musicSettings = {};
@@ -199,15 +199,49 @@ client.getQueue = (server) => {
   return client.queue[server];
 }
 
-client.execQueue = (message, queue, player) => {
+client.execQueue = async (message, queue, player, isfirst = false) => {
   if(client.musicSettings[message.guild.id] && client.musicSettings[message.guild.id].shuffle) {
     var th = Math.floor(Math.random() * queue.length);
     queue.unshift(queue[th]);
     queue.splice(th + 1, th + 1);
   }
   player.play(queue[0].track);
-  if(client.npSettings.get(message.guild.id, "np"))
-	    message.channel.send(`Now playing **${queue[0].info.title}**`);
+  if(!isfirst){
+    if(client.npSettings.get(message.guild.id, "np")){
+      let length = client.getYTLength(queue[0].info.length)
+      let song = queue[0].info.title
+      if(queue[0].info.length >= 9223372036854776000){
+        length = `Live`
+        await getStreamMeta(queue[0].info.uri)
+        .then((song) => {
+          song = song
+          //console.log(song)
+        })
+      }
+      async function getStreamMeta(url){
+        return new Promise((resolve) => {
+          internetradio.getStationInfo(url, function(error, station) {
+            song = station.title;
+            console.log(station)
+           resolve(song);
+          });
+        });
+      }
+      var requestedBy = client.users.get(queue[0].requestedBy)
+      var name = requestedBy.username
+      var avatarURL = requestedBy.avatarURL
+      message.channel.send(new Discord.RichEmbed()
+        .setColor("0357ff")
+        .setAuthor(`Now playing`)
+        .setTitle(song)
+        //.setDescription(`${length}`)
+        .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
+        .setURL(queue[0].info.uri)
+        .setFooter(`Added by ${name} | Length: ${length}`, avatarURL));
+    }
+  }
+
+	    //message.channel.send(`Now playing **${queue[0].info.title}**`);
 
 	player.once('end', async (r) => {
     if(!client.musicSettings[message.guild.id] || client.musicSettings[message.guild.id].loop == 0)
