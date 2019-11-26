@@ -13,7 +13,7 @@ exports.run = (client, message, args) => {
     if(client.player.get(message.guild.id) && message.member.voiceChannelID !== client.player.get(message.guild.id).channel)
       return message.channel.send(`You're not in the playing voice channel!`);
     
-    if(!queue[0].isSeekable)
+    if(!queue[0].info.isSeekable)
       return message.channel.send(`This song is not seekable!`)
     var pos = args[0] * 1000
     if(!pos || pos.length < 1)
