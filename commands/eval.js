@@ -7,7 +7,8 @@ function clean(text) { // For Eval
             return text;
     }
 exports.run = (client, message, args) => {
-  if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a)) return;
+  if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a))
+          return message.channel.send(`You tried...`);
   try {
         const code = args.join(' ');
         let evaled = eval(code);
