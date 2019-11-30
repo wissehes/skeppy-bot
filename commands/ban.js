@@ -20,4 +20,15 @@ exports.run = (client, message, args) => {
     .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
   message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: \`\`\`${reason}\`\`\``);
   client.users.get(member.user.id).send(`You have been banned from ${message.guild.name} by ${message.author.tag} for \`\`\`${reason}\`\`\``)
+  function addBanToDatabase(member, message, enmap){
+    //setting all the variables
+    var guildId = member.guild.id
+    var userId = member.user.id
+    var date = Date.now();
+    var userWhoBannedId = message.author.id
+    var dataToStore = {date: date, userId: userId, userWhoBanned: userWhoBannedId}
+
+    //Storing the data in the Enmap
+    enmap.set(guildId, dataToStore)
+  }
 }

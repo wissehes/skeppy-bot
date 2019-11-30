@@ -12,6 +12,7 @@ const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
+const bans = new Enmap({name: 'bans'})
 const config = require("./config.json");
 const defaultSettings = {
   np: true, 
@@ -23,6 +24,7 @@ const defaultSettings = {
 client.defaultSettings = defaultSettings;
 client.config = config;
 client.npSettings = npSettings;
+client.bans = bans;
 const commandCooldown = new Set();
 client.cooldown = commandCooldown;
 
