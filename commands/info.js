@@ -37,6 +37,16 @@ String.prototype.toHHMMSS = function () {
     
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+    function uptime(seconds){
+        //var seconds = os.uptime
+        var days = Math.floor(seconds / (3600*24));
+        seconds  -= days*3600*24;
+        var hrs   = Math.floor(seconds / 3600);
+        seconds  -= hrs*3600;
+        var mnts = Math.floor(seconds / 60);
+        seconds  -= mnts*60;
+        return days+" days, "+hrs+" Hrs, "+mnts+" Minutes";
+    }
     var time = process.uptime();
     var DJSVer = require('../package.json').dependencies["discord.js"].slice('^'.length).trim().split(/ +/g);
     var embed = new Discord.RichEmbed()
@@ -45,8 +55,8 @@ String.prototype.toHHMMSS = function () {
     .setURL('https://skeppybot.xyz')
     .setThumbnail(client.user.avatarURL)
     .addField(`Server count`, client.guilds.size, true)
-    .addField(`System Uptime`, getOsUptime(), true)
-    .addField(`Uptime`, (time + "").toHHMMSS(), true)
+    .addField(`System Uptime`, uptime(os.uptime), true)
+    .addField(`Uptime`, uptime(process.uptime()), true)
     .addField(`User count`, client.users.size, true)
     .addField(`Channels`, client.channels.size, true)
     .addField(`Node.JS version`, process.version, true)
