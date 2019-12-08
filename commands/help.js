@@ -2,7 +2,8 @@ const Discord = require('discord.js');
 const Pagination = require('discord-paginationembed');
 
 exports.run = (client, message, args) => {
-  const prefixes = client.config.prefix.join(", ");
+  message.channel.send(`For help visit https://skeppybot.xyz`)
+  /*const prefixes = client.config.prefix.join(", ");
   const prefix = client.config.prefix[0]
   if(!args[0]){
     var embed = new Discord.RichEmbed()
@@ -114,5 +115,5 @@ exports.run = (client, message, args) => {
     .addField(`${prefix}kick`, `Kicks a user`)
     .addField(`${prefix}eval`, `Evaluates code`)
   )
-  }
+  }*/
 }
