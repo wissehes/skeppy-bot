@@ -1,3 +1,12 @@
+const Discord = require("discord.js");
+
 exports.run = (client, message, args) => {
-    message.channel.send(`Invite me with this link: https://discordapp.com/oauth2/authorize?client_id=579327336395309062&scope=bot&permissions=2084044031\nVote for me at: https://top.gg/bot/579327336395309062`)
+    const embed = new Discord.RichEmbed()
+    .setTitle(`Invite links`)
+    .setDescription(`
+[Invite](https://discordapp.com/oauth2/authorize?client_id=579327336395309062&scope=bot&permissions=2084044031)
+[Vote](https://top.gg/bot/579327336395309062)
+[Website](https://skeppybot.xyz/)
+    `)
+    message.channel.send(embed)
 }
