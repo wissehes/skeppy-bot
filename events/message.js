@@ -1,6 +1,7 @@
 module.exports = (client, message) => {
   // Ignore all bots
   if (message.isMentioned(client.user)) {
+    if(message.content == "<@!"+client.user.id+">")
     message.channel.send(`Hi ${message.author.toString()}. For help look at https://docs.skeppybot.xyz`);
   }
   if (message.author.bot) return;
