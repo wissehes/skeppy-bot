@@ -30,4 +30,4 @@ This is the Skeppy Discord bot, full of the trio related memes!
 If you want to contribute to the Skeppy bot, feel free to open a pull request!
 
 # Contributors
- * Thank you so much to [Naz](https://github.com/BluSpring) for making it work with YouTube, Twitch, Bandcamp, Soundcloud, Vimeo, Mixer and more! It can even play live radio! :o
+ * Thank you so much to [Naz](https://github.com/BluSpring) for making it work with YouTube, Twitch, Bandcamp, Soundcloud, Vimeo, Mixer and more! It can even play live radio! OwO
