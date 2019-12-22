@@ -9,6 +9,7 @@ exports.run = (client, message, args) => {
   if(!queue || queue.length == 0)
     return message.channel.send(`No music is playing!`);
 
+  var q = queue;
   //var requestedBy = client.users.get(queue[0].requestedBy).username
   //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri}) by **${a.info.author}**` : `Unknown`} (${client.getYTLength(a.info.length)})`);
   //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${client.users.get(a.requestedBy).username}** (${client.getYTLength(a.info.length)})`);
@@ -17,8 +18,13 @@ exports.run = (client, message, args) => {
     return `**${i}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${client.users.get(a.requestedBy).username}** (${client.getYTLength(a.info.length)})`
   });
 
-  if(list.length > 11)
+  var playingMore;
+  if(list.length > 11){
     list.splice(11, list.length);
+    var moreSongs = q.length - 11
+    playingMore = `+ ${moreSongs} more ${q.length - 11 > 1 ? `song` : `songs`}`
+  }
+
 
     let npMsgs;
     if(client.npSettings.get(message.guild.id, "np")){
@@ -33,7 +39,7 @@ exports.run = (client, message, args) => {
   embed.setColor('0357ff').setTitle(`Queue for **${message.guild.name}**`);
   let loopV = `off`
   let shuffleV = `off`
-  embed.setDescription(`Now Playing:\n${nowPlaying}\n\nPlaying next:`+list.join('\n'));
+  embed.setDescription(`Now Playing:\n${nowPlaying}${q.length > 1 ? `\n\nPlaying next:${list.join('\n')}\n${playingMore ? playingMore : ''}` : ``}`);
   if(client.musicSettings[message.guild.id]){
     if(client.musicSettings[message.guild.id].loop == 1)
       loopV = `single song`
