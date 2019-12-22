@@ -61,12 +61,13 @@ exports.run = (client, message, args) => {
             }
         }
         if(args[1] == 'setchannel'){
-            var channelName = args[2]
-            if(message.guild.channels.exists('name', channelName)){
-                npSettings.set(guildId, channelName, "welcomeChannel")
-                message.channel.send(`✅ Welcome channel set!`)
+            var channelName = message.mentions.channels.first()
+            if(channelName){
+                npSettings.set(guildId, channelName.name, "welcomeChannel")
+                message.channel.send(`✅ Welcome channel set to \`${channelName.name}\`!`)
             } else {
                 message.channel.send(`❌ An error occured!`)
+                message.reply(`You need to mention a channel to set as welcome channel!`)
             }
         }
     }
