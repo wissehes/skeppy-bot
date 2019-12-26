@@ -1,4 +1,22 @@
 exports.run = async (client, message, args) => {
+    if(args[0] == `status`){
+        var settings = client.musicSettings[message.guild.id];
+        if(!settings){
+            var queue = client.getQueue(message.guild.id);
+            if(!queue || queue.length == 0) {
+                message.channel.send(`🔇 | Nothing is currently playing!`)
+            } else if(queue){
+                message.channel.send(`🔓 | Lock is currently disabled!`)
+            }
+            return;
+        }
+        if(settings.lock == true) {
+            message.channel.send(`🔒 | Lock is currently enabled!`)
+        } else if(settings.lock == false) {
+            message.channel.send(`🔓 | Lock is currently disabled!`)
+        }
+    }
+
 	if(!message.member.voiceChannelID)
     	return message.channel.send(`You're not in a voice channel!`);
 
@@ -48,7 +66,6 @@ exports.run = async (client, message, args) => {
             message.channel.send(`✅ | Lock enabled! 🔒`)
         } else {
             message.channel.send(`❌ | You didn't start this session!`)
-        }        
+        }
     }
-
 }
