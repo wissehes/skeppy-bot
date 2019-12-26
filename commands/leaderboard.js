@@ -16,7 +16,11 @@ exports.run = (client, message, args) => {
     .setColor(0x00AE86);
 
   for(const data of top10) {
-    embed.addField(client.users.get(data.user).tag, `${data.points} points (level ${data.level})`);
+    try {
+      embed.addField(client.users.get(data.user).tag, `${data.points} points (level ${data.level})`);
+    } catch {
+      embed.addField(`*error occurred!*`);
+    }
   }
   return message.channel.send({embed});
 
