@@ -82,19 +82,35 @@ exports.run = async (client, message, args) => {
 
   if(!betterArgs && !bot.player.get(message.guild.id))
     return message.channel.send(`You didn't give anything to play!`) && message.channel.stopTyping();
+  if(client.musicSettings[message.guild.id]){
+    if(client.musicSettings[message.guild.id].lock){
+      if(client.musicSettings[message.guild.id].lockid !== message.author.id){
+        message.channel.stopTyping();
+        return message.channel.send(`🔐| Music commands are locked by ${client.users.get(client.musicSettings[message.guild.id].lockid).username}`);
+      }
+    }
+  }
 
   var queue = bot.getQueue(message.guild.id);
   var track = await getSongs(betterArgs.startsWith(`http`) ? betterArgs : `ytsearch:${betterArgs}`, message.author.id);
   //console.log(track)
   var requestedBy = track.userid
   if(track instanceof Error)
-    return message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``) && message.channel.stopTyping();
+    if(e) {
+      return message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``) && message.channel.stopTyping();
+    } else {
+      message.channel.stopTyping();
+      return message.channel.send(`Track search failed with an unknown error!`)
+    }
   const urlParams = new URLSearchParams(args.join(' '));
   const myParam = parseInt(urlParams.get('index'));
 
   if(!track[0]) return message.channel.send(`No results found.`) && message.channel.stopTyping();
   //track[0].requestedBy = requestedBy
-  if(!queue[0]) canPlay = true;
+  if(!queue[0]) {
+    canPlay = true; 
+    queue.startedBy = message.author.id;
+  }
   if(urlParams.get('list') && myParam) {
     track = track.splice(myParam - 1, track.length);
     track.forEach((cr, i) => {
@@ -145,6 +161,6 @@ exports.run = async (client, message, args) => {
       host: theHost
     });
     bot.player.get(message.guild.id).node = bot.player.nodes.get(theHost);
-    bot.execQueue(message, queue, player, true);
+    bot.execQueue(message, queue, player, true, );
   }
 }

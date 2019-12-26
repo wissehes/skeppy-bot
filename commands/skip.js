@@ -9,6 +9,15 @@ exports.run = (client, message, args) => {
   	var queue = client.getQueue(message.guild.id);
 	if(!queue || queue.length == 0)
 		return message.channel.send(`No music is playing!`);
+
+		if(client.musicSettings[message.guild.id]){
+			if(client.musicSettings[message.guild.id].lock){
+			  if(client.musicSettings[message.guild.id].lockid !== message.author.id){
+				return message.channel.send(`🔐| Music commands are locked by ${client.users.get(client.musicSettings[message.guild.id].lockid).username}`);
+			  }
+			}
+		  }
+
 	let howMany = 1;
 	if(args[0])
 		howMany = Math.min(parseInt(args[0]), queue.length);

@@ -11,6 +11,15 @@ exports.run = (client, message, args) => {
     
     if(!queue || queue.length == 0)
           return message.channel.send(`No music is playing!`);
+
+          if(client.musicSettings[message.guild.id]){
+            if(client.musicSettings[message.guild.id].lock){
+              if(client.musicSettings[message.guild.id].lockid !== message.author.id){
+                return message.channel.send(`🔐| Music commands are locked by ${client.users.get(client.musicSettings[message.guild.id].lockid).username}`);
+              }
+            }
+          }
+          
     if(!args[0]){
       var volume = client.player.get(message.guild.id).state.volume;
           if(volume > 100) {

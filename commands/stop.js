@@ -11,11 +11,19 @@ exports.run = (client, message, args) => {
 		return message.channel.send(`You're not in the playing voice channel!`);
   	var queue = client.getQueue(message.guild.id);
 	if(!queue || queue.length == 0)
-		return message.channel.send(`No music is playing!`);
+    return message.channel.send(`No music is playing!`);
+
+    if(client.musicSettings[message.guild.id]){
+      if(client.musicSettings[message.guild.id].lock){
+          if(client.musicSettings[message.guild.id].lockid !== message.author.id){
+              return message.channel.send(`🔐| Music commands are locked by ${client.users.get(client.musicSettings[message.guild.id].lockid).username}`);
+          }
+      }
+  }
   
     queue.splice(0, queue.length);
     if(client.musicSettings[message.guild.id])
       delete client.musicSettings[message.guild.id];
-    message.channel.send(`Stopped playing and queue cleared!`);
+    message.channel.send(`Stopped playing and cleared queue!`);
     client.player.leave(message.guild.id);
 }
