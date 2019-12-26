@@ -12,14 +12,20 @@ exports.run = (client, message, args) => {
   const embed = new Discord.RichEmbed()
     .setTitle("Leaderboard")
     .setAuthor(client.user.username, client.user.avatarURL)
-    .setDescription("Our top 10 points leaders!")
+    //.setDescription("Our top 10 points leaders!")
     .setColor(0x00AE86);
 
-  for(const data of top10) {
+    if(top10.length < 10){
+    embed.setDescription(`Our top ${top10.length} points leaders!`)
+    } else {
+      embed.setDescription(`Our top 10 points leaders!`)
+    }
+
+  for(let i = 0; i < top10.length; i++) {
     try {
-      embed.addField(client.users.get(data.user).tag, `${data.points} points (level ${data.level})`);
+      embed.addField(`${i+1}. ${client.users.get(top10[i].user).tag}`, `${top10[i].points} points (level ${top10[i].level})`);
     } catch {
-      embed.addField(`*error occurred!*`);
+      embed.addField(`*error occurred!*`, `*User not found!*`);
     }
   }
   return message.channel.send({embed});
