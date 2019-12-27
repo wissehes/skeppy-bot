@@ -77,3 +77,10 @@ if(args[0]){
     .setURL(queue[0].info.uri)
     .setFooter(`Requested by ${name}`, avatarURL));
 }
+exports.info = {
+  name: `np`,
+  aliases: [`nowplaying`],
+  description: `Shows what's currently playing!`,
+  usage: `np *or* nowplaying`,
+  category: `Music`
+}

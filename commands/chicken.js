@@ -36,3 +36,10 @@ exports.run = async (client, message, args) => {
         message.channel.send(attachment)
     }
 }
+exports.info = {
+  name: `chicken`,
+  aliases: [],
+  description: `Puts your avatar on a chicken.`,
+  usage: `chicken [mention]`,
+  category: `Fun`
+}

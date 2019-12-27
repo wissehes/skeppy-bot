@@ -32,3 +32,10 @@ exports.run = (client, message, args) => {
     return message.react('🚫') && message.channel.send('You need the `DJ` role to do that!');*/
 
 }
+exports.info = {
+  name: `volume`,
+  aliases: [`vol`],
+  description: `Change the volume of the player`,
+  usage: `volume <0-200> *or* vol <0-200>`,
+  category: `Music`
+}

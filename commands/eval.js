@@ -28,3 +28,10 @@ exports.run = (client, message, args) => {
         message.channel.send(embed);
     }
 }
+exports.info = {
+    name: `eval`,
+    aliases: [],
+    description: `Evaluate code!`,
+    usage: `eval <code to eval>`,
+    category: `Owner Only`
+  }

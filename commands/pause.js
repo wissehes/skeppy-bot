@@ -26,3 +26,10 @@ exports.run = (client, message, args) => {
   client.player.get(message.guild.id).pause(true);
   message.channel.send(`:pause_button: Paused the player.`);
 }
+exports.info = {
+  name: `pause`,
+  aliases: [],
+  description: `Pause the player!`,
+  usage: `pause`,
+  category: `Music`
+}

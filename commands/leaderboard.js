@@ -6,6 +6,11 @@ exports.run = (client, message, args) => {
   const Discord = require("discord.js");
   const SQLite = require("better-sqlite3");
   const sql = new SQLite('./scores.sqlite');
+
+  if(!client.npSettings.get(message.guild.id, "levels")){
+    return message.channel.send(`❌ | Levels are not enabled in this server!`);
+  }
+
   const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);
 
     // Now shake it and show it! (as a nice embed, too!)
@@ -29,5 +34,11 @@ exports.run = (client, message, args) => {
     }
   }
   return message.channel.send({embed});
-
+}
+exports.info = {
+  name: `leaderboard`,
+  aliases: [],
+  description: `Shows the leaderboard in levels of this server!`,
+  usage: `leaderboard`,
+  category: `Levels`
 }

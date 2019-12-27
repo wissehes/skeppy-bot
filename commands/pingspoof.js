@@ -10,3 +10,10 @@ exports.run = (client, message, args) => {
     })
   .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
 }
+exports.info = {
+  name: `pingspoof`,
+  aliases: [],
+  description: `Something`,
+  usage: `pingspoof`,
+  category: `Fun`
+}

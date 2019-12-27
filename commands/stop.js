@@ -31,3 +31,10 @@ exports.run = (client, message, args) => {
     message.channel.send(`Stopped playing and cleared queue!`);
     client.player.leave(message.guild.id);
 }
+exports.info = {
+    name: `stop`,
+    aliases: ['sotp'],
+    description: `Stop the player`,
+    usage: `stop`,
+    category: `Music`
+}

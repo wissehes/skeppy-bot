@@ -78,3 +78,10 @@ exports.run = (client, message, args) => {
     }
 
 }
+exports.info = {
+  name: `latest`,
+  aliases: [],
+  description: `Shows latest tweet of skeppy or latest video of someone on YouTube`,
+  usage: `latest tweet *or* latest video [channel name]`,
+  category: `Misc`
+}

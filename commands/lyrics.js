@@ -74,3 +74,10 @@ if (args[0]){
           })
       }
 }
+exports.info = {
+    name: `Lyrics`,
+    aliases: [],
+    description: `Shows the lyrics of a song! Note: when playing live radio you have to specify the song!`,
+    usage: `lyrics [song title]`,
+    category: `Music`
+  }

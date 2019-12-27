@@ -124,6 +124,10 @@ fs.readdir("./events/", (err, files) => {
 });
 
 client.commands = new Enmap();
+client.aliases = new Enmap();
+client.commandsInfo = new Enmap();
+//client.commandsInfo.set(`commandsInfo`, [])
+client.commandsInfo.set(`categories`, [])
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
@@ -132,6 +136,15 @@ fs.readdir("./commands/", (err, files) => {
     let commandName = file.split(".")[0];
     console.log(`Attempting to load command ${commandName}`);
     client.commands.set(commandName, props);
+    if(!props.info) return;
+    if(props.info.aliases){
+      for(i = 0; i < props.info.aliases.length; i++){
+        client.aliases.set(props.info.aliases[i], props)
+      }
+    }
+    client.commandsInfo.set(`commands`, props.info, props.info.name)
+    client.commandsInfo.push(`categories`, props.info.category)
+    client.commandsInfo.set(`CAT_${props.info.category.toLowerCase()}`, props.info, props.info.name)
   });
 });
 

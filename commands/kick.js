@@ -26,3 +26,10 @@ exports.run = (client, message, args) => {
   message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: \`\`\`${reason}\`\`\``);
   client.users.get(member.user.id).send(`You have been kicked from ${message.guild.name} by ${message.author.tag} for \`\`\`${reason}\`\`\``)
 }
+exports.info = {
+  name: `kick`,
+  aliases: [],
+  description: `Kick someone from your server!`,
+  usage: `kick <mention> [reason]`,
+  category: `Admin`
+}

@@ -69,3 +69,10 @@ exports.run = async (client, message, args) => {
         }
     }
 }
+exports.info = {
+    name: `lock`,
+    aliases: [],
+    description: `Lock music commands to yourself!`,
+    usage: `lock [on/off]`,
+    category: `Music`
+  }

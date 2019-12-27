@@ -31,3 +31,10 @@ exports.run = async (client, message, args) => {
         message.channel.send(`Shuffle turned off.`);
     }
 }
+exports.info = {
+    name: `shuffle`,
+    aliases: [],
+    description: `Turn shuffle on/off`,
+    usage: `shuffle`,
+    category: `Music`
+}

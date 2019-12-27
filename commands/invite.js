@@ -10,3 +10,10 @@ exports.run = (client, message, args) => {
     `)
     message.channel.send(embed)
 }
+exports.info = {
+    name: `invite`,
+    aliases: [],
+    description: `Shows links to invite the Skeppy Bot!`,
+    usage: `invite`,
+    category: `Misc`
+}

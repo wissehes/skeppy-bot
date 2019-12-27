@@ -30,3 +30,10 @@ exports.run = (client, message, args) => {
     message.channel.send(`Position set to ${pos / 1000} seconds`)
     client.player.get(message.guild.id).seek(pos)   
 }
+exports.info = {
+  name: `seek`,
+  aliases: [],
+  description: `Seek on song playing right now`,
+  usage: `seek <seconds>`,
+  category: `Music`
+}

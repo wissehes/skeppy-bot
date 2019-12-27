@@ -26,3 +26,10 @@ exports.run = (client, message, args) => {
   client.player.get(message.guild.id).pause(false);
   message.channel.send(`:arrow_forward: Resumed the player.`);
 }
+exports.info = {
+  name: `resume`,
+  aliases: [],
+  description: `Resume the player if its paused`,
+  usage: `resume`,
+  category: `Music`
+}

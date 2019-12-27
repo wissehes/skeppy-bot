@@ -21,3 +21,10 @@ exports.run = (client, message, args) => {
       message.channel.send(redditPost)
     })
 }
+exports.info = {
+  name: `meme`,
+  aliases: [],
+  description: `Shows a meme from Reddit`,
+  usage: `meme`,
+  category: `Fun`
+}

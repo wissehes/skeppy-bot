@@ -29,3 +29,10 @@ exports.run = (client, message, args) => {
 		message.channel.send(`Skipped ${howMany} songs.`);
 		client.player.get(message.guild.id).stop();
 }
+exports.info = {
+    name: `skip`,
+    aliases: [],
+    description: `Skip songs`,
+    usage: `skip`,
+    category: `Music`
+}

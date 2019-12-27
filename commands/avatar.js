@@ -21,3 +21,10 @@ exports.run = (client, message, args) => {
         return;
     }
 }
+exports.info = {
+    name: `avatar`,
+    aliases: [],
+    description: `Shows you your avatar or someone elses avatar!`,
+    usage: `avatar [mention]`,
+    category: `Misc`
+}

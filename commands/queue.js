@@ -55,3 +55,10 @@ exports.run = (client, message, args) => {
       embed.addField('Current Settings', `**Loop**: ${loopV}\n**Shuffle**: ${shuffleV}\n**Song updates**: ${npMsgs}`)
     message.channel.send(embed);
 }
+exports.info = {
+  name: `queue`,
+  aliases: [`q`],
+  description: `Shows the queue of songs`,
+  usage: `queue`,
+  category: `Music`
+}

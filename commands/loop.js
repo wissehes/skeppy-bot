@@ -49,3 +49,10 @@ exports.run = async (client, message, args) => {
         }
     }
 }
+exports.info = {
+    name: `loop`,
+    aliases: [],
+    description: `Loop one song or the whole queue`,
+    usage: `loop [off/one/all]`,
+    category: `Music`
+  }

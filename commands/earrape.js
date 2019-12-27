@@ -51,13 +51,12 @@ exports.run = (client, message, args) => {
     }
   } else if(!message.member.roles.some(r=>["DJ", "dj", "DeeJay", "deejay"].includes(r.name)))
     return message.react('🚫') && message.channel.send('You need the `DJ` role to do that!');
+}
 
-
-
-  /*if(typeof num == 'number'){
-    client.player.get(message.guild.id).volume(num * 100);
-  }else{
-    message.react('🚫')
-    message.reply(`That's not a valid number!`)
-  }*/
+exports.info = {
+  name: `earrape`,
+  aliases: [],
+  description: `Turn earrape on/off!`,
+  usage: `earrape [level]`,
+  category: `Music`
 }

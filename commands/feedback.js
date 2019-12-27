@@ -34,5 +34,11 @@ exports.run = (client, message, args) => {
     } catch(e) {
         message.channel.send(`an error ocurred o-o`)
     }
-
 }
+exports.info = {
+    name: `feedback`,
+    aliases: [],
+    description: `Send feedback to the developers of this bot!`,
+    usage: `feedback <message>`,
+    category: `Misc`
+  }

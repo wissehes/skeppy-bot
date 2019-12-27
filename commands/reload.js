@@ -23,3 +23,10 @@ exports.run = (client, message, args) => {
     client.commands.set(commandName, props);
     message.reply(`The command \`${commandName}\` has been reloaded`);
   };
+exports.info = {
+  name: `reload`,
+  aliases: [],
+  description: `Reload a command`,
+  usage: `reload <command>`,
+  category: `Owner Only`
+}

@@ -17,3 +17,10 @@ exports.run = (client, message, args) => {
   var badboy = getBadboy();
   message.channel.send(badboy)
 }
+exports.info = {
+  name: `badboyhalo`,
+  aliases: [],
+  description: `BadBoyHalo command gives you something.`,
+  usage: `badboyhalo`,
+  category: `TheTrio`
+}

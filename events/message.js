@@ -40,13 +40,11 @@ module.exports = (client, message) => {
   // Our standard argument/command name definition.
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-
   // Grab the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
-
   // If that command doesn't exist, silently exit and do nothing
-  if (!cmd) return;
+  if (cmd) cmd.run(client, message, args);
 
-  // Run the command
-  cmd.run(client, message, args);
+  const aliasCmd = client.aliases.get(command)
+  if(aliasCmd) aliasCmd.run(client, message, args)
 };

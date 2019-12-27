@@ -73,23 +73,23 @@ exports.run = async (client, message, args) => {
   const betterArgs = args.join(' ').trim();
   let canPlay = false;
   //await message.channel.send(`Hold on...`);
-  await message.channel.startTyping()
   if(!msg.member.voiceChannelID)
-    return message.channel.send(`You're not in a voice channel!`) && message.channel.stopTyping();
+    return message.channel.send(`You're not in a voice channel!`);
 
   if(bot.player.get(message.guild.id) && msg.member.voiceChannelID !== bot.player.get(message.guild.id).channel)
-    return message.channel.send(`You're not in the playing voice channel!`) && message.channel.stopTyping();
+    return message.channel.send(`You're not in the playing voice channel!`);
 
   if(!betterArgs && !bot.player.get(message.guild.id))
-    return message.channel.send(`You didn't give anything to play!`) && message.channel.stopTyping();
+    return message.channel.send(`You didn't give anything to play!`);
   if(client.musicSettings[message.guild.id]){
     if(client.musicSettings[message.guild.id].lock){
       if(client.musicSettings[message.guild.id].lockid !== message.author.id){
-        message.channel.stopTyping();
         return message.channel.send(`🔐| Music commands are locked by ${client.users.get(client.musicSettings[message.guild.id].lockid).username}`);
       }
     }
   }
+  await message.channel.startTyping()
+
 
   var queue = bot.getQueue(message.guild.id);
   var track = await getSongs(betterArgs.startsWith(`http`) ? betterArgs : `ytsearch:${betterArgs}`, message.author.id);
@@ -97,6 +97,7 @@ exports.run = async (client, message, args) => {
   var requestedBy = track.userid
   if(track instanceof Error)
     if(e) {
+      message.channel.stopTyping();
       return message.channel.send(`Track search failed with error \n\`\`\`xl\n${e.toString()}\n\`\`\``) && message.channel.stopTyping();
     } else {
       message.channel.stopTyping();
@@ -163,4 +164,12 @@ exports.run = async (client, message, args) => {
     bot.player.get(message.guild.id).node = bot.player.nodes.get(theHost);
     bot.execQueue(message, queue, player, true, );
   }
+}
+
+exports.info = {
+  name: `play`,
+  aliases: [`p`],
+  description: `Play music!`,
+  usage: `play <song title/twitch url/soundcloud url/mp3 url>`,
+  category: `Music`
 }

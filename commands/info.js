@@ -65,3 +65,10 @@ String.prototype.toHHMMSS = function () {
     message.channel.send(embed)
 }   
 
+exports.info = {
+    name: `info`,
+    aliases: [`stats`],
+    description: `Show info about the Skeppy bot!`,
+    usage: `info`,
+    category: `Misc`
+  }

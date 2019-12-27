@@ -43,3 +43,11 @@ exports.run = async (client, message, args) => {
         return message.channel.send(embed);
     })
 }
+
+exports.info = {
+    name: `weather`,
+    aliases: [],
+    description: `Shows the weather!`,
+    usage: `weather <place>`,
+    category: `Misc`
+}

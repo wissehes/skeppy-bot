@@ -21,3 +21,10 @@ exports.run = (client, message, args) => {
   message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: \`\`\`${reason}\`\`\``);
   client.users.get(member.user.id).send(`You have been banned from ${message.guild.name} by ${message.author.tag} for \`\`\`${reason}\`\`\``)
 }
+exports.info = {
+  name: `ban`,
+  aliases: [],
+  description: `Ban someone!`,
+  usage: `ban <mention> [reason]`,
+  category: `Admin`
+}

@@ -72,3 +72,10 @@ exports.run = (client, message, args) => {
         }
     }
 }
+exports.info = {
+    name: `settings`,
+    aliases: [],
+    description: `Settings, see https://docs.skeppybot.xyz/ for info`,
+    usage: `See [docs](https://docs.skeppybot.xyz/settings)`,
+    category: `Settings`
+}
