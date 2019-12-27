@@ -293,6 +293,10 @@ client.execQueue = async (message, queue, player, isfirst = false) => {
       await client.player.leave(message.guild.id);
       if(client.musicSettings[message.guild.id])
         delete client.musicSettings[message.guild.id];
+      if(client.execQueue.checkSize)
+        clearInterval(client.execQueue.checkSize)
+      if(client.execQueue.leaveTimeout)
+        clearTimeout(client.execQueue.leaveTimeout)
 		}
 	});
 }
