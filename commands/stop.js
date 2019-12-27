@@ -24,6 +24,10 @@ exports.run = (client, message, args) => {
     queue.splice(0, queue.length);
     if(client.musicSettings[message.guild.id])
       delete client.musicSettings[message.guild.id];
+    if(client.execQueue.checkSize)
+        clearInterval(client.execQueue.checkSize)
+    if(client.execQueue.leaveTimeout)
+        clearTimeout(client.execQueue.leaveTimeout)
     message.channel.send(`Stopped playing and cleared queue!`);
     client.player.leave(message.guild.id);
 }

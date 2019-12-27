@@ -201,7 +201,6 @@ client.getQueue = (server) => {
 
 client.execQueue = async (message, queue, player, isfirst = false) => {
   client.execQueue.checkSize = setInterval(() => {
-    console.log(client.channels.get(player.channel).members.size)
     if(client.channels.get(player.channel).members.size == 1) {
       if(!player.paused){
         player.pause(true)
