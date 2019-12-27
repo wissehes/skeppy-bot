@@ -107,11 +107,11 @@ client.on("ready", () => {
 
   // And then we have two prepared statements to get and set the score data.
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
+  client.deleteScore = sql.prepare("DELETE FROM scores WHERE user = ? AND guild = ?")
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
   setInterval(() => {
     dbl.postStats(client.guilds.size);
   }, 1800000);
-
 });
 
 fs.readdir("./events/", (err, files) => {

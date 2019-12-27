@@ -21,11 +21,10 @@ module.exports = (client, message) => {
       const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
       if(score.level < curLevel) {
         score.level++;
-        message.reply(`You've leveled up to level **${curLevel}**! Ain't that dandy?`);
+        message.reply(`You've leveled up to level **${curLevel}**!`);
       }
       client.setScore.run(score);
     }
-
   }
 
   const prefixes = require('../config.json').prefix
