@@ -1,14 +1,12 @@
 const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
-  //message.channel.send(`For help visit https://skeppybot.xyz`)
   const commandsDB = client.commandsInfo
   const categories = commandsDB.get('categories')
   if(!args[0]){
     const embed = new Discord.RichEmbed()
     .setTitle(`Skeppy Bot Help`)
     .setThumbnail(client.user.avatarURL)
-    //.setDescription(``)
     .setFooter(`Made by ${client.users.get(client.config.ownerID).username}#${client.users.get(client.config.ownerID).discriminator}`)
     for(let i = 0; i < categories.length; i++){
       const data = commandsDB.get(`CAT_${categories[i].toLowerCase()}`)
@@ -19,10 +17,6 @@ exports.run = (client, message, args) => {
       }
       embed.addField(categories[i], '`'+commands.join("`, `")+'`')
     }
-    /*.setDescription(`These are all the categories, type \`${client.config.prefix[0]}help <category>\` to see the commands.
-  
-\`\`\`${categories.join(`\`\`\`\n\`\`\``)}\`\`\`
-`)*/
     message.channel.send(embed)
   } else if(args[0]){
     const arg = args[0].toLowerCase();
@@ -35,12 +29,12 @@ exports.run = (client, message, args) => {
     .setTitle(`\`${commandName}\` command`)
     .setThumbnail(client.user.avatarURL)
     .setDescription(commandData.description)
-    if(commandData.aliases) embed.addField(`Aliases`, commandData.aliases.join(", "))
-    .addField(`Usage`, commandData.usage)
+    if(commandData.aliases[0]) embed.addField(`Aliases`, commandData.aliases.join(", "))
+    embed.addField(`Usage`, commandData.usage)
+    embed.addField(`Category`, commandData.category)
 
     message.channel.send(embed)
   }
-
 }
 exports.info = {
   name: `help`,

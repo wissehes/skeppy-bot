@@ -32,4 +32,4 @@ exports.info = {
     description: `Puts your avatar on a bald head.`,
     usage: `bald [mention]`,
     category: `Fun`
-  }
+}
