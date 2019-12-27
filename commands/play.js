@@ -88,7 +88,8 @@ exports.run = async (client, message, args) => {
       }
     }
   }
-  await message.channel.startTyping()
+  //await message.channel.startTyping()
+  const m = message.channel.send(`Hold on...`)
 
 
   var queue = bot.getQueue(message.guild.id);
@@ -143,8 +144,19 @@ exports.run = async (client, message, args) => {
       });
     });
   }
-  message.channel.stopTyping()
-  message.channel.send(new Discord.RichEmbed()
+  //message.channel.stopTyping()
+  m.then(m => {
+    m.edit(new Discord.RichEmbed()
+    .setColor("0357ff")
+    .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
+    .setTitle(song)
+    .setThumbnail(`https://i.ytimg.com/vi/${track[0].info.identifier}/hqdefault.jpg`)
+    .setFooter(`Length: ${length} | ${track[0].info.author}`)
+    .setDescription(`
+• **URL**: [${track[0].info.uri}](${track[0].info.uri})
+`));
+  })
+  /*message.channel.send(new Discord.RichEmbed()
   .setColor("0357ff")
   .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
   .setTitle(song)
@@ -152,7 +164,7 @@ exports.run = async (client, message, args) => {
   .setFooter(`Length: ${length} | ${track[0].info.author}`)
   .setDescription(`
 • **URL**: [${track[0].info.uri}](${track[0].info.uri})
-  `));
+  `));*/
 
   if(canPlay) {
     var theHost = getIdealHost(bot, message.guild.region);
