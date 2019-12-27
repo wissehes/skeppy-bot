@@ -200,6 +200,27 @@ client.getQueue = (server) => {
 }
 
 client.execQueue = async (message, queue, player, isfirst = false) => {
+  client.execQueue.checkSize = setInterval(() => {
+    console.log(client.channels.get(player.channel).members.size)
+    if(client.channels.get(player.channel).members.size == 1) {
+      if(!player.paused){
+        player.pause(true)
+        message.channel.send(`⏸ | Everyone left the voice channel. The player has been paused, leaving in 10 seconds if no one joins!`)
+        client.execQueue.leaveTimeout = setTimeout(() => {
+          clearInterval(client.execQueue.checkSize)
+          queue.splice(0, queue.length);
+          client.player.leave(message.guild.id);
+          if(client.musicSettings[message.guild.id])
+            delete client.musicSettings[message.guild.id];
+          message.channel.send(`No one joined so I'm leaving!`)
+        }, 10000);    
+      }
+    } else {
+      if(client.execQueue.leaveTimeout)
+        clearTimeout(client.execQueue.leaveTimeout)
+    }
+  }, 1000);
+  
   if(client.musicSettings[message.guild.id] && client.musicSettings[message.guild.id].shuffle) {
     var th = Math.floor(Math.random() * queue.length);
     queue.unshift(queue[th]);
@@ -252,6 +273,7 @@ client.execQueue = async (message, queue, player, isfirst = false) => {
     }
 		if(queue.length > 0) {
 			setTimeout(() => {
+        clearInterval(client.execQueue.checkSize)
 				client.execQueue(message, queue, player);
 			}, 1000);
 		} else {
