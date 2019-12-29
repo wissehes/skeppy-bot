@@ -41,8 +41,8 @@ exports.run = (client, message, args) => {
         return message.channel.send(`❌ | Position ${pos2} doesn't exist!`);
     }
     try {
-        queue.move(pos1, pos2)
         message.channel.send(`✅ | \`${queue[pos1].info.title}\` successfully moved from position ${pos1} to ${pos2}`)
+        queue.move(pos1, pos2)
     } catch (e) {
         message.channel.send(`⚠️ | An error occurred while moving \`${queue[pos1].info.title}\` from position ${pos1} to ${pos2}`)
     }
