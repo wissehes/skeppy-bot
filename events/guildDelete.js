@@ -6,10 +6,10 @@ module.exports = (client, guild) => {
   const embed = new Discord.RichEmbed()
   .setTitle(`😕 I was removed from a new server!`)
   .setColor('RED')
-  .setDescription(`I was removed from {{name}}`)
+  .setDescription(`I was removed from ${guild.name}`)
   //.addField(`Owner`, guild.owner.user.tag)
   .addField(`Guild ID`, guild.id)
   //.addField(`User count`, guild.memberCount)
-  if(message.guild.iconURL) embed.setThumbnail(message.guild.iconURL);
+  if(guild.iconURL) embed.setThumbnail(guild.iconURL);
   client.channels.get(client.config.NewServerChannel).send(embed)
 }
