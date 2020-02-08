@@ -9,5 +9,5 @@ module.exports = (client, message) => {
         created: message.createdAt
     }
     console.log(dbMessage)
-    client.snipes.set(message.guild.id, dbMessage, message.channel.id)
+    client.snipes.set(message.channel.id, dbMessage)
 }
