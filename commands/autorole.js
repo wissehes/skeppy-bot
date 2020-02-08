@@ -4,6 +4,9 @@ exports.run = (client, message, args) => {
     if(!message.guild.me.hasPermission("MANAGE_ROLES")){
         return message.channel.send("I don't have permissions to manage roles!")
     }
+    if(!message.member.hasPermission("MANAGE_ROLES")){
+        return message.reply("You need `MANAGE_ROLES` permisson!")
+    }
 
     if(!args[0]){
         return message.reply("please tell me which level I should give a role to or if you want to remove a role!")
