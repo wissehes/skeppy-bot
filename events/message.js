@@ -6,8 +6,8 @@ module.exports = (client, message) => {
   }
   if (message.author.bot) return;
   //ignore dm's
-/*  if (message.channel.type === 'dm')
-      return message.channel.send('lmao, no');*/
+if (message.channel.type === 'dm')
+      return;
 
   let score;
   if (message.guild) { 
@@ -22,6 +22,10 @@ module.exports = (client, message) => {
       if(score.level < curLevel) {
         score.level++;
         message.reply(`You've leveled up to level **${curLevel}**!`);
+        if(client.autorole.has(message.guild.id, curLevel.toString())){
+          message.member.addRole(client.autorole.get(message.guild.id, curLevel.toString()))
+          .catch(console.log)
+        }
       }
       client.setScore.run(score);
     }
@@ -42,9 +46,21 @@ module.exports = (client, message) => {
   const command = args.shift().toLowerCase();
   // Grab the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
-  // If that command doesn't exist, silently exit and do nothing
-  if (cmd) cmd.run(client, message, args);
 
+
+  if (cmd){
+    try {
+      cmd.run(client, message, args);
+    } catch(e) {
+      console.log(e)
+    }
+  }
   const aliasCmd = client.aliases.get(command)
-  if(aliasCmd) aliasCmd.run(client, message, args)
+  if(aliasCmd){
+    try {
+      aliasCmd.run(client, message, args)
+    } catch(e) {
+      console.log(e)
+    }
+  }
 };
