@@ -22,9 +22,11 @@ if (message.channel.type === 'dm')
       if(score.level < curLevel) {
         score.level++;
         message.reply(`You've leveled up to level **${curLevel}**!`);
-        if(client.autorole.has(message.guild.id, curLevel.toString())){
-          message.member.addRole(client.autorole.get(message.guild.id, curLevel.toString()))
-          .catch(console.log)
+        if(client.autorole.has(message.guild.id)){
+          if(client.autorole.has(message.guild.id, curLevel.toString())){
+            message.member.addRole(client.autorole.get(message.guild.id, curLevel.toString()))
+              .catch(console.log)
+          }
         }
       }
       client.setScore.run(score);
