@@ -8,6 +8,24 @@ exports.run = (client, message, args) => {
     if(!args[0]){
         return message.reply("please tell me which level I should give a role to or if you want to remove a role!")
     }
+    if(args[0] == "list" || args[0] == "rules") {
+        if(!client.autorole.has(message.guild.id)) {
+            return message.reply("there are no rules yet!")
+        }
+        const DB = client.autorole.get(message.guild.id)
+        const rolesList = Object.keys(DB).map(e => {
+            return `**Level**: ${e}. **Name**: ${message.guild.roles.get(DB[e]).name || `*deleted*`}`;
+        })
+        if(rolesList.length < 1){
+            return message.reply("there are no rules yet!")
+        }
+        const embed = new RichEmbed()
+            .setTitle(`List of autorole lues!`)
+            .setColor("BLUE")
+            .setDescription(rolesList.join("\n"))
+
+        return message.channel.send(embed)
+    }
 
     if(args[0] === "remove" || args[0] === "delete"){
         if(!client.autorole.has(message.guild.id)) {
