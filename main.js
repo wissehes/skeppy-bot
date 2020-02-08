@@ -6,12 +6,17 @@ const axios = require('axios');
 const Twitter = require('twitter');
 const DBL = require("dblapi.js");
 const internetradio = require('node-internet-radio');
+const express = require("express")
+const app = express();
+app.use(express.json());
 
 
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
+const autorole = new Enmap({ name: "autorole" })
+const snipes = new Enmap();
 const config = require("./config.json");
 const defaultSettings = {
   np: true, 
@@ -20,6 +25,8 @@ const defaultSettings = {
   welcomeMessage: "Welcome {{user}} to the server!",
   welcomeChannel: "welcome"
 }
+client.autorole = autorole
+client.snipes = snipes
 client.defaultSettings = defaultSettings;
 client.config = config;
 client.npSettings = npSettings;
@@ -329,6 +336,27 @@ Array.prototype.move = function (pos1, pos2) {
       this[pos2] = tmp;
   }
 }
+
+app.get('/api/stats', (req, res) => {
+  res.type('json')
+  const stats = {
+    servers: client.guilds.size,
+    users: client.users.size,
+    uptime: Math.round(process.uptime())
+  }
+  res.send(JSON.stringify(stats))
+});
+app.get('/api/commands', (req, res) => {
+  res.type('json')
+  const DBFilter = client.commands.filter(e => e.info)
+  const DB = DBFilter.map(e => {return e.info})
+  res.send(DB)
+})
+
+
+app.listen(config.port, () => {
+  console.log(`server running on port ${config.port}`)
+});
 
 process.on('uncaughtException', async function (error) {
 	if(error.stack.includes(`Error: Unexpected server response:`)) {
