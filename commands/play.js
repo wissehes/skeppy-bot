@@ -147,6 +147,7 @@ exports.run = async (client, message, args) => {
           canPlay = true;
           queue.startedBy = message.author.id;
         }
+        collected.first().delete().catch(console.log)
         queue.push(track[parseInt(collected.first().content) - 1]);
         const songData = track[parseInt(collected.first().content) - 1]
         const playEmbed = new Discord.RichEmbed()
@@ -170,11 +171,11 @@ exports.run = async (client, message, args) => {
           bot.execQueue(message, queue, player, true);
         }
       })
-      /*.catch(() => {
+      .catch(() => {
         m.then(m => {
           m.edit(new Discord.RichEmbed().setColor("0357ff").setTitle(`Selection closed.`))
         })
-      });*/
+      });
     });
   return;
   }
@@ -202,7 +203,6 @@ exports.run = async (client, message, args) => {
     await getStreamMeta(track[0].info.uri)
       .then((song) => {
         song = song
-        //console.log(song)
       })
   }
   async function getStreamMeta(url) {
