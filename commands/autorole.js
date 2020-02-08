@@ -20,7 +20,7 @@ exports.run = (client, message, args) => {
             return message.reply("there are no rules yet!")
         }
         const embed = new RichEmbed()
-            .setTitle(`List of autorole lues!`)
+            .setTitle(`List of autorole rules!`)
             .setColor("BLUE")
             .setDescription(rolesList.join("\n"))
 
