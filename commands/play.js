@@ -200,16 +200,17 @@ exports.run = async (client, message, args) => {
   let song = track[0].info.title
   if (track[0].info.length >= 9223372036854776000) {
     length = `Live`
-    await getStreamMeta(track[0].info.uri)
+    if(!track[0].info.uri.startsWith("https://twitch.tv")){
+      await getStreamMeta(track[0].info.uri)
       .then((song) => {
         song = song
       })
+    }
   }
   async function getStreamMeta(url) {
     return new Promise((resolve) => {
       internetradio.getStationInfo(url, function (error, station) {
         song = station.title;
-        console.log(station)
         resolve(song);
       });
     });
