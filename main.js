@@ -6,10 +6,7 @@ const axios = require('axios');
 const Twitter = require('twitter');
 const DBL = require("dblapi.js");
 const internetradio = require('node-internet-radio');
-const express = require("express")
-const app = express();
-app.use(express.json());
-
+const api = require('./api')
 
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
@@ -78,6 +75,7 @@ setInterval(pingLavalinkNodes, 260000);
 
 
 client.on("ready", () => {
+  api.run(client)
   pingLavalinkNodes();
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
   client.user.setActivity(`for "${config.prefix[0]}help" in ${client.guilds.size} servers | skeppybot.xyz`, {type: "WATCHING"});
@@ -336,33 +334,6 @@ Array.prototype.move = function (pos1, pos2) {
       this[pos2] = tmp;
   }
 }
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-})
-
-app.get('/api/stats', (req, res) => {
-  res.type('json')
-  const stats = {
-    servers: client.guilds.size,
-    users: client.users.size,
-    uptime: Math.round(process.uptime())
-  }
-  res.send(JSON.stringify(stats))
-});
-app.get('/api/commands', (req, res) => {
-  res.type('json')
-  const DBFilter = client.commands.filter(e => e.info)
-  const DB = DBFilter.map(e => {return e.info})
-  res.send(DB)
-})
-
-
-app.listen(config.port, () => {
-  console.log(`server running on port ${config.port}`)
-});
 
 process.on('uncaughtException', async function (error) {
 	if(error.stack.includes(`Error: Unexpected server response:`)) {
