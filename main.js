@@ -13,6 +13,7 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
 const autorole = new Enmap({ name: "autorole" })
+const stats = new Enmap({ name: "stats"})
 const snipes = new Enmap();
 const config = require("./config.json");
 const defaultSettings = {
@@ -23,6 +24,7 @@ const defaultSettings = {
   welcomeChannel: "welcome"
 }
 client.autorole = autorole
+client.stats = stats
 client.snipes = snipes
 client.defaultSettings = defaultSettings;
 client.config = config;

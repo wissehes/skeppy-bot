@@ -27,7 +27,8 @@ exports.run = (client) => {
           channels: client.channels.size,
           uptime: Math.round(process.uptime()),
           uptime_formatted: uptime(process.uptime()),
-          commands: client.commands.size
+          commands: client.commands.size,
+          executedCommands: client.stats.get("executedCommands")
         }
         res.send(JSON.stringify(stats))
     });

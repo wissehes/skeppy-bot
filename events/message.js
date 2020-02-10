@@ -54,17 +54,26 @@ if (message.channel.type === 'dm')
   const command = args.shift().toLowerCase();
   // Grab the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
-
-
+  const incStats = () => {
+    if(client.stats.has("executedCommands")){
+      client.stats.inc("executedCommands")
+    } else {
+      client.stats.set("executedCommands", 1)
+    }
+  }
+ 
   if (cmd){
+    incStats()
     try {
       cmd.run(client, message, args);
     } catch(e) {
       console.log(e)
     }
   }
+
   const aliasCmd = client.aliases.get(command)
   if(aliasCmd){
+    incStats()
     try {
       aliasCmd.run(client, message, args)
     } catch(e) {
