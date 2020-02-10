@@ -36,8 +36,9 @@ exports.run = (client) => {
     app.get('/api/commands', (req, res) => {
         res.type('json')
         const DBFilter = client.commands.filter(e => e.info)
-        const DB = DBFilter.map(e => {return e.info})
-        res.send(DB)
+        const map = DBFilter.map(e => {return e.info})
+        const sorted = map.sort((a, b) => a.category.localeCompare(b.category))
+        res.send(sorted)
     })
       
       
