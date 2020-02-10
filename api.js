@@ -38,7 +38,20 @@ exports.run = (client) => {
         const DBFilter = client.commands.filter(e => e.info)
         const map = DBFilter.map(e => {return e.info})
         const sorted = map.sort((a, b) => a.category.localeCompare(b.category))
-        res.send(sorted)
+        if(req.params.category){
+            const filtered = sorted.filter(e => e.category.toLowerCase() == req.params.category.toLowerCase())
+            res.send(filtered)
+        } else {
+            res.send(sorted)
+        }
+    })
+    app.get('/api/commands/:category', (req, res) => {
+        res.type('json')
+        const DBFilter = client.commands.filter(e => e.info)
+        const map = DBFilter.map(e => {return e.info})
+        const sorted = map.sort((a, b) => a.category.localeCompare(b.category))
+        const filtered = sorted.filter(e => e.category.toLowerCase() == req.params.category.toLowerCase())
+        res.send(filtered)
     })
       
       
