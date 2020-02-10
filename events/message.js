@@ -17,15 +17,21 @@ if (message.channel.type === 'dm')
       if (!score) {
         score = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, points: 0, level: 1 }
       }
-      score.points++;
+      score.points += 100;
       const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
       if(score.level < curLevel) {
         score.level++;
         message.reply(`You've leveled up to level **${curLevel}**!`);
         if(client.autorole.has(message.guild.id)){
-          if(client.autorole.has(message.guild.id, curLevel.toString())){
-            message.member.addRole(client.autorole.get(message.guild.id, curLevel.toString()))
-              .catch(console.log)
+          try {
+            for(let i = 0; i <= curLevel; i++){
+              if(client.autorole.has(message.guild.id, i.toString())){
+                message.member.addRole(client.autorole.get(message.guild.id, i.toString()))
+                .catch(console.log)
+              }
+            }
+          } catch(e) {
+            console.log(e)
           }
         }
       }
