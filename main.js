@@ -16,7 +16,7 @@ const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
 const newSettings = new Keyv(config.mongodb, { collection: "settings" })
 const autorole = new Enmap({ name: "autorole" })
-const newAutorole = new Keyv(config.mongodb, { collection: autorole })
+const newAutorole = new Keyv(config.mongodb, { collection: 'autorole' })
 const stats = new Keyv(config.mongodb, { collection: "executedCommands" })
 const defaultSettings = {
   np: true, 
