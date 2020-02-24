@@ -54,9 +54,10 @@ if (message.channel.type === 'dm')
   const command = args.shift().toLowerCase();
   // Grab the command data from the client.commands Enmap
   const cmd = client.commands.get(command);
-  const incStats = () => {
-    if(client.stats.has("executedCommands")){
-      client.stats.inc("executedCommands")
+  const incStats = async () => {
+    const stats = await client.stats.get("executedCommands")
+    if(stats){
+      client.stats.set("executedCommands", parseInt(stats) + 1)
     } else {
       client.stats.set("executedCommands", 1)
     }
