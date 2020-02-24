@@ -7,25 +7,25 @@ const Twitter = require('twitter');
 const DBL = require("dblapi.js");
 const internetradio = require('node-internet-radio');
 const api = require('./api')
+const Keyv = require("keyv")
 
+const config = require("./config.json");
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 const npSettings = new Enmap({ name: 'npSettings' });
-const autorole = new Enmap({ name: "autorole" })
-const stats = new Enmap({ name: "stats"})
-const snipes = new Enmap();
-const config = require("./config.json");
+const newSettings = new Keyv(config.mongodb, { collection: "settings" })
+const autorole = new Keyv(config.mongodb, { collection: "autorole" })
+const stats = new Keyv(config.mongodb, { collection: "executedCommands" })
 const defaultSettings = {
   np: true, 
-  levels: true, 
+  levels: false, 
   welcome: false, 
   welcomeMessage: "Welcome {{user}} to the server!",
   welcomeChannel: "welcome"
 }
 client.autorole = autorole
 client.stats = stats
-client.snipes = snipes
 client.defaultSettings = defaultSettings;
 client.config = config;
 client.npSettings = npSettings;
@@ -77,6 +77,17 @@ setInterval(pingLavalinkNodes, 260000);
 
 
 client.on("ready", () => {
+  npSettings.forEach((value, key) => {
+    setTimeout(async () => {
+      if(value.welcomeMessage){
+        const dbRes = await newSettings.get(key)
+        if(!dbRes){
+          newSettings.set(key, value)
+        }
+      }
+    }, 1000)
+  })
+
   api.run(client)
   pingLavalinkNodes();
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
