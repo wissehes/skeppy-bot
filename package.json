@@ -26,16 +26,18 @@
   },
   "homepage": "https://github.com/TheChicken14/skeppy-bot#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "@keyv/mongo": "^1.1.0",
+    "axios": "^0.19.2",
     "better-sqlite3": "^5.4.3",
-    "canvas": "^2.6.0",
-    "dblapi.js": "^2.3.0",
+    "canvas": "^2.6.1",
+    "dblapi.js": "^2.3.1",
     "discord.js": "^11.5.1",
     "discord.js-lavalink": "^2.2.3",
-    "enmap": "^5.2.1",
+    "enmap": "^5.2.4",
     "express": "^4.17.1",
+    "keyv": "^4.0.0",
     "node-internet-radio": "^0.1.6",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "twitter": "^1.7.1"
   }
 }
