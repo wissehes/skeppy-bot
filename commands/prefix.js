@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
         message.channel.send(embed)
     }
     if(args[0] === "set"){
-        if(!message.member.hasPermissions("MANAGE_MESSAGES")){
+        if(!message.member.hasPermissions("MANAGE_MESSAGES") && message.author.id !== client.config.ownerID){
             return;
         }
         if(args[1]){
