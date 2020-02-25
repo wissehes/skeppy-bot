@@ -7,8 +7,8 @@ exports.run = (client, message, args) => {
   const SQLite = require("better-sqlite3");
   const sql = new SQLite('./scores.sqlite');
 
-  if(!client.npSettings.get(message.guild.id, "levels")){
-    return message.channel.send(`❌ | Levels are not enabled in this server!`);
+  if(!message.settings.levels){
+    return message.channel.send(`❌ | Levels aren't enabled in this server!`);
   }
 
   const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);

@@ -1,6 +1,6 @@
 const { RichEmbed } = require("discord.js")
 
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
     if(!message.guild.me.hasPermission("MANAGE_ROLES")){
         return message.channel.send("I don't have permissions to manage roles!")
     }
@@ -8,14 +8,14 @@ exports.run = (client, message, args) => {
         return message.reply("You need `MANAGE_ROLES` permisson!")
     }
 
-    if(!args[0]){
+    /*if(!args[0]){
         return message.reply("please tell me which level I should give a role to or if you want to remove a role!")
-    }
-    if(args[0] == "list" || args[0] == "rules") {
-        if(!client.autorole.has(message.guild.id)) {
+    }*/
+    const DB = await client.autorole.get(message.guild.id)
+    if(!args[0] || args[0] == "list" || args[0] == "rules") {
+        if(!DB) {
             return message.reply("there are no rules yet!")
         }
-        const DB = client.autorole.get(message.guild.id)
         const rolesList = Object.keys(DB).map(e => {
             return `**Level**: ${e}. **Name**: ${message.guild.roles.get(DB[e]).name || `*deleted*`}`;
         })
@@ -31,7 +31,7 @@ exports.run = (client, message, args) => {
     }
 
     if(args[0] === "remove" || args[0] === "delete"){
-        if(!client.autorole.has(message.guild.id)) {
+        if(!DB) {
             return message.reply("there are no rules yet!")
         }
         const DB = client.autorole.get(message.guild.id)
@@ -52,8 +52,8 @@ exports.run = (client, message, args) => {
             message.channel.awaitMessages(filter, { maxMatches: 1, time: 30000, errors: ['time'] })
                 .then(collected => {
                     const level = collected.first().content
-                    if(client.autorole.has(message.guild.id, level)){
-                        client.autorole.remove(message.guild.id, level)
+                    if(DB[level]){
+                        client.autoroleSettings.removeRule(message.guild, level)
                         message.channel.send(`Rule for level **${level}** has been removed!`);
                     } else {
                         message.reply("That's not a valid rule!")
@@ -74,10 +74,9 @@ exports.run = (client, message, args) => {
     const roles = message.guild.roles.filter(e => e.editable && !e.deleted && e.name !== "@everyone")
     const rolesMap = roles.map(e => {
         if(!e.deleted && e.editable){
-            return e.name
+            return `• **${e.name}**`
         }
     })
-    const DB = client.autorole
     const level = args[0]
     const embed = new RichEmbed()
         .setTitle("Type the name of the role you want to give")
@@ -89,15 +88,23 @@ exports.run = (client, message, args) => {
         return message.author.id == response.author.id && roles.some(role => role.name.toLowerCase() === response.content.toLowerCase())
     };
         
-    message.channel.send(embed).then(() => {
+    const m = message.channel.send(embed).then((msg) => {
         message.channel.awaitMessages(filter, { maxMatches: 1, time: 30000, errors: ['time'] })
             .then(collected => {
                 const role = message.guild.roles.find(role => role.name.toLowerCase() == collected.first().content.toLowerCase())
-                DB.set(message.guild.id, role.id, level)
+                client.autoroleSettings.set(message.guild, { [level]: role.id })
                 message.channel.send(`When you reach level **${args[0]}**, you will get \`${role.name}\` role!`);
+                msg.edit(new RichEmbed()
+                .setTitle(`Selection closed.`)
+                )
             })
             .catch(collected => {
                 message.channel.send("Time ran out!");
+                m.then(m => {
+                    m.edit(new RichEmbed()
+                        .setTitle(`Selection closed.`)
+                    )
+                })
             });
         });
 }

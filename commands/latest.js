@@ -2,11 +2,10 @@ const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
     if(!args[0]){
-        const prefixes = client.config.prefix.join(", ");
-        const prefix = client.config.prefix[0]
+        const prefix = message.settings.prefix
         var embed = new Discord.RichEmbed()
         .setTitle("Latest")
-        .setDescription(`Make sure you use one of the prefixes: ${prefixes}`)
+        .setDescription(`Make sure you use my prefix: ${prefix}`)
         .setThumbnail('https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg')
         .setURL('https://github.com/thechicken14/skeppy-bot')
         .setFooter('Made by TheChicken#5845', 'https://pbs.twimg.com/profile_images/1182235859036332033/bkU06kE__400x400.jpg')

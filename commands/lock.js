@@ -57,7 +57,7 @@ exports.run = async (client, message, args) => {
                 message.channel.send(`❌ | You didn't start this session!`)
             }
         } else {
-            message.channel.send(`❌ | Lock isn't enabled! You can enable it with \`${config.prefix[0]}lock\``)
+            message.channel.send(`❌ | Lock isn't enabled! You can enable it with \`${message.settings.prefix}lock\``)
         }
     } else if(args[0] == `enable` || args[0] == `on`) {
         if(queue.startedBy == message.author.id){
