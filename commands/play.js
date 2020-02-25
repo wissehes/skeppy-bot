@@ -123,19 +123,19 @@ exports.run = async (client, message, args) => {
       m.edit(embed)
     })
     .then(() => {
-      message.channel.awaitMessages(response => response.author.id == message.author.id, {
+      message.channel.awaitMessages(response => response.author.id == message.author.id && parseInt(response.content), {
         max: 1,
         time: 30000,
         errors: ['time'],
       })
       .then((collected) => {
-        if(parseInt(collected.first().content) == NaN || !parseInt(collected.first().content)){
+        /*if(parseInt(collected.first().content) == NaN || !parseInt(collected.first().content)){
           m.then(m => {
             m.edit(new Discord.RichEmbed().setColor("0357ff").setTitle(`Selection closed.`))
           })
           message.channel.send(`You must specify a number between 1 and 10!`);
           return;
-        }
+        }*/
         if(collected.first().content < 1 || collected.first().content > 10){
           m.then(m => {
             m.edit(new Discord.RichEmbed().setColor("0357ff").setTitle(`Selection closed.`))
