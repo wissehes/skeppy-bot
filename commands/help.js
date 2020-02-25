@@ -6,6 +6,8 @@ exports.run = (client, message, args) => {
   if(!args[0]){
     const embed = new Discord.RichEmbed()
     .setTitle(`Skeppy Bot Help`)
+    .setAuthor("Support Server", client.user.avatarURL, "https://discord.gg/dTJBDRU")
+    .setColor("BLUE")
     .setThumbnail(client.user.avatarURL)
     .setFooter(`Made by ${client.users.get(client.config.ownerID).username}#${client.users.get(client.config.ownerID).discriminator}`)
     for(let i = 0; i < categories.length; i++){
