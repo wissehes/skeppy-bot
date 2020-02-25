@@ -19,7 +19,8 @@ exports.run = (client) => {
         next();
     })
       
-    app.get('/api/stats', (req, res) => {
+    app.get('/api/stats', async (req, res) => {
+        const executedCommands = await client.stats.get("executedCommands")
         res.type('json')
         const stats = {
           servers: client.guilds.size,
@@ -28,7 +29,7 @@ exports.run = (client) => {
           uptime: Math.round(process.uptime()),
           uptime_formatted: uptime(process.uptime()),
           commands: client.commands.size,
-          executedCommands: client.stats.get("executedCommands")
+          executedCommands: executedCommands
         }
         res.send(JSON.stringify(stats))
     });
