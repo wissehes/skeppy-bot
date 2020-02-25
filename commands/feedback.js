@@ -20,7 +20,7 @@ exports.run = (client, message, args) => {
     var feedbackEmbed = new Discord.RichEmbed()
         .setTitle(`New suggestion`)
         .setColor(`GREEN`)
-        .addField(`By`, feedbackUser)
+        .addField(`By`, `${feedbackUser} (${message.author.tag})`)
         .addField(`Feedback message`, feedback)
         .setTimestamp()
     var responseEmbed = new Discord.RichEmbed()
