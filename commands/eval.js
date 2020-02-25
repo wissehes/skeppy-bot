@@ -6,12 +6,12 @@ function clean(text) { // For Eval
         else
             return text;
     }
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
   if(![client.config.ownerID, client.config.adminID].some(a => message.author.id == a))
           return message.channel.send(`You tried...`);
   try {
         const code = args.join(' ');
-        let evaled = eval(code);
+        let evaled = (args[0] === "async") ? args.shift() && await eval(code) : eval(code)
         if(typeof evaled !== 'string')
             evaled = require('util').inspect(evaled);
 
