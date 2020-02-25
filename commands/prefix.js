@@ -19,6 +19,9 @@ exports.run = async (client, message, args) => {
         message.channel.send(embed)
     }
     if(args[0] === "set"){
+        if(!message.member.hasPermissions("MANAGE_MESSAGES")){
+            return;
+        }
         if(args[1]){
             args.shift()
             const newPrefix = args.join(" ")
