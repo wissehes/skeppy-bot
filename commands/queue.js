@@ -25,14 +25,6 @@ exports.run = (client, message, args) => {
     playingMore = `+ ${moreSongs} more ${q.length - 11 > 1 ? `song` : `songs`}`
   }
 
-
-    let npMsgs;
-    if(client.npSettings.get(message.guild.id, "np")){
-      npMsgs = `On`
-    } else {
-      npMsgs = `Off`
-    }
-
   var e = queue[0]
   var nowPlaying = `${e.info.author ? `[**${e.info.title}**](${e.info.uri})` : `Unknown`} added by **${client.users.get(e.requestedBy).username}** (${client.getYTLength(e.info.length)})`
   var embed = new Discord.RichEmbed();
@@ -52,7 +44,7 @@ exports.run = (client, message, args) => {
     //embed.addField('Current Settings', `**Loop**: ${client.musicSettings[message.guild.id].loop}\n**Shuffle**: ${client.musicSettings[message.guild.id].shuffle}\n **Now playing messages**: ${npMsgs}`);
   //else
     //embed.addField('Current Settings', `**Loop**: 0\n**Shuffle**: false\n **Song updates**: ${npMsgs}`);
-      embed.addField('Current Settings', `**Loop**: ${loopV}\n**Shuffle**: ${shuffleV}\n**Song updates**: ${npMsgs}`)
+      embed.addField('Current Settings', `**Loop**: ${loopV}\n**Shuffle**: ${shuffleV}\n**Song updates**: ${message.settings.np ? 'on' : 'off'}`)
     message.channel.send(embed);
 }
 exports.info = {
