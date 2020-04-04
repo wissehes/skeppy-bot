@@ -193,16 +193,15 @@ client.on("guildMemberAdd", async(member) => {
         if (welcomeSettings.welcome) {
 
             let welcomeMessage = welcomeSettings.welcomeMessage;
-            console.log(welcomeMessage)
 
             welcomeMessage = welcomeMessage.replace("{{user}}", member.user.toString())
                 .replace('{{usertag}}', member.user.tag)
                 .replace('{{username}}', member.user.username)
 
             // we'll send it to the welcome channel.
-            const channel = member.guild.channels.get(welcomeSettings.welcomeChannel)
+            const channel = member.guild.channels.resolve(welcomeSettings.welcomeChannel)
             if (!channel) {
-                member.guild.channels
+                member.guild.channels.cache
                     .find(channel => channel.name === welcomeSettings.welcomeChannel)
                     .send(welcomeMessage)
                     .catch(console.log);
