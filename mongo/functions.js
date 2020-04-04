@@ -1,5 +1,4 @@
 module.exports = client => {
-
     client.getGuild = async (guild) => {
         let data = await client.settings.get(guild.id);
         if (data) return data;

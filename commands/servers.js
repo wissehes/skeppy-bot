@@ -1,5 +1,5 @@
 exports.run = (client, message, args) => {
-message.channel.send(`I'm in ${client.guilds.size} servers with ${client.users.size} members and ${client.channels.size} channels.`)
+    message.channel.send(`I'm in ${client.guilds.cache.size} servers with ${client.users.cache.size} members and ${client.channels.cache.size} channels.`)
 }
 exports.info = {
     name: `servers`,

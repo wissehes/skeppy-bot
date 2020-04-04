@@ -1,25 +1,25 @@
-const { RichEmbed } = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 
-exports.run = async (client, message, args) => {
-    if(!message.member.hasPermission("MANAGE_CHANNELS")){
-        return;
-    }
-
-    const getStatusEmbed = async () => {
-        const settings = await client.getGuild(message.guild)
-        let channel = client.channels.get(settings.welcomeChannel)
-        if(!channel){
-            channel = client.channels.find(channel => channel.name === settings.welcomeChannel)
-            if(channel) {
-                channel = `**Not Found**`
-            } else {
-                channel = channel.name
-            }
+exports.run = async(client, message, args) => {
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) {
+            return;
         }
-        const embed = new RichEmbed()
-        .setTitle(`Welcome settings for ${message.guild.name}`)
-        .setColor("BLUE")
-        .setDescription(`
+
+        const getStatusEmbed = async() => {
+                const settings = await client.getGuild(message.guild)
+                let channel = client.channels.get(settings.welcomeChannel)
+                if (!channel) {
+                    channel = client.channels.find(channel => channel.name === settings.welcomeChannel)
+                    if (channel) {
+                        channel = `**Not Found**`
+                    } else {
+                        channel = channel.name
+                    }
+                }
+                const embed = new MessageEmbed()
+                    .setTitle(`Welcome settings for ${message.guild.name}`)
+                    .setColor("BLUE")
+                    .setDescription(`
 **Status**: ${settings.welcome ? `on` : `off`}
 **Channel**: ${channel}
 **Message**: ${settings.welcomeMessage}                     

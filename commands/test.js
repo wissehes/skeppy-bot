@@ -1,7 +1,24 @@
 exports.run = (client, message, args) => {
-  //message.channel.send("Hello").then((newMessage) => {newMessage.edit("Edited!");});
-  message.guild.fetchMembers().then(fetchedGuild => {
-    const totalOnline = message.guild.roles.get('265124127789023232').members.filter(member => member.presence.status === 'online');
-    message.channel.send(`There are currently ${totalOnline.size} members online in this guild!`);
-  });
+    if (message.author.id !== client.config.ownerID) {
+        return;
+    }
+
+    client.guilds.cache.forEach(e => {
+        setTimeout(() => {
+            const channel = e.channels.cache.find(ch => ch.name == "general")
+            if (channel) {
+                channel.send(args.join(" "))
+            } else if (e.systemChannel) {
+                e.systemChannel.send(args.join(" "))
+            }
+        }, 1000)
+    })
+}
+exports.info = {
+    name: `test`,
+    aliases: [],
+    description: `test`,
+    usage: ``,
+    category: `Misc`,
+    lock: false
 }

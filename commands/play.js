@@ -19,18 +19,18 @@ const Discord = require('discord.js');
 const internetradio = require('node-internet-radio');
 
 const defaultRegions = {
-  asia: ["sydney", "singapore", "japan", "hongkong"],
-  eu: ["london", "frankfurt", "amsterdam", "russia", "eu-central", "eu-west"],
-  us: ["us-central", "us-west", "us-east", "us-south", "brazil"]
+    asia: ["sydney", "singapore", "japan", "hongkong"],
+    eu: ["london", "frankfurt", "amsterdam", "russia", "eu-central", "eu-west"],
+    us: ["us-central", "us-west", "us-east", "us-south", "brazil"]
 };
 
 
-exports.run = async (client, message, args) => {
-  var config = client.config;
-  async function getSongs(search, userid) {
-    return new Promise(async (resolve, rej) => {
-      try {
-        const res = await axios.get(`${config.lavalink.searchnode.address ? config.lavalink.searchnode.address : `https://${config.lavalink.searchnode.host}:${config.lavalink.searchnode.port}`}/loadtracks?identifier=${encodeURIComponent(search)}`, {
+exports.run = async(client, message, args) => {
+        var config = client.config;
+        async function getSongs(search, userid) {
+            return new Promise(async(resolve, rej) => {
+                        try {
+                            const res = await axios.get(`${config.lavalink.searchnode.address ? config.lavalink.searchnode.address : `https://${config.lavalink.searchnode.host}:${config.lavalink.searchnode.port}`}/loadtracks?identifier=${encodeURIComponent(search)}`, {
           headers: {
             Authorization: config.lavalink.searchnode.password
           }
@@ -72,23 +72,17 @@ exports.run = async (client, message, args) => {
   const betterArgs = args.join(' ').trim();
   let canPlay = false;
   //await message.channel.send(`Hold on...`);
-  if (!msg.member.voiceChannelID)
+  if (!msg.member.voice.channel)
     return message.channel.send(`You're not in a voice channel!`);
 
-  if (bot.player.get(message.guild.id) && msg.member.voiceChannelID !== bot.player.get(message.guild.id).channel)
+  if (bot.player.players.get(message.guild.id) && msg.member.voice.channel.id !== bot.player.players.get(message.guild.id).channel)
     return message.channel.send(`You're not in the playing voice channel!`);
 
   if (!betterArgs && !bot.player.get(message.guild.id))
     return message.channel.send(`You didn't give anything to play!`);
-  if (client.musicSettings[message.guild.id]) {
-    if (client.musicSettings[message.guild.id].lock) {
-      if (client.musicSettings[message.guild.id].lockid !== message.author.id) {
-        return message.channel.send(`🔐| Music commands are locked by ${client.users.get(client.musicSettings[message.guild.id].lockid).username}`);
-      }
-    }
-  }
+
   //await message.channel.startTyping()
-  const m = message.channel.send(`Hold on...`)
+  const m = await message.channel.send(`Hold on...`)
 
 
   var queue = bot.getQueue(message.guild.id);
@@ -110,20 +104,19 @@ exports.run = async (client, message, args) => {
 
   if (!betterArgs.startsWith(`http`)) {
     var list = track.map((t, i) => {
-      return `**${i + 1}** ${t.info.title} \`${bot.getYTLength(t.info.length)}\``;
+      return `**${i + 1}** ${t.info.title || 'Unknown'} \`${bot.getYTLength(t.info.length) || 'Unknown'}\``;
     })
     if(list.length > 10){
       list.splice(10)
     }
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
     .setTitle(`Song selection`)
     .setColor("0357ff")
     .setDescription(`${list.join('\n')}\n Send the number of the song you want to play. (1-10)`)
-    m.then(m => {
-      m.edit(embed)
-    })
+
+      m.edit("", embed)
     .then(() => {
-      message.channel.awaitMessages(response => response.author.id == message.author.id && parseInt(response.content), {
+      message.channel.awaitMessages(response => response.author.id == message.author.id && (parseInt(response.content) || response.content == "cancel"), {
         max: 1,
         time: 30000,
         errors: ['time'],
@@ -131,15 +124,17 @@ exports.run = async (client, message, args) => {
       .then((collected) => {
         /*if(parseInt(collected.first().content) == NaN || !parseInt(collected.first().content)){
           m.then(m => {
-            m.edit(new Discord.RichEmbed().setColor("0357ff").setTitle(`Selection closed.`))
+            m.edit(new Discord.MessageEmbed().setColor("0357ff").setTitle(`Selection closed.`))
           })
           message.channel.send(`You must specify a number between 1 and 10!`);
           return;
         }*/
+        if(collected.first().content == "cancel") {
+          m.edit("Canceled.")
+          return;
+        }
         if(collected.first().content < 1 || collected.first().content > 10){
-          m.then(m => {
-            m.edit(new Discord.RichEmbed().setColor("0357ff").setTitle(`Selection closed.`))
-          })
+            m.edit("", new Discord.MessageEmbed().setColor("0357ff").setTitle(`Selection closed.`))
           message.channel.send(`You must specify a number between 1 and 10!`);
           return;
         }
@@ -150,30 +145,29 @@ exports.run = async (client, message, args) => {
         collected.first().delete().catch(console.log)
         queue.push(track[parseInt(collected.first().content) - 1]);
         const songData = track[parseInt(collected.first().content) - 1]
-        const playEmbed = new Discord.RichEmbed()
+        const playEmbed = new Discord.MessageEmbed()
         .setColor("0357ff")
         .setAuthor(`Added song to queue!`)
         .setTitle(songData.info.title)
         .setThumbnail(`https://i.ytimg.com/vi/${songData.info.identifier}/hqdefault.jpg`)
         .setFooter(`Length: ${client.getYTLength(songData.info.length)} | ${songData.info.author}`)
         .setDescription(`• **URL**: [${songData.info.uri}](${songData.info.uri})`)
-        m.then(m => {
-          m.edit(playEmbed)
-        })
+        m.edit("Added song to queue!", playEmbed)
         if (canPlay) {
           var theHost = getIdealHost(bot, message.guild.region);
-          const player =  bot.player.join({
+          const player = bot.player.join({
             guild: message.guild.id,
-            channel: message.member.voiceChannelID,
+            channel: message.member.voice.channel.id,
             host: theHost
           });
-          bot.player.get(message.guild.id).node = bot.player.nodes.get(theHost);
+          bot.player.players.get(message.guild.id).node = bot.player.nodes.get(theHost);
           bot.execQueue(message, queue, player, true);
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e)
         m.then(m => {
-          m.edit(new Discord.RichEmbed().setColor("0357ff").setTitle(`Selection closed.`))
+          m.edit(new Discord.MessageEmbed().setColor("0357ff").setTitle(`Selection closed.`))
         })
       });
     });
@@ -217,7 +211,7 @@ exports.run = async (client, message, args) => {
   }
   //message.channel.stopTyping()
   m.then(m => {
-    m.edit(new Discord.RichEmbed()
+    m.edit(new Discord.MessageEmbed()
       .setColor("0357ff")
       .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
       .setTitle(song)
@@ -227,7 +221,7 @@ exports.run = async (client, message, args) => {
 • **URL**: [${track[0].info.uri}](${track[0].info.uri})
 `));
   })
-  /*message.channel.send(new Discord.RichEmbed()
+  /*message.channel.send(new Discord.MessageEmbed()
   .setColor("0357ff")
   .setAuthor(`Added ${urlParams.get('list') ? "playlist" : "song"} to queue!`)
   .setTitle(song)
@@ -241,7 +235,7 @@ exports.run = async (client, message, args) => {
     var theHost = getIdealHost(bot, message.guild.region);
     const player = await bot.player.join({
       guild: message.guild.id,
-      channel: message.member.voiceChannelID,
+      channel: message.member.voice.channel.id,
       host: theHost
     });
     bot.player.get(message.guild.id).node = bot.player.nodes.get(theHost);
@@ -254,5 +248,6 @@ exports.info = {
   aliases: [`p`],
   description: `Play music!`,
   usage: `play <song title/twitch url/soundcloud url/mp3 url>`,
-  category: `Music`
+  category: `Music`,
+  lock: true
 }

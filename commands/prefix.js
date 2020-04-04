@@ -1,33 +1,30 @@
-const { RichEmbed } = require('discord.js')
+const { MessageEmbed } = require('discord.js')
 
-exports.run = async (client, message, args) => {
-    const getPrefixEmbed = async () => {
+exports.run = async(client, message, args) => {
+    const getPrefixEmbed = async() => {
         const settings = await client.getGuild(message.guild)
-        const embed = new RichEmbed()
-        .setAuthor(`Prefix for ${message.guild.name}`, message.guild.iconURL)
-        .setColor("BLUE")
-        .setDescription(`My prefix in this guild is now : \`${settings.prefix}\``)
+        const embed = new MessageEmbed()
+            .setAuthor(`Prefix for ${message.guild.name}`, message.guild.iconURL)
+            .setColor("BLUE")
+            .setDescription(`My prefix in this guild is now : \`${settings.prefix}\`\n\nYou can see my prefix anytime by mentioning me.`)
 
         return embed
     }
-    if(!args[0]) {
-        const embed = new RichEmbed()
-        .setAuthor(`Prefix for ${message.guild.name}`, message.guild.iconURL)
-        .setColor("BLUE")
-        .setDescription(`My prefix in this guild is: \`${message.settings.prefix}\`\nSet a prefix with \`${message.settings.prefix}prefix set\``)
+    if (!args[0]) {
+        const embed = new MessageEmbed()
+            .setAuthor(`Prefix for ${message.guild.name}`, message.guild.iconURL)
+            .setColor("BLUE")
+            .setDescription(`My prefix in this guild is: \`${message.settings.prefix}\`\nSet a prefix with \`${message.settings.prefix}prefix <new prefix>\``)
 
         message.channel.send(embed)
     }
-    if(args[0] === "set"){
-        if(!message.member.hasPermissions("MANAGE_MESSAGES") && message.author.id !== client.config.ownerID){
+    if (args[0]) {
+        if (!message.member.hasPermission("MANAGE_MESSAGES") && message.author.id !== client.config.ownerID) {
             return;
         }
-        if(args[1]){
-            args.shift()
-            const newPrefix = args.join(" ")
-            await client.updateGuild(message.guild, { prefix: newPrefix })
-            message.channel.send(await getPrefixEmbed())
-        }
+        const newPrefix = args.join(" ")
+        await client.updateGuild(message.guild, { prefix: newPrefix })
+        message.channel.send(await getPrefixEmbed())
     }
 }
 

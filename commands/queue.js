@@ -1,21 +1,21 @@
 const Discord = require('discord.js');
 
 exports.run = (client, message, args) => {
-    //ignore dm's
-    if (message.channel.type === 'dm')
-    return message.channel.send(`You need to be in a server to use this command.`);
-    
-  var queue = client.getQueue(message.guild.id);
-  if(!queue || queue.length == 0)
-    return message.channel.send(`No music is playing!`);
+        //ignore dm's
+        if (message.channel.type === 'dm')
+            return message.channel.send(`You need to be in a server to use this command.`);
 
-  var q = queue;
-  //var requestedBy = client.users.get(queue[0].requestedBy).username
-  //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri}) by **${a.info.author}**` : `Unknown`} (${client.getYTLength(a.info.length)})`);
-  //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${client.users.get(a.requestedBy).username}** (${client.getYTLength(a.info.length)})`);
-  var list = queue.map((a, i) => {
-    if(i == 0) return;
-    return `**${i}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${client.users.get(a.requestedBy).username}** (${client.getYTLength(a.info.length)})`
+        var queue = client.getQueue(message.guild.id);
+        if (!queue || queue.length == 0)
+            return message.channel.send(`No music is playing!`);
+
+        var q = queue;
+        //var requestedBy = client.users.resolve(queue[0].requestedBy).username
+        //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri}) by **${a.info.author}**` : `Unknown`} (${client.getYTLength(a.info.length)})`);
+        //var list = queue.map((a, i) => `**${i + 1}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${client.users.resolve(a.requestedBy).username}** (${client.getYTLength(a.info.length)})`);
+        var list = queue.map((a, i) => {
+                    if (i == 0) return;
+                    return `**${i}**. ${a.info.author ? `[**${a.info.title}**](${a.info.uri})` : `Unknown`} added by **${client.users.resolve(a.requestedBy).username}** (${client.getYTLength(a.info.length)})`
   });
 
   var playingMore;
@@ -26,8 +26,8 @@ exports.run = (client, message, args) => {
   }
 
   var e = queue[0]
-  var nowPlaying = `${e.info.author ? `[**${e.info.title}**](${e.info.uri})` : `Unknown`} added by **${client.users.get(e.requestedBy).username}** (${client.getYTLength(e.info.length)})`
-  var embed = new Discord.RichEmbed();
+  var nowPlaying = `${e.info.author ? `[**${e.info.title}**](${e.info.uri})` : `Unknown`} added by **${client.users.resolve(e.requestedBy).username}** (${client.getYTLength(e.info.length)})`
+  var embed = new Discord.MessageEmbed();
   embed.setColor('0357ff').setTitle(`Queue for **${message.guild.name}**`);
   let loopV = `off`
   let shuffleV = `off`
