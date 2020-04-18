@@ -6,9 +6,14 @@ module.exports = (client, oldState, newState) => {
         if (channel) {
             if (client.player.players.get(newState.guild.id)) {
                 client.player.players.get(newState.guild.id).channel = channel.id
+                if (channel.members.size == 1) {
+                    client.player.players.get(newState.guild.id).pause(true)
+                    newState.guild.channels.resolve(client.getQueue(newState.guild.id)[0].channel).send(`⏸ | Everyone left the voice channel so the player has been paused.`)
+                }
             }
         }
     } catch (e) {
-
+        void(e)
     }
+
 }
