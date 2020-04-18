@@ -28,11 +28,11 @@ exports.run = async (client, message, args) => {
         const background = await Canvas.loadImage(`./img/chickens/chicken3.jpg`);
         // This uses the canvas dimensions to stretch the image onto the entire canvas
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const avatar = await Canvas.loadImage(userMention.avatarURL);
+        const avatar = await Canvas.loadImage(userMention.displayAvatarURL({ format: 'jpg' }));
         ctx.drawImage(avatar, 468.1, 51.3, 163.3, 163.3);
     
         // Use helpful Attachment class structure to process the file for you
-        const attachment = new Discord.Attachment(canvas.toBuffer(), 'pinecone.png');
+        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'pinecone.png');
         message.channel.send(attachment)
     }
 }
