@@ -243,12 +243,12 @@ client.getQueue = (server) => {
 
 client.execQueue = async(message, queue, player, isfirst = false) => {
     client.execQueue.checkSize = setInterval(() => {
-        if (client.channels.cache.get(player.channel).members.size == 1) {
+        /*if (client.channels.cache.get(player.channel).members.size == 1) {
             if (!player.paused) {
                 player.pause(true)
                 message.channel.send(`⏸ | Everyone left the voice channel so the player has been paused!`)
             }
-        } else {}
+        }*/
     }, 1000);
 
     if (client.musicSettings[message.guild.id] && client.musicSettings[message.guild.id].shuffle) {
@@ -264,17 +264,15 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
             let song = queue[0].info.title
             if (queue[0].info.length >= 9223372036854776000) {
                 length = `Live`
-                await getStreamMeta(queue[0].info.uri)
+                getStreamMeta(queue[0].info.uri)
                     .then((song) => {
                         song = song
-                            //console.log(song)
                     })
             }
             async function getStreamMeta(url) {
                 return new Promise((resolve) => {
                     internetradio.getStationInfo(url, function(error, station) {
                         song = station.title;
-                        console.log(station)
                         resolve(song);
                     });
                 });
@@ -282,7 +280,7 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
             var requestedBy = client.users.resolve(queue[0].requestedBy)
             var name = requestedBy.username
             var avatarURL = requestedBy.avatarURL
-            message.channel.send(new Discord.MessageEmbed()
+            message.guild.channels.resolve(queue[0].channel).send(new Discord.MessageEmbed()
                 .setColor("0357ff")
                 .setAuthor(`Now playing`, avatarURL)
                 .setTitle(song)
@@ -309,9 +307,10 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
             }, 1000);
         } else {
             message.channel.send(`Queue is now empty! Leaving the voice channel.`);
+            client.queue[message.guild.id] = [];
             await client.player.leave(message.guild.id);
             if (client.musicSettings[message.guild.id])
-                delete client.musicSettings[message.guild.id];
+                client.musicSettings[message.guild.id] = [];
             if (client.execQueue.checkSize)
                 clearInterval(client.execQueue.checkSize)
         }
