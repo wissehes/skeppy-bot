@@ -5,7 +5,7 @@ exports.run = async(client, message, args) => {
     if (args[0] == "top") {
         var users = await Braincells.find({});
         users = users.filter((u) => client.users.resolve(u.userId))
-        const sorted = users.sort((a, b) => a.braincells + b.braincells);
+        const sorted = users.sort((a, b) => a.braincells > b.braincells ? -1 : b.braincells > a.braincells ? 1 : 0);
 
         const map = sorted.map((e, i) => {
             var usertag = client.users.resolve(e.userId).tag
