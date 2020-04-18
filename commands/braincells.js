@@ -3,10 +3,12 @@ const Braincells = require("../mongo/models/Braincells")
 
 exports.run = async(client, message, args) => {
     if (args[0] == "top") {
-        const users = await Braincells.find({});
+        var users = await Braincells.find({});
+        users = users.filter((u) => client.users.resolve(u.userId))
         const sorted = users.sort((a, b) => a - b);
 
         const map = sorted.map((e, i) => {
+            var usertag = client.users.resolve(e.userId).tag
             return `${
                 (i === 0) 
                 ? '🥇'
@@ -17,7 +19,7 @@ exports.run = async(client, message, args) => {
                             : (i === 3)
                                 ? '🏅'
                                     : '🔘'
-            } **${e.braincells} braincells** - ${client.users.resolve(e.userId).tag || 'User tag not found'}`
+            } **${e.braincells} braincells** - ${usertag ? usertag : 'User not found.'}`
         })
 
         if (map.length > 10) {
