@@ -1,21 +1,29 @@
 {
-  "token": "<your token>",
-  "prefix": "skeppy ",
-  "guilds": "<your guild id>",
-  "lavalink": {
-    "searchnode": {
-      "host": "<your Lavalink node hostname>",
-      "port": "<your Lavalink node port>",
-      "address": "<your Lavalink node address. This will cancel out host and port.>",
-      "password": "<your Lavalink node's password>"
+    "token": "",
+    "prefix": ["skeppy ", "s!"],
+    "guilds": "",
+    "feedbackChannel": "",
+    "ownerID": "",
+    "adminID": "",
+    "NewServerChannel": "",
+    "YTapikey": "",
+    "lavalink": {
+        "searchnode": {
+            "host": "",
+            "address": "",
+            "password": ""
+        },
+        "nodes": [
+            { "host": "", "port": "", "address": "", "password": "" }
+        ]
     },
-    "nodes": [
-      {
-        "host": "<your Lavalink node hostname>",
-        "port": "<your Lavalink node port>",
-        "address": "<your Lavalink node address. This will cancel out host and port.>",
-        "password": "<your Lavalink node's password>"
-      }
-    ]
-  }
+    "twitterConsumer": "",
+    "twitterConsumerSecret": "",
+    "twitterTokenKey": "",
+    "twitterTokenSecret": "",
+    "DBLApiKey": "",
+    "noLevelServers": "",
+    "ksoftApi": "<ksoft api token>",
+    "port": 8888,
+    "mongodb": "<mongo uri>"
 }
