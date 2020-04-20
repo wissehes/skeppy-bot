@@ -22,7 +22,7 @@ exports.run = (client, message, args) => {
   if(list.length > 11){
     list.splice(11, list.length);
     var moreSongs = q.length - 11
-    playingMore = `+ ${moreSongs} more ${q.length - 11 > 1 ? `song` : `songs`}`
+    playingMore = `+ ${moreSongs} more ${moresongs = 1 ? `song` : `songs`}`
   }
 
   var e = queue[0]
