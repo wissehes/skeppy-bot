@@ -242,15 +242,6 @@ client.getQueue = (server) => {
 }
 
 client.execQueue = async(message, queue, player, isfirst = false) => {
-    client.execQueue.checkSize = setInterval(() => {
-        /*if (client.channels.cache.get(player.channel).members.size == 1) {
-            if (!player.paused) {
-                player.pause(true)
-                message.channel.send(`⏸ | Everyone left the voice channel so the player has been paused!`)
-            }
-        }*/
-    }, 1000);
-
     if (client.musicSettings[message.guild.id] && client.musicSettings[message.guild.id].shuffle) {
         var th = Math.floor(Math.random() * queue.length);
         queue.unshift(queue[th]);
@@ -284,7 +275,6 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
                 .setColor("0357ff")
                 .setAuthor(`Now playing`, avatarURL)
                 .setTitle(song)
-                //.setDescription(`${length}`)
                 .setThumbnail(`https://i.ytimg.com/vi/${queue[0].info.identifier}/hqdefault.jpg`)
                 .setURL(queue[0].info.uri)
                 .setFooter(`Added by ${name} | Length: ${length}`));
@@ -311,8 +301,6 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
             await client.player.leave(message.guild.id);
             if (client.musicSettings[message.guild.id])
                 client.musicSettings[message.guild.id] = [];
-            if (client.execQueue.checkSize)
-                clearInterval(client.execQueue.checkSize)
         }
     });
 }
