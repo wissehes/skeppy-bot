@@ -14,7 +14,7 @@
 
 // Lavalink version
 
-const axios = require('axios');
+const axios = require('axios').default;
 const Discord = require('discord.js');
 const internetradio = require('node-internet-radio');
 
@@ -174,12 +174,21 @@ exports.run = async(client, message, args) => {
     track.forEach(cr => {
       queue.push(cr);
     });
+    sendPlaylistUpdate()
   } else if (urlParams.get('list')) {
     track.forEach((cr) => {
       queue.push(cr);
     });
+    sendPlaylistUpdate()
   } else {
     queue.push(track[0]);
+    m.edit(`Added ${(length == "Live" ? "livestream" : "song")} to queue`, new Discord.MessageEmbed()
+    .setColor("0357ff")
+    .setAuthor(`Added ${(length == "Live" ? "livestream" : "song")} to queue!`)
+    .setTitle(song)
+    .setThumbnail(`https://i.ytimg.com/vi/${track[0].info.identifier}/hqdefault.jpg`)
+    .setFooter(`Length: ${length} | ${track[0].info.author}`)
+    .setDescription(`• **URL**: [${track[0].info.uri}](${track[0].info.uri})`));
   }
   let length = bot.getYTLength(track[0].info.length)
   let song = track[0].info.title
@@ -199,14 +208,6 @@ exports.run = async(client, message, args) => {
     });
   }
 
-  m.edit(`Added ${(length == "Live" ? "livestream" : urlParams.get('list') ? "playlist" : "song")} to queue`, new Discord.MessageEmbed()
-  .setColor("0357ff")
-  .setAuthor(`Added ${(length == "Live" ? "livestream" : urlParams.get('list') ? "playlist" : "song")} to queue!`)
-  .setTitle(song)
-  .setThumbnail(`https://i.ytimg.com/vi/${track[0].info.identifier}/hqdefault.jpg`)
-  .setFooter(`Length: ${length} | ${track[0].info.author}`)
-  .setDescription(`• **URL**: [${track[0].info.uri}](${track[0].info.uri})`));
-
   if (canPlay) {
     var theHost = getIdealHost(bot, message.guild.region);
     const player = bot.player.join({
@@ -216,6 +217,22 @@ exports.run = async(client, message, args) => {
     });
     bot.player.players.get(message.guild.id).node = bot.player.nodes.get(theHost);
     bot.execQueue(message, queue, player, true);
+  }
+  function sendPlaylistUpdate() {
+    axios.get(`https://www.googleapis.com/youtube/v3/playlists`, {
+      params: {
+        key: client.config.YTapikey,
+        part: 'snippet,contentDetails',
+        id: urlParams.get('list'),
+      },
+      headers: {
+        accept: 'application/json',
+      }
+    }).then(res => {
+      m.edit(`Added ${res.data.items[0].contentDetails.itemCount || 'an unknown amount of'} songs from playlist **${res.data.items[0].snippet.title || 'unknown'}**.`)
+    }).catch(e => {
+      m.edit(`Added an unknown amount of songs from an unknown playlist.`)
+    })
   }
 }
 
