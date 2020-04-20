@@ -67,3 +67,4 @@ scores.sqlite-wal
 *.sqlite*
 .DS_Store
 package-lock.json
+config.json
