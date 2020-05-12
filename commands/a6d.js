@@ -15,9 +15,6 @@ exports.run = (client, message, args) => {
     var a6d = getA6d();
     message.channel.send(a6d)
 }
-exports.run = (client, message, args) => {
-  message.channel.send(a6d)
-}
 exports.info = {
   name: `a6d`,
   aliases: [],
