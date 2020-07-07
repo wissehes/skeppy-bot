@@ -1,9 +1,9 @@
-/*exports.run = (client, message, args) => {
+exports.run = (client, message, args) => {
   function getA6d() {
     var a6d = [
-        "a6doo",
-        "a6diarrhea",
-        "a6dee",
+        "*quietly eats baguette in corner*",
+        "***LOUDLY CROONCHES ON BAGUETTE BEHIND YOU***",
+        "If i talk i delete this bot. (im playing minecraft by the way)",
         "outvadedlands is just great!",
         "a6d french guy",
         "a6d likes baguettes",
@@ -14,14 +14,11 @@
 
     var a6d = getA6d();
     message.channel.send(a6d)
-}*/
-exports.run = (client, message, args) => {
-  message.channel.send('i need to make this')
 }
 exports.info = {
   name: `a6d`,
   aliases: [],
-  description: `A6d command, currently does nothing.`,
+  description: `A6d command, currently WIP.`,
   usage: `a6d`,
   category: `TheTrio`
 }
