@@ -12,7 +12,7 @@ module.exports = (client, guild) => {
         .addField(`Guild ID`, guild.id)
         //.addField(`User count`, guild.memberCount)
     if (guild.iconURL) embed.setThumbnail(guild.iconURL);
-    client.channels.get(client.config.NewServerChannel).send(embed)
+    client.channels.resolve(client.config.NewServerChannel).send(embed)
     try {
         client.deleteGuild(guild)
     } catch (e) {}
