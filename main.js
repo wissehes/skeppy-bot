@@ -40,11 +40,6 @@ require("./mongo/braincell_functions")(client)
 
 client.mongoose = require('./mongo/mongoose');
 
-let dbl;
-try {
-    dbl = new DBL(config.DBLApiKey, client);
-} catch (e) {}
-client.dbl = dbl;
 //client.music = require("discord.js-musicbot-addon");
 client.queue = {};
 client.musicSettings = {};
@@ -132,9 +127,15 @@ client.on("ready", () => {
     client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
     client.deleteScore = sql.prepare("DELETE FROM scores WHERE user = ? AND guild = ?")
     client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
-    setInterval(() => {
-        dbl.postStats(client.guilds.cache.size);
-    }, 1800000);
+
+    // Start DBL if there's an API key present.
+    if (config.DBLApiKey && config.DBLApiKey.length > 1) {
+        let dbl = new DBL(config.DBLApiKey, client);
+        client.dbl = dbl;
+        setInterval(() => {
+            dbl.postStats(client.guilds.cache.size);
+        }, 1800000);
+    }
 });
 
 fs.readdir("./events/", (err, files) => {
