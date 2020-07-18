@@ -78,15 +78,6 @@ function pingLavalinkNodes() {
 setInterval(pingLavalinkNodes, 260000);
 
 client.on("ready", () => {
-    /*  client.guilds.forEach(async guild => {
-        const dbtest = await client.settings.get(guild.id)
-        if(!dbtest){
-          client.createGuild(guild)
-        } else if(!dbtest.prefix){
-          client.updateGuild(guild, { prefix: 'skeppy' })
-        }
-      })*/
-
     api.run(client)
     pingLavalinkNodes();
     console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
