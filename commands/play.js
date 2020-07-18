@@ -182,6 +182,17 @@ exports.run = async(client, message, args) => {
     sendPlaylistUpdate()
   } else {
     queue.push(track[0]);
+
+    let length = bot.getYTLength(track[0].info.length)
+    let song = track[0].info.title
+    // when it's a live stream
+    if (track[0].info.length >= 9223372036854776000) {
+      length = `Live`
+      if(!track[0].info.uri.startsWith("https://twitch.tv")){
+        song = await getStreamMeta(track[0].info.uri)
+      }
+    }
+
     m.edit(`Added ${(length == "Live" ? "livestream" : "song")} to queue`, new Discord.MessageEmbed()
     .setColor("0357ff")
     .setAuthor(`Added ${(length == "Live" ? "livestream" : "song")} to queue!`)
@@ -190,15 +201,7 @@ exports.run = async(client, message, args) => {
     .setFooter(`Length: ${length} | ${track[0].info.author}`)
     .setDescription(`• **URL**: [${track[0].info.uri}](${track[0].info.uri})`));
   }
-  let length = bot.getYTLength(track[0].info.length)
-  let song = track[0].info.title
-  // when it's a live stream
-  if (track[0].info.length >= 9223372036854776000) {
-    length = `Live`
-    if(!track[0].info.uri.startsWith("https://twitch.tv")){
-      song = await getStreamMeta(track[0].info.uri)
-    }
-  }
+
   async function getStreamMeta(url) {
     return new Promise((resolve) => {
       internetradio.getStationInfo(url, function (error, station) {
@@ -218,6 +221,7 @@ exports.run = async(client, message, args) => {
     bot.player.players.get(message.guild.id).node = bot.player.nodes.get(theHost);
     bot.execQueue(message, queue, player, true);
   }
+
   function sendPlaylistUpdate() {
     axios.get(`https://www.googleapis.com/youtube/v3/playlists`, {
       params: {
