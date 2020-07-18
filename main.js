@@ -102,6 +102,7 @@ client.on("ready", () => {
             console.log(`Node ${a.manager.host} is currently reconnecting...`);
         });
     });
+
     //---levels---
     // Check if the table "points" exists.
     const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
