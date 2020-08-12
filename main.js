@@ -13,7 +13,7 @@ const config = require("./config.json");
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
-yarn
+
 const newSettings = new Keyv(config.mongodb, { collection: "settings" })
     //const autorole = new Enmap({ name: "autorole" })
 const autorole = new Keyv(config.mongodb, { collection: 'autorole' })
