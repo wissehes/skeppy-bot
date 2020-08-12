@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
             return;
         var embed = new Discord.MessageEmbed()
             .setTitle(`${userMention.tag}'s avatar`)
-            .setImage(userMention.avatarURL)
+            .setImage(userMention.avatarURL())
         message.channel.send(embed)
         return;
     }
