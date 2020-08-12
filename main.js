@@ -13,7 +13,7 @@ const config = require("./config.json");
 const client = new Discord.Client();
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
-
+yarn
 const newSettings = new Keyv(config.mongodb, { collection: "settings" })
     //const autorole = new Enmap({ name: "autorole" })
 const autorole = new Keyv(config.mongodb, { collection: 'autorole' })
@@ -82,26 +82,34 @@ client.on("ready", () => {
     pingLavalinkNodes();
     console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
     client.user.setActivity(`for "skeppy help" in ${client.guilds.cache.size} servers | skeppybot.xyz`, { type: "WATCHING" });
-    client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {
-        user: client.user.id
-    });
-    client.player.nodes.array().forEach(a => {
-        a.manager.on('ready', () => {
-            console.log(`Node ${a.host} is ready!`);
+    try {
+        client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {
+            user: client.user.id
         });
+        client.player.nodes.array().forEach(a => {
+            a.manager.on('ready', () => {
+                console.log(`Node ${a.host} is ready!`);
+            });
+    
+            a.manager.on('error', (e) => {
+                console.log(`Node ${a.host} encountered an error: ${e.stack}`);
+            });
+    
+            a.manager.on('disconnect', (r) => {
+                console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
+            });
+    
+            a.manager.on('reconnecting', (r) => {
+                console.log(`Node ${a.manager.host} is currently reconnecting...`);
+            });
+        });
+    } catch(e) {
+        console.error(e)
+        client.player = {
+            available: false
+        }
+    }
 
-        a.manager.on('error', (e) => {
-            console.log(`Node ${a.host} encountered an error: ${e.stack}`);
-        });
-
-        a.manager.on('disconnect', (r) => {
-            console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
-        });
-
-        a.manager.on('reconnecting', (r) => {
-            console.log(`Node ${a.manager.host} is currently reconnecting...`);
-        });
-    });
 
     //---levels---
     // Check if the table "points" exists.
