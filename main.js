@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Enmap = require("enmap");
+
 const fs = require("fs");
 const Lavalink = require('discord.js-lavalink');
 const axios = require('axios');
@@ -15,7 +15,7 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 
 const newSettings = new Keyv(config.mongodb, { collection: "settings" })
-//const autorole = new Enmap({ name: "autorole" })
+
 const autorole = new Keyv(config.mongodb, { collection: 'autorole' })
 const stats = new Keyv(config.mongodb, { collection: "executedCommands" })
 const defaultSettings = {
@@ -40,7 +40,6 @@ require("./mongo/braincell_functions")(client)
 
 client.mongoose = require('./mongo/mongoose');
 
-//client.music = require("discord.js-musicbot-addon");
 client.queue = {};
 client.musicSettings = {};
 
@@ -147,11 +146,9 @@ fs.readdir("./events/", (err, files) => {
     });
 });
 
-client.commands = new Enmap();
-client.aliases = new Enmap();
-client.commandsInfo = new Enmap();
-//client.commandsInfo.set(`commandsInfo`, [])
-client.commandsInfo.set(`categories`, [])
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+
 fs.readdir("./commands/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -166,14 +163,14 @@ fs.readdir("./commands/", (err, files) => {
                 client.aliases.set(props.info.aliases[i], props)
             }
         }
-        client.commandsInfo.set(`commands`, props.info, props.info.name)
-        client.commandsInfo.push(`categories`, props.info.category)
-        client.commandsInfo.set(`CAT_${props.info.category.toLowerCase()}`, props.info, props.info.name)
+        //client.commandsInfo.set(`commands`, props.info, props.info.name)
+        //client.commandsInfo.push(`categories`, props.info.category)
+        //client.commandsInfo.set(`CAT_${props.info.category.toLowerCase()}`, props.info, props.info.name)
     });
 });
 
 client.reloadAllCommands = function () {
-    client.commands = new Enmap();
+    client.commands = new Discord.Collection();
     fs.readdir("./commands/", (err, files) => {
         if (err) return console.error(err);
         files.forEach(file => {
