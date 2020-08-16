@@ -1,29 +1,32 @@
 const { MessageEmbed } = require("discord.js")
 
-exports.run = async(client, message, args) => {
-        if (!message.member.hasPermission("MANAGE_CHANNELS")) {
-            return;
-        }
+exports.run = async (client, message, args) => {
+    if (!message.member.hasPermission("MANAGE_CHANNELS")) {
+        return message.reply("You don't have permission to use this command, you need `MANAGE_CHANNELS`!s");
+    }
 
-        const getStatusEmbed = async() => {
-                const settings = await client.getGuild(message.guild)
-                let channel = client.channels.get(settings.welcomeChannel)
-                if (!channel) {
-                    channel = client.channels.find(channel => channel.name === settings.welcomeChannel)
-                    if (channel) {
-                        channel = `**Not Found**`
-                    } else {
-                        channel = channel.name
-                    }
-                }
-                const embed = new MessageEmbed()
-                    .setTitle(`Welcome settings for ${message.guild.name}`)
-                    .setColor("BLUE")
-                    .setDescription(`
+    const getStatusEmbed = async () => {
+        const settings = await client.getGuild(message.guild)
+        let channel = client.channels.resolve(settings.welcomeChannel)
+        if (!channel) {
+            channel = client.channels.cache.find(channel => channel.name === settings.welcomeChannel)
+            if (channel) {
+                channel = `**Not Found**`
+            } else {
+                channel = channel.name
+            }
+        }
+        const embed = new MessageEmbed()
+            .setTitle(`Welcome settings for ${message.guild.name}`)
+            .setColor("BLUE")
+            .setDescription(`
 **Status**: ${settings.welcome ? `on` : `off`}
 **Channel**: ${channel}
 **Message**: ${settings.welcomeMessage}                     
 `)
+            .addField(`Setting a channel`, `\`${settings.prefix}welcome channel <channel>\``)
+            .addField(`Setting a message`, `\`${settings.prefix}welcome message\``)
+            .addField(`Enabling/disabling welcome messages`, `\`${settings.prefix}welcome enable/disable\``)
         return embed
     }
 
@@ -54,8 +57,8 @@ exports.run = async(client, message, args) => {
                 })
             break;
         case 'channel':
-            if(args[1]){
-                if(!message.mentions.channels.first()){
+            if (args[1]) {
+                if (!message.mentions.channels.first()) {
                     return message.reply("Please mention a channel!")
                 } else {
                     await client.updateGuild(message.guild, { welcomeChannel: message.mentions.channels.first().id })
@@ -64,30 +67,31 @@ exports.run = async(client, message, args) => {
                 }
             } else {
                 message.channel.send(`Mention the channel you want to set as welcome channel!`)
-                .then(() => {
-                    message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] })
-                        .then(async collected => {
-                            if(!collected.first().mentions.channels.first()){
-                                const foundChannel = client.channels.find(ch => ch.name === collected.first().content)
-                                if(!foundChannel){
-                                    message.reply(`I couldn't find that channel!`)
+                    .then(() => {
+                        message.channel.awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] })
+                            .then(async collected => {
+                                if (!collected.first().mentions.channels.first()) {
+                                    const foundChannel = client.channels.find(ch => ch.name === collected.first().content)
+                                    if (!foundChannel) {
+                                        message.reply(`I couldn't find that channel!`)
+                                    } else {
+                                        await client.updateGuild(message.guild, { welcomeChannel: foundChannel.id })
+                                        const embed = await getStatusEmbed()
+                                        message.channel.send(embed)
+                                    }
                                 } else {
-                                    await client.updateGuild(message.guild, { welcomeChannel: foundChannel.id })
+                                    await client.updateGuild(message.guild, { welcomeChannel: collected.first().mentions.channels.first().id })
                                     const embed = await getStatusEmbed()
                                     message.channel.send(embed)
                                 }
-                            } else {
-                                await client.updateGuild(message.guild, { welcomeChannel: collected.first().mentions.channels.first().id })
-                                const embed = await getStatusEmbed()
-                                message.channel.send(embed)   
-                            }
-                        })
-                })
+                            })
+                    })
             }
             break;
+        case "":
         default:
             const embed = await getStatusEmbed()
-            message.channel.send(embed)  
+            message.channel.send(embed)
             break;
     }
 }
