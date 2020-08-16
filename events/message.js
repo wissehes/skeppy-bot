@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js")
 
-module.exports = async(client, message) => {
+module.exports = async (client, message) => {
     if (message.author.bot) return;
     //ignore dm's
     if (message.channel.type === 'dm')
@@ -33,7 +33,7 @@ module.exports = async(client, message) => {
                 score = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, points: 0, level: 1 }
             }
             score.points++
-                const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
+            const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
             const autorole = await client.autorole.get(message.guild.id)
             if (autorole) {
                 try {
@@ -67,9 +67,9 @@ module.exports = async(client, message) => {
     // Our standard argument/command name definition.
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    // Grab the command data from the client.commands Enmap
+    // Grab the command data from the client.commands Collection
     const cmd = client.commands.get(command);
-    const incStats = async() => {
+    const incStats = async () => {
         const stats = await client.stats.get("executedCommands")
         if (stats) {
             client.stats.set("executedCommands", parseInt(stats) + 1)
@@ -90,7 +90,7 @@ module.exports = async(client, message) => {
                     }
                 }
             }
-            if(cmd.info.category == "Music") {
+            if (cmd.info.category == "Music") {
                 return message.reply("music is not available at the moment.")
             }
             cmd.run(client, message, args);
@@ -112,7 +112,7 @@ module.exports = async(client, message) => {
                     }
                 }
             }
-            if(aliasCmd.info.category == "Music") {
+            if (aliasCmd.info.category == "Music") {
                 return message.reply("music is not available at the moment.")
             }
             aliasCmd.run(client, message, args)
