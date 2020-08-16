@@ -1,8 +1,22 @@
 const Discord = require('discord.js');
 
-exports.run = (client, message, args) => {
-    const commandsDB = client.commandsInfo
-    const categories = commandsDB.get('categories')
+exports.run = async (client, message, args) => {
+    const categories = []
+    client.commands.forEach((command) => {
+        if (command.info) {
+            if (!categories.find(c => c.category == command.info.category)) {
+                categories.push({
+                    category: command.info.category,
+                    commands: [
+                        command.info
+                    ]
+                })
+            } else {
+                categories.find(c => c.category == command.info.category).commands.push(command.info)
+            }
+        }
+    })
+
     if (!args[0]) {
         const embed = new Discord.MessageEmbed()
             .setTitle(`Skeppy Bot Help`)
@@ -11,26 +25,25 @@ exports.run = (client, message, args) => {
             .setThumbnail(client.user.avatarURL)
             .setFooter(`Made by ${client.users.resolve(client.config.ownerID).username}#${client.users.resolve(client.config.ownerID).discriminator}`)
         for (let i = 0; i < categories.length; i++) {
-            const data = commandsDB.get(`CAT_${categories[i].toLowerCase()}`)
-            var commands = [];
-            for (const e in data) {
-                const ee = data[e]
-                commands.push(ee.name)
-            }
-            embed.addField(categories[i], '`' + commands.join("`, `") + '`')
+            const category = categories[i]
+            const commandNames = category.commands.map(co => `\`${co.name}\``)
+            embed.addField(category.category, commandNames.join(", "))
         }
         message.channel.send(embed)
     } else if (args[0]) {
         const arg = args[0].toLowerCase();
-        var commandData = commandsDB.get(`commands`, arg)
-        if (!commandData) {
-            return message.channel.send(`❌ | Thats not a valid command!`)
+        const commands = client.commands.filter(c => c.info)
+        const command = commands.find(c => c.info.name.toLowerCase() == arg)
+        if (!command) {
+            return message.channel.send(`❌ | Command not found!`)
         }
+        const commandData = command.info
         const commandName = commandData.name
         const embed = new Discord.MessageEmbed()
             .setTitle(`\`${commandName}\` command`)
             .setThumbnail(client.user.avatarURL)
             .setDescription(commandData.description)
+            .setColor("RANDOM")
         if (commandData.aliases[0]) embed.addField(`Aliases`, commandData.aliases.join(", "))
         embed.addField(`Usage`, commandData.usage)
         embed.addField(`Category`, commandData.category)
