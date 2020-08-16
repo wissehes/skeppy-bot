@@ -15,7 +15,7 @@ const SQLite = require("better-sqlite3");
 const sql = new SQLite('./scores.sqlite');
 
 const newSettings = new Keyv(config.mongodb, { collection: "settings" })
-    //const autorole = new Enmap({ name: "autorole" })
+//const autorole = new Enmap({ name: "autorole" })
 const autorole = new Keyv(config.mongodb, { collection: 'autorole' })
 const stats = new Keyv(config.mongodb, { collection: "executedCommands" })
 const defaultSettings = {
@@ -56,9 +56,9 @@ try {
     });
     //Bind 't' to 'client'
     client.t = t;
-} catch (e) {} // If it errors, silently fail and do nothing.
+} catch (e) { } // If it errors, silently fail and do nothing.
 
-Discord.Collection.betterForEach = async(callback) => {
+Discord.Collection.betterForEach = async (callback) => {
     for (let index = 0; index < this.size; index++) {
         await callback(this.array()[index], index, this.array());
     }
@@ -70,8 +70,8 @@ function pingLavalinkNodes() {
         if (!a.host.includes('glitch.me') && !a.address.includes('glitch.me')) return;
 
         axios.get(`${a.address.startsWith('ws') ? (a.address.startsWith('ws://') ? a.address.slice(2) : (a.address.startsWith('wss://') ? a.address.slice(3) : (a.address.startsWith('http') ? a.address : ('https://' + a.address)))) : (a.address.startsWith('http') ? a.address : ('https://' + a.address))}`)
-            .then(() => {})
-            .catch(() => {});
+            .then(() => { })
+            .catch(() => { });
     });
 }
 
@@ -90,20 +90,20 @@ client.on("ready", () => {
             a.manager.on('ready', () => {
                 console.log(`Node ${a.host} is ready!`);
             });
-    
+
             a.manager.on('error', (e) => {
                 console.log(`Node ${a.host} encountered an error: ${e.stack}`);
             });
-    
+
             a.manager.on('disconnect', (r) => {
                 console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
             });
-    
+
             a.manager.on('reconnecting', (r) => {
                 console.log(`Node ${a.manager.host} is currently reconnecting...`);
             });
         });
-    } catch(e) {
+    } catch (e) {
         console.error(e)
         client.player = {
             available: false
@@ -172,7 +172,7 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
-client.reloadAllCommands = function() {
+client.reloadAllCommands = function () {
     client.commands = new Enmap();
     fs.readdir("./commands/", (err, files) => {
         if (err) return console.error(err);
@@ -186,30 +186,34 @@ client.reloadAllCommands = function() {
     });
 }
 
-client.on("guildMemberAdd", async(member) => {
+client.on("guildMemberAdd", async (member) => {
     if (member.guild) {
-        //const defaultSettings = client.npSettings.ensure(member.guild.id, client.defaultSettings);
-        const welcomeSettings = await client.getGuild(member.guild)
+        try {
+            //const defaultSettings = client.npSettings.ensure(member.guild.id, client.defaultSettings);
+            const welcomeSettings = await client.getGuild(member.guild)
 
-        if (welcomeSettings.welcome) {
+            if (welcomeSettings.welcome) {
 
-            let welcomeMessage = welcomeSettings.welcomeMessage;
+                let welcomeMessage = welcomeSettings.welcomeMessage;
 
-            welcomeMessage = welcomeMessage.replace("{{user}}", member.user.toString())
-                .replace('{{usertag}}', member.user.tag)
-                .replace('{{username}}', member.user.username)
+                welcomeMessage = welcomeMessage.replace("{{user}}", member.user.toString())
+                    .replace('{{usertag}}', member.user.tag)
+                    .replace('{{username}}', member.user.username)
 
-            // we'll send it to the welcome channel.
-            const channel = member.guild.channels.resolve(welcomeSettings.welcomeChannel)
-            if (!channel) {
-                member.guild.channels.cache
-                    .find(channel => channel.name === welcomeSettings.welcomeChannel)
-                    .send(welcomeMessage)
-                    .catch(console.log);
-            } else {
-                channel.send(welcomeMessage)
-                    .catch(console.log)
+                // we'll send it to the welcome channel.
+                const channel = member.guild.channels.resolve(welcomeSettings.welcomeChannel)
+                if (!channel) {
+                    member.guild.channels.cache
+                        .find(channel => channel.name === welcomeSettings.welcomeChannel)
+                        .send(welcomeMessage)
+                        .catch(console.log);
+                } else {
+                    channel.send(welcomeMessage)
+                        .catch(console.log)
+                }
             }
+        } catch (e) {
+            console.error(e)
         }
     }
 });
@@ -242,7 +246,7 @@ client.getQueue = (server) => {
     return client.queue[server];
 }
 
-client.execQueue = async(message, queue, player, isfirst = false) => {
+client.execQueue = async (message, queue, player, isfirst = false) => {
     if (client.musicSettings[message.guild.id] && client.musicSettings[message.guild.id].shuffle) {
         var th = Math.floor(Math.random() * queue.length);
         queue.unshift(queue[th]);
@@ -263,7 +267,7 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
             }
             async function getStreamMeta(url) {
                 return new Promise((resolve) => {
-                    internetradio.getStationInfo(url, function(error, station) {
+                    internetradio.getStationInfo(url, function (error, station) {
                         song = station.title;
                         resolve(song);
                     });
@@ -284,7 +288,7 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
 
     //message.channel.send(`Now playing **${queue[0].info.title}**`);
 
-    player.once('end', async(r) => {
+    player.once('end', async (r) => {
         if (!client.musicSettings[message.guild.id] || client.musicSettings[message.guild.id].loop == 0)
             queue.shift();
         else if (client.musicSettings[message.guild.id].loop == 2) {
@@ -306,7 +310,7 @@ client.execQueue = async(message, queue, player, isfirst = false) => {
     });
 }
 
-Array.prototype.move = function(pos1, pos2) {
+Array.prototype.move = function (pos1, pos2) {
     // local variables
     var i, tmp;
     // cast input parameters to integers
@@ -335,11 +339,11 @@ Array.prototype.move = function(pos1, pos2) {
     }
 }
 
-Array.prototype.random = function() {
+Array.prototype.random = function () {
     return this[Math.floor(Math.random() * this.length)];
 }
 
-process.on('uncaughtException', async function(error) {
+process.on('uncaughtException', async function (error) {
     if (error.stack.includes(`Error: Unexpected server response:`)) {
         console.error(`A Lavalink node went offline!`);
     } else {
