@@ -11,5 +11,12 @@ exports.run = (client, message, args) => {
   message.delete();
   // And we get the bot to say the thing:
   message.channel.send("**" + memberTag + ": **");
-  message.channel.send(sayMessage, {code: true})
+  message.channel.send(sayMessage, { code: true })
+}
+exports.info = {
+  name: `say`,
+  aliases: [],
+  description: `Make skeppy bot say something!`,
+  usage: `say [text]`,
+  category: `Misc`,
 }
