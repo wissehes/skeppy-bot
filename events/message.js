@@ -60,7 +60,7 @@ module.exports = async (client, message) => {
         }
     }
 
-    const prefix = settings.prefix
+    const prefix = settings.prefix || "skeppy"
 
     if (message.content.toLowerCase().indexOf(prefix.toLowerCase()) !== 0) return;
 
