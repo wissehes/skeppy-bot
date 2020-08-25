@@ -90,7 +90,7 @@ module.exports = async (client, message) => {
                     }
                 }
             }
-            if (cmd.info.category == "Music") {
+            if (cmd.info.category == "Music" && client.player.notAvailable) {
                 return message.reply("music is not available at the moment.")
             }
             cmd.run(client, message, args);
@@ -112,7 +112,7 @@ module.exports = async (client, message) => {
                     }
                 }
             }
-            if (aliasCmd.info.category == "Music") {
+            if (aliasCmd.info.category == "Music" && client.player.notAvailable) {
                 return message.reply("music is not available at the moment.")
             }
             aliasCmd.run(client, message, args)

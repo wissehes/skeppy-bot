@@ -76,37 +76,41 @@ function pingLavalinkNodes() {
 
 setInterval(pingLavalinkNodes, 260000);
 
+const startLavalink = () => {
+    client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {
+        user: client.user.id
+    });
+    client.player.nodes.array().forEach(a => {
+        a.manager.on('ready', () => {
+            console.log(`Node ${a.host} is ready!`);
+        });
+
+        a.manager.on('error', (e) => {
+            console.log(`Node ${a.host} encountered an error: ${e.stack}`);
+        });
+
+        a.manager.on('disconnect', (r) => {
+            console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
+        });
+
+        a.manager.on('reconnecting', (r) => {
+            console.log(`Node ${a.manager.host} is currently reconnecting...`);
+        });
+    });
+}
+
+setInterval(startLavalink, 260000)
+
 client.on("ready", () => {
     api.run(client)
     pingLavalinkNodes();
     console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
     client.user.setActivity(`for "skeppy help" in ${client.guilds.cache.size} servers | skeppybot.xyz`, { type: "WATCHING" });
     try {
-        client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {
-            user: client.user.id
-        });
-        client.player.nodes.array().forEach(a => {
-            a.manager.on('ready', () => {
-                console.log(`Node ${a.host} is ready!`);
-            });
-
-            a.manager.on('error', (e) => {
-                console.log(`Node ${a.host} encountered an error: ${e.stack}`);
-            });
-
-            a.manager.on('disconnect', (r) => {
-                console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
-            });
-
-            a.manager.on('reconnecting', (r) => {
-                console.log(`Node ${a.manager.host} is currently reconnecting...`);
-            });
-        });
+        startLavalink()
     } catch (e) {
         console.error(e)
-        client.player = {
-            available: false
-        }
+        client.player.notAvailable = true
     }
 
 
