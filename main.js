@@ -77,26 +77,28 @@ function pingLavalinkNodes() {
 setInterval(pingLavalinkNodes, 260000);
 
 const startLavalink = () => {
-    client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {
-        user: client.user.id
-    });
-    client.player.nodes.array().forEach(a => {
-        a.manager.on('ready', () => {
-            console.log(`Node ${a.host} is ready!`);
+    if (client.player.notAvailable) {
+        client.player = new Lavalink.PlayerManager(client, config.lavalink.nodes, {
+            user: client.user.id
         });
+        client.player.nodes.array().forEach(a => {
+            a.manager.on('ready', () => {
+                console.log(`Node ${a.host} is ready!`);
+            });
 
-        a.manager.on('error', (e) => {
-            console.log(`Node ${a.host} encountered an error: ${e.stack}`);
-        });
+            a.manager.on('error', (e) => {
+                console.log(`Node ${a.host} encountered an error: ${e.stack}`);
+            });
 
-        a.manager.on('disconnect', (r) => {
-            console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
-        });
+            a.manager.on('disconnect', (r) => {
+                console.log(`Node ${a.manager.host} has disconnected with reason ${r}`);
+            });
 
-        a.manager.on('reconnecting', (r) => {
-            console.log(`Node ${a.manager.host} is currently reconnecting...`);
+            a.manager.on('reconnecting', (r) => {
+                console.log(`Node ${a.manager.host} is currently reconnecting...`);
+            });
         });
-    });
+    }
 }
 
 setInterval(startLavalink, 260000)
