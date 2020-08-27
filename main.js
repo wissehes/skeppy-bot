@@ -135,7 +135,7 @@ client.on("ready", () => {
         }, 1800000);
     }
     client.player = {
-        notAvailable: tfs.runcate
+        notAvailable: true
     }
     try {
         startLavalink()
