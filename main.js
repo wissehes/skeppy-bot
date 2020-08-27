@@ -134,6 +134,9 @@ client.on("ready", () => {
             dbl.postStats(client.guilds.cache.size);
         }, 1800000);
     }
+    client.player = {
+        notAvailable: tfs.runcate
+    }
     try {
         startLavalink()
     } catch (e) {
