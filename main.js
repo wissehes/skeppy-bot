@@ -108,13 +108,6 @@ client.on("ready", () => {
     pingLavalinkNodes();
     console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
     client.user.setActivity(`for "skeppy help" in ${client.guilds.cache.size} servers | skeppybot.xyz`, { type: "WATCHING" });
-    try {
-        startLavalink()
-    } catch (e) {
-        console.error(e)
-        client.player.notAvailable = true
-    }
-
 
     //---levels---
     // Check if the table "points" exists.
@@ -140,6 +133,12 @@ client.on("ready", () => {
         setInterval(() => {
             dbl.postStats(client.guilds.cache.size);
         }, 1800000);
+    }
+    try {
+        startLavalink()
+    } catch (e) {
+        console.error(e)
+        client.player.notAvailable = true
     }
 });
 
