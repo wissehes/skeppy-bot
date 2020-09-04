@@ -137,12 +137,12 @@ client.on("ready", () => {
     client.player = {
         notAvailable: true
     }
-    try {
-        startLavalink()
-    } catch (e) {
-        console.error(e)
-        client.player.notAvailable = true
-    }
+    // try {
+    //     startLavalink()
+    // } catch (e) {
+    //     console.error(e)
+    //     client.player.notAvailable = true
+    // }
 });
 
 fs.readdir("./events/", (err, files) => {
