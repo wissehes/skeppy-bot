@@ -101,7 +101,7 @@ const startLavalink = () => {
     }
 }
 
-setInterval(startLavalink, 260000)
+//setInterval(startLavalink, 260000)
 
 client.on("ready", () => {
     api.run(client)
